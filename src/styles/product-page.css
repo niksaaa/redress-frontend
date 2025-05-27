@@ -1,0 +1,72 @@
+.container-2 {
+  flex: 1;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: "Inria Serif", serif;
+  padding-bottom: 120px; /* Отступ для футера */
+  padding-left: 188px;
+  padding-right: 168px;
+}
+
+.product-title {
+  width: 425px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 178px;
+  left: 718px;
+  font-family: Inria Serif;
+  font-weight: Bold;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+
+.action-buttons {
+  width: 92px;
+  height: 36px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 178px;
+  left: 1180px;
+  overflow: hidden;
+}
+.like-btn {
+  width: 36px;
+  height: 36px;
+  background: url("../images/like.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+
+.trusted-icon {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+
+.post-date {
+  width: 100%;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 140px;
+  left: 720px;
+  font-family: Inria Serif;
+  font-weight: Regular;
+  font-size: 20px;
+  opacity: 1;
+  text-align: left;
+}

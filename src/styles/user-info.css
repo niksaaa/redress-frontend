@@ -1,0 +1,39 @@
+.user-info {
+    font-family: 'Inria Serif';
+    font-weight: Regular;
+    margin: 16px 0;
+}
+
+.info-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    /* Відступ між блоками */
+}
+
+.date-wrapper,
+.location-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Відступ між іконкою та текстом */
+}
+
+.date-icon,
+.location-ico {
+    font-size: 18px;
+}
+
+.creation-date,
+.location {
+    font-size: 16px;
+    color: #333;
+}
+
+.loading {
+    color: #666;
+    font-style: italic;
+}
+
+.error {
+    color: #FF0000; }

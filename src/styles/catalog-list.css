@@ -1,0 +1,15 @@
+/* .items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 0; } */
+
+.items-grid {
+    display: flex;
+        justify-content: left;
+        flex-wrap: wrap;
+        gap: 20px;
+}

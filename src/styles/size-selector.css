@@ -1,0 +1,43 @@
+.size-selector-container {
+  margin: 20px 0;
+}
+
+.size-selector-label {
+  width: 361px;
+  color: rgba(0, 0, 0, 1);
+  font-family: Inria Serif;
+  font-weight: Regular;
+  font-size: clamp(20px, 1.5vw, 26px);
+  opacity: 1;
+  text-align: left;
+  display: block;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.size-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.size-option {
+  border: 1px solid #828282;
+  border-radius: 4px;
+  padding: 12px;
+  background-color: white;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: Inria Serif;
+  font-weight: Regular;
+}
+
+.size-option:hover {
+  border-color: #aaa;
+}
+
+.size-option.selected {
+  background-color: #aaa;
+  color: white;
+  border-color: #aaa;
+}

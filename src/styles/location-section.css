@@ -1,0 +1,54 @@
+.location-section {
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  overflow: hidden;
+}
+
+.section-bg {
+  width: 100%;
+  background: rgba(245, 245, 245, 1);
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 20px 20px;
+  box-sizing: border-box;
+}
+
+/* 
+.section-title-2 {
+  display: block;
+  color: rgba(0, 0, 0, 1);
+  font-family: "Inria Serif", serif;
+  font-weight: 700;
+  font-size: clamp(18px, 2vw, 20px);
+  text-align: left;
+  margin-top: 16px;
+} */
+
+/* Контейнер з іконкою і текстом */
+.location-content {
+  display: flex;
+    align-items: center;
+    gap: 20px;
+  /* Відстань між іконкою і текстом */
+  padding-bottom: 16px;
+}
+
+/* Іконка */
+.location-icon {
+  width: 40px;
+  height: 40px;
+  background: url("../images/product-page/v342_40.png") no-repeat center center;
+  background-size: contain;
+}
+
+/* Текст */
+.location-text {
+  color: rgba(0, 0, 0, 1);
+  font-family: "Inria Serif", serif;
+  font-weight: 400;
+  font-size: clamp(14px, 1.5vw, 16px);
+  text-align: left;
+}

@@ -1,0 +1,336 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+}
+
+main {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.background-image-1 {
+  position: absolute;
+  inset: 0; /* shorthand для top/right/bottom/left: 0 */
+  z-index: 1;
+  background: url("../images/image.png") no-repeat center center / cover;
+  opacity: 1;
+}
+
+.registration-form {
+  width: 100%;
+  max-width: 514px;
+  height: 749px;
+  position: relative;
+  z-index: 2;
+  padding: 0 1rem;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.background-1 {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-option-button,
+.registration-option-button {
+  width: 174px;
+  height: 52px;
+  font-family: "Inria Serif", serif;
+  font-size: 24px;
+  border-radius: 8px;
+  border: none;
+  text-align: center;
+  color: rgba(0, 0, 0, 1);
+}
+
+.login-option-button {
+  background: rgba(255, 255, 255, 1);
+}
+
+.registration-option-button {
+  background: rgba(230, 230, 230, 1);
+}
+
+.login-container-1,
+.registration-container-1 {
+  width: 174px;
+  height: 52px;
+  position: absolute;
+  top: 40px;
+  overflow: hidden;
+}
+
+.login-container-1 {
+  left: 60px;
+}
+
+.registration-container-1 {
+  right: 60px;
+}
+
+.registration-btn-container {
+  width: 297px;
+  height: 52px;
+  position: absolute;
+  top: 341px;
+  left: 108px;
+  overflow: hidden;
+}
+
+.registration-btn {
+  width: 100%;
+  height: 100%;
+  background: rgba(60, 193, 42, 0.78);
+  border-radius: 8px;
+  border: none;
+  color: rgba(0, 0, 0, 1);
+  font-family: "Inria Serif", serif;
+  font-size: 24px;
+  text-align: center;
+  position: relative;
+}
+
+/* Адаптивность для экранов до 600px */
+@media (max-width: 600px) {
+  .registration-form {
+    width: 100%;
+    height: auto;
+    top: 120px;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  .background-1 {
+    width: 100%;
+    height: auto;
+  }
+
+  .login-container-1,
+  .registration-container-1 {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    margin: 0 auto 1rem auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .registration-btn-container {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-width: 297px;
+    margin: 2rem auto;
+  }
+}
+
+.or-text {
+  width: 36px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 433px;
+  left: 239px;
+  font-family: Inria Serif;
+  font-size: 20px;
+  text-align: left;
+}
+
+.facebook-auth-btn-container,
+.google-auth-btn-container {
+  width: 390px;
+  height: 46px;
+  position: absolute;
+  overflow: hidden;
+  opacity: 1;
+}
+
+.facebook-auth-btn-container {
+  top: 503px;
+  left: 62px;
+}
+
+.google-auth-btn-container {
+  top: 565px;
+  left: 62px;
+}
+
+.facebook-auth-btn,
+.google-auth-btn {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border: 1px solid rgba(130, 130, 130, 1);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.facebook-auth-icon,
+.google-auth-icon {
+  width: 30px;
+  height: 30px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position: absolute;
+  top: 8px;
+  overflow: hidden;
+}
+
+.facebook-auth-icon {
+  background-image: url("../images/facebookAuth.png");
+  left: 59px;
+}
+
+.google-auth-icon {
+  background-image: url("../images/googleAuth.png");
+  left: 71px;
+}
+
+.facebook-auth-text,
+.google-auth-text {
+  position: absolute;
+  top: 8px;
+  color: rgba(0, 0, 0, 1);
+  font-family: Inria Serif;
+  font-size: 20px;
+  text-align: left;
+  opacity: 1;
+}
+
+.facebook-auth-text {
+  width: 230px;
+  right: 59px;
+}
+
+.google-auth-text {
+  width: 206px;
+  right: 71px;
+}
+
+/* Адаптивность для экранов до 600px */
+@media (max-width: 600px) {
+  .or-text {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: 1rem auto;
+    text-align: center;
+  }
+
+  .facebook-auth-btn-container,
+  .google-auth-btn-container {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-width: 390px;
+    margin: 1rem auto;
+  }
+
+  .facebook-auth-icon,
+  .google-auth-icon {
+    left: 16px;
+  }
+
+  .facebook-auth-text,
+  .google-auth-text {
+    right: 16px;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+.registration-input-container,
+.password-input-container {
+  width: 390px;
+  height: 46px;
+  position: absolute;
+  left: 62px;
+}
+
+.registration-input-container {
+  top: 169px;
+}
+
+.password-input-container {
+  top: 275px;
+}
+
+.registration-input,
+.password-input {
+  width: 100%;
+  height: 100%;
+  padding-left: 13px;
+  background: #fff;
+  border: 1px solid rgba(130, 130, 130, 1);
+  border-radius: 8px;
+  font-family: "Inria Serif", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000;
+  outline: none;
+}
+
+.registration-text,
+.password-text {
+  position: absolute;
+  color: #000;
+  font-family: "Inria Serif", serif;
+  font-size: 18px;
+  opacity: 1;
+  text-align: left;
+  left: 62px;
+}
+
+.registration-text {
+  top: 135px;
+  width: 200px;
+}
+
+.password-text {
+  top: 240px;
+  width: 75px;
+}
+
+/* Адаптивность для экранов до 600px */
+@media (max-width: 600px) {
+  .registration-text,
+  .password-text {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: 1rem auto 0.5rem;
+    width: 90%;
+    text-align: left;
+  }
+
+  .registration-input-container,
+  .password-input-container {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 90%;
+    max-width: 390px;
+    margin: 0 auto 1.5rem;
+  }
+}

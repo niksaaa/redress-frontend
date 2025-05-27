@@ -1,0 +1,41 @@
+.color-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 20px;
+}
+
+.color-item {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background-color: #fdfdfd;
+  cursor: pointer;
+}
+
+.color-box {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  margin-right: 12px;
+  position: relative; /* для позиціювання галочки */
+}
+
+.checkmark {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  color: gray;
+  font-weight: bold;
+  font-size: 18px;
+  user-select: none;
+}
+
+.color-label {
+  font-family: "Inria Serif", serif;
+  font-size: 18px;
+  color: #000;
+}

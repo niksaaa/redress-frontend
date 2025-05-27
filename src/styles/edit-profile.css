@@ -1,0 +1,130 @@
+.edit-container {
+    margin-bottom: 120px;
+    align-items: center;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px; 
+}
+
+/* Головний flex-контейнер */
+.info-sections {
+    display: flex;
+    gap: 20px;
+    /* Відстань між блоками */
+    flex-wrap: wrap;
+    /* Щоб не ламалося на маленьких екранах */
+    justify-content: center;
+    align-items: start;
+}
+
+
+.info-container {
+    width: 400px;
+    padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-sizing: border-box;
+}
+
+.photo-container {
+    padding: 20px;
+        /* Відступ до країв блоку */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* Центрує зображення і кнопку */
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-sizing: border-box;
+}
+
+/* .photo-container img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+} */
+
+.photo-container img {
+    width: 160px;
+    /* або будь-яке фіксоване значення */
+    height: 160px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+
+/* Заголовки секцій */
+.section-title {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+/* Підпис + поле */
+.input-group {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-label {
+    margin-bottom: 4px;
+}
+
+.input-field {
+    background-color: #D9D9D9;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    resize: none;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: Inria Serif;
+    font-weight: regular;
+}
+
+.textarea-field {
+    height: 80px;
+}
+
+.edit-photo-btn {
+    margin-top: 12px;
+    padding: 8px 12px;
+    background-color: #ccc;
+    border: none;
+    border-radius: 4px;
+    font-family: Inria Serif;
+    font-weight: regular;
+    font-size: 16px;
+    cursor: pointer; 
+}
+
+.save-btn {
+    padding: 8px 20px;
+        /* 8px зверху/знизу, 16px зліва/справа */
+        border: none;
+        border-radius: 8px;
+        font-family: Inria Serif;
+        font-weight: regular;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        background-color: #3CC12B;
+        color: #000;
+        margin-top: 40px;
+}
+
+.btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.back-link {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #000; }

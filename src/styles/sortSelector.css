@@ -1,0 +1,58 @@
+.sort-container {
+    display: flex;
+    justify-content: start;
+    margin: 18px 0;
+}
+
+.sort-list {
+    list-style: none;
+    display: flex;
+    gap: 4px;
+    padding: 0;
+    margin: 0;
+    border-radius: 8px;
+}
+
+.sort-item {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Варіант default */
+.sort-container.default .sort-list {
+    background-color: #d9d9d9;
+    gap: 0px;
+}
+
+.sort-container.default .sort-item {
+    background-color: #d9d9d9;
+    color: #333;
+}
+
+.sort-container.default .sort-item.active {
+    background-color: #ffffff;
+    color: #000000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #828282;
+}
+
+/* Варіант reverse */
+.sort-container.reverse .sort-list {
+    background-color: #ffffff;
+}
+
+.sort-container.reverse .sort-item {
+    background-color: #ffffff;
+    color: #333;
+}
+
+.sort-container.reverse .sort-item.active {
+    background-color: #d9d9d9;
+    color: #000000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,21 @@
+.tags-container {
+  display: flex;
+  gap: 12px; /* Відступ між кнопками */
+  top: 652px;
+  left: 188px;
+  padding: 16px 0;
+}
+
+.tag {
+  padding: 0 12px; /* Внутрішні відступи для змінної ширини */
+  height: 40px;
+  background: rgba(245, 245, 245, 1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inria Serif", serif;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 1);
+  white-space: nowrap;
+}

@@ -1,0 +1,170 @@
+.footer1 {
+  width: 100%;
+  background: #f5f5f5;
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.footer-top1,
+.footer-middle1,
+.footer-bottom1 {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Контакти */
+.contacts1 {
+  min-width: 140px;
+  text-align: right;
+  align-self: flex-end;
+}
+
+.contacts-text1 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.contacts-info1 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.email1,
+.numbers1 {
+  font-size: 15px;
+  white-space: pre-line;
+}
+
+/* Соц. мережі */
+.social-media1 {
+  min-width: 140px;
+}
+
+.sm-text1 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.sm-icons1 {
+  display: flex;
+  gap: 10px;
+}
+
+.facebook-icon1,
+.instagram-icon1,
+.twitter-icon1,
+.youtube-icon1 {
+  width: 26px;
+  height: 26px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.facebook-icon1 {
+  background-image: url("../images/facebook.png");
+}
+.instagram-icon1 {
+  background-image: url("../images/instagram.png");
+}
+.twitter-icon1 {
+  background-image: url("../images/twitter.png");
+}
+.youtube-icon1 {
+  background-image: url("../images/youtube.png");
+}
+
+/* Меню */
+.additional-menu1 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 160px;
+}
+
+.policy1,
+.contract1,
+.service1 {
+  font-size: 15px;
+}
+
+/* Завантаження */
+.footer-middle1 {
+  align-items: center;
+  gap: 40px;
+}
+
+.download1 {
+  position: relative;
+  width: 256px;
+  height: 70px;
+}
+
+.download-btn1 {
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 10px;
+}
+
+.download-img1 {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  width: 30px;
+  height: 30px;
+  background-image: url("../images/download.png");
+  background-size: cover;
+}
+
+.download-text1 {
+  position: absolute;
+  top: 24px;
+  left: 72px;
+  font-size: 15px;
+}
+
+/* Тексти */
+.text-elem11 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.text-elem21,
+.text-elem31 {
+  font-size: 15px;
+}
+
+/* Нижній блок */
+.footer-bottom1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.text-elem31 {
+  margin-bottom: 10px;
+}
+
+.copyright1 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.copyright-icon1 {
+  width: 15px;
+  height: 15px;
+  background-image: url("../images/copyright.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

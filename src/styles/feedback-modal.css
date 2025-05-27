@@ -1,0 +1,114 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Grayed-out background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's on top of everything */
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  box-sizing: border-box; /* Include padding in width */
+  display: flex; /* Use flexbox for vertical stacking */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally within the flex container */
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal-close-button:hover {
+  color: #000;
+}
+
+.modal-title {
+  text-align: center; /* Center the title text */
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 22px;
+  width: 100%; /* Ensure title takes full width for centering */
+}
+
+.form-group {
+  margin-bottom: 20px;
+  width: 100%; /* Ensure form groups take full width within the modal-content */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+  text-align: left; /* Align labels to the left */
+}
+
+.form-group input[type="number"],
+.form-group textarea {
+  width: calc(100% - 20px); /* Adjust for padding */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+.form-group input[type="number"]:focus,
+.form-group textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.form-group textarea {
+  resize: vertical; /* Allow vertical resizing */
+  min-height: 80px;
+}
+
+.input-error {
+  border-color: #dc3545 !important;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+  text-align: left; /* Align error message to the left */
+}
+
+.submit-review-button {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  background-color: #28a745; /* Green color for submit */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.submit-review-button:hover {
+  background-color: #218838;
+}

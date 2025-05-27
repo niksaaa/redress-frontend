@@ -1,0 +1,136 @@
+.auction-card {
+  width: 240px;
+  height: 394px;
+  background: rgba(245, 245, 245, 1); /* Светлый фон карточки */
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px; /* Расстояние между карточками */
+  /* border-radius: 8px; */
+}
+
+.auction-card__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.auction-label-card {
+  color: rgba(255, 0, 0, 1);
+  font-family: "Inria Serif", serif;
+  font-weight: 400;
+  font-size: 16px;
+  font-style: italic;
+  padding: 2px 6px;
+  background: rgba(255, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.auction-card__image {
+  width: 200px;
+  height: 270px;
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  top: 48px;
+  left: 20px;
+  /* border-radius: 8px; */
+}
+
+.auction-card__details {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 324px;
+  margin-top: 0;
+  padding: 0;
+  background: none;
+}
+
+.auction-card__price {
+  display: block;
+  font-family: Inria Serif;
+  font-weight: regular;
+  font-size: 16px;
+  margin-bottom: 4px;
+  text-align: left;
+}
+
+.auction-card__description {
+  display: block;
+  font-family: Inria Serif;
+  font-weight: regular;
+  font-size: 16px;
+  margin-top: 4px;
+}
+
+.auction-card__like {
+  position: absolute;
+  right: 20px;
+  bottom: 16px;
+  left: auto;
+  top: auto;
+  width: 32px;
+  height: 32px;
+  z-index: 2;
+}
+
+.auction-card__like-icon {
+  width: 24px;
+  height: 24px;
+  background-size: cover;
+  background-position: center center;
+}
+
+.v46_121_like {
+  width: 32px;
+  height: 32px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 282px;
+  left: 186px;
+  overflow: hidden;
+}
+
+.v46_120_like {
+  width: 32px;
+  height: 32px;
+  background: rgba(245, 245, 245, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  overflow: hidden;
+}
+
+.v46_118_like {
+  width: 24px;
+  height: 24px;
+  background: url("../images/like.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  overflow: hidden;
+}
+
+.v46_164 {
+  width: 100%;
+  height: 100%;
+  background: rgba(245, 245, 245, 1);
+  position: relative;
+  overflow: hidden;
+}

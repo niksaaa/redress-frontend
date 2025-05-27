@@ -1,0 +1,55 @@
+.rating-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: 'Inria Serif', sans-serif;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    font-family: Inria Serif;
+        font-weight: Regular;
+}
+
+.star-icon {
+    color: #FFD700;
+    font-size: 18px;
+}
+
+.average-rating {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.rating-counts {
+    color: #666;
+    font-size: 14px;
+    padding-top: 2px;
+    margin-left: 16px;
+}
+
+.status-icon {
+    font-size: 18px;
+}
+
+.rating-status {
+    font-size: 16px;
+    color: #333;
+}
+
+.loading {
+    color: #666;
+    font-style: italic;
+}
+
+.error {
+    color: #FF0000; }

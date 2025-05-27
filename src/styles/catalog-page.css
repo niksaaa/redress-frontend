@@ -1,0 +1,89 @@
+body {
+    height: auto !important;
+    font-size: 14px;
+    font-family: Inria Serif;
+    font-weight: Regular;
+}
+
+.reset-filters-btn {
+    font-family: Inria Serif;
+        font-weight: Regular;
+        margin: 20px 0;
+    padding: 12px 20px;
+    background-color: #E6E6E6;
+    border: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+}
+
+.reset-filters-btn:hover {
+    background-color: #d9d9d9;
+    color: #000000;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Основний контейнер */
+.container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    padding: 0 80px;
+    font-family: 'Inria Serif', serif;
+    margin-bottom: 120px; /* Відстань до футера */
+}
+
+/* Блок фільтрів - ліва колонка */
+.filters {
+    grid-row: 1 / span 3;
+    /* width: 300px; */
+    /* або інша бажана ширина */
+}
+
+/* Права частина - всі інші елементи */
+.content-area {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Перший рядок - пошук і перше сортування */
+.search-sort-row {
+    display: flex;
+    justify-content: space-between;
+    /* margin-bottom: 10px; */
+}
+
+.search {
+    flex-grow: 1;
+    margin-right: 20px;
+}
+
+/* Другий рядок - друге сортування і кнопка */
+.sort-reset-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    margin-top: -10px;
+}
+
+/* Контейнер товарів */
+.product-list-wrapper {
+    grid-column: 2;
+    width: 100%;
+}
+
+/* Кнопка скидання фільтрів */
+/* .reset-filters-btn {
+    padding: 8px 16px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.reset-filters-btn:hover {
+    background-color: #e0e0e0; } */

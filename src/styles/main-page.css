@@ -1,0 +1,100 @@
+* body {
+  font-size: 14px;
+}
+.gallery-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 32px 0 32px !important;
+  min-height: unset !important;
+  height: auto !important;
+  width: 100%;
+  margin-bottom: 80px !important;
+  padding-bottom: 0 !important;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto 0 auto !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+  row-gap: 0 !important;
+}
+
+.image-block {
+  flex: 1 1 30%; /* автоадаптація: 3 в ряд на великих, 2 в ряд на середніх */
+  max-width: 500px;
+  min-width: 280px;
+  aspect-ratio: 3 / 4;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.image-woman {
+  background-image: url("../images/main-page/v16_16.png");
+}
+
+.image-man {
+  background-image: url("../images/main-page/v16_19.png");
+}
+
+.image-kids {
+  background-image: url("../images/main-page/v16_22.png");
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 10px 20px;
+  font-family: "Inria Serif", serif;
+  font-size: 20px;
+  color: #000;
+  white-space: nowrap;
+  text-align: center;
+}
+.v30_33 {
+  width: 100vw;
+  max-width: 100%;
+  display: block;
+  position: relative;
+  left: 0;
+  right: 0;
+  color: rgba(0, 0, 0, 1);
+  font-family: Inria Serif;
+  font-weight: Regular;
+  font-size: 32px;
+  opacity: 1;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.name {
+  color: #fff;
+}
+.v30_106 {
+  width: 100vw;
+  max-width: 100%;
+  display: block;
+  position: relative;
+  left: 0;
+  right: 0;
+  color: rgba(0, 0, 0, 1);
+  font-family: Inria Serif;
+  font-weight: Regular;
+  font-size: 36px;
+  opacity: 1;
+  text-align: center;
+  margin: 40px 0;
+}
+.name {
+  color: #fff;
+}

@@ -1,0 +1,66 @@
+.search-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 432px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 45px 10px 20px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: #E6E6E6;
+    box-shadow: 0 0 8px #828282;
+}
+
+.search-icon-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.search-icon2 {
+    width: 28px;
+    height: 28px;
+    transition: transform 0.3s ease;
+    background: url("../images/search.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.search-icon-button:hover .search-icon2 {
+    transform: scale(1.1);
+}
+
+/* Адаптація для менших екранів */
+@media (max-width: 768px) {
+    .search-wrapper {
+        width: 100%;
+        /* На малих екранах займає всю доступну ширину */
+        max-width: 432px;
+        /* Але не більше 432px */
+    }
+
+    .search-container {
+        justify-content: center;
+        /* Центруємо на малих екранах */
+    }
+}

@@ -1,0 +1,58 @@
+.wallet-container {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background-color: #F5F5F5;
+    border-radius: 8px;
+    margin: 16px 0;
+    max-width: fit-content;
+    box-sizing: border-box;
+    gap: 24px;
+    /* відстань між wallet-info та кнопкою */
+}
+
+.wallet-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* відстань між label та amount */
+}
+
+.wallet-label {
+    font-size: 16px;
+    color: #666;
+}
+
+.wallet-amount {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.topup-button {
+    padding: 10px 20px;
+    background-color: #3CC12B;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: flex-start;
+    /* кнопка вирівняна ліворуч */
+}
+
+.topup-button:hover {
+    background-color: #36B127;
+}
+
+.wallet-loading,
+.wallet-error {
+    padding: 16px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.wallet-error {
+    color: #ff0000;
+}

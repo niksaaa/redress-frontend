@@ -1,0 +1,20 @@
+/* Make inputs visible - adjust according to your actual styles */
+input {
+  width: 100%;
+  /* padding: 8px; */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.order-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  margin: 40px 120px 120px;
+}
+
+.order-info {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}

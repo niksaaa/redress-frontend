@@ -1,0 +1,33 @@
+/* .bio-container {
+    margin: 20px 0;
+    padding: 16px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+} */
+
+.bio-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.bio-text {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #444;
+    white-space: pre-line;
+    /* Зберігає переноси рядків */
+}
+
+.bio-loading,
+.bio-empty,
+.bio-error {
+    padding: 16px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+}
+
+.bio-error {
+    color: #ff0000; }

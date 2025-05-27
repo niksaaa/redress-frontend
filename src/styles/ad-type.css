@@ -1,0 +1,53 @@
+.type-selection {
+  display: flex;
+  flex-direction: row; /* расположить элементы по горизонтали */
+  justify-content: flex-start; /* выравнивание по левому краю */
+  gap: 30px; /* отступ между блоками */
+  flex-wrap: nowrap; /* элементы не должны переходить на новую строку */
+  width: 100%; /* растягиваем контейнер на всю доступную ширину */
+}
+
+.icon-selection,
+.icon-selection-1 {
+  display: flex;
+  align-items: center;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  width: fit-content;
+  height: 28px;
+}
+
+.type-selection-2,
+.type-selection-3 {
+  position: relative; /* важливо для позиціонування галочки */
+  width: 28px;
+  height: 28px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  border: 1px solid rgba(0, 0, 0, 1);
+  border-radius: 4px;
+  margin-right: 8px; /* отступ между цветными квадратиками и текстом */
+}
+
+.text-1,
+.text-2 {
+  font-family: Inria Serif;
+  font-weight: Regular;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 1);
+  text-align: left;
+}
+/* Стиль самої галочки */
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: gray;
+  font-weight: bold;
+  font-size: 20px;
+  user-select: none;
+  pointer-events: none;
+}
