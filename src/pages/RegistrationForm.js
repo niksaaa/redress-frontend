@@ -20,12 +20,11 @@ const RegistrationForm = () => {
     }
   
     const registrationData = {
-      Username: nickname,  // змінили nickname на Username
-      Email: email,
-      PhoneNumber: phone,
-      PasswordHash: password,  // змінили password на PasswordHash
-      Role: UserRole.Regular,  
-      Sex: gender === "male" ? Sex.Male : gender === "female" ? Sex.Female : Child // адаптували gender до Sex
+      email,
+      password,
+      nickname,
+      phone,
+      gender,
     };
   
     try {
