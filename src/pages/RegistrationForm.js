@@ -18,19 +18,20 @@ const RegistrationForm = () => {
       setError("Будь ласка, заповніть усі поля.");
       return;
     }
-
+  
     const registrationData = {
-      email,
-      password,
-      nickname,
-      phone,
-      gender,
+      Username: nickname,  // змінили nickname на Username
+      Email: email,
+      PhoneNumber: phone,
+      PasswordHash: password,  // змінили password на PasswordHash
+      Role: UserRole.Regular,  
+      Sex: gender === "male" ? Sex.Male : gender === "female" ? Sex.Female : Child // адаптували gender до Sex
     };
-
+  
     try {
       setLoading(true);
       setError("");
-
+  
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Auth/Register`, {
         method: "POST",
         headers: {
@@ -38,16 +39,16 @@ const RegistrationForm = () => {
         },
         body: JSON.stringify(registrationData),
       });
-
+  
       if (!response.ok) {
         const data = await response.json();
         throw new Error(data.message || "Помилка реєстрації");
       }
-
+  
       alert("Реєстрація пройшла успішно!");
       navigate("/");
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Сталася помилка під час реєстрації");
     } finally {
       setLoading(false);
     }
