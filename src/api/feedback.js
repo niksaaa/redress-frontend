@@ -7,7 +7,7 @@ export const fetchProfileFeedbacks = async (profileId, page = 1, pageSize = 5) =
     });
   }
   
-  const response = await fetch(`https://localhost:7029/api/Feedback/GetProfileFeedbacks?${profileId}&page=${page}&pageSize=${pageSize}`);
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Feedback/GetProfileFeedbacks?${profileId}&page=${page}&pageSize=${pageSize}`);
   if (!response.ok) throw new Error('Не вдалося завантажити відгуки');
   return response.json();
 };

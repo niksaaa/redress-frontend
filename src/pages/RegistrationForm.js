@@ -31,7 +31,7 @@ const RegistrationForm = () => {
       setLoading(true);
       setError("");
 
-      const response = await fetch("https://localhost:7029/API/Auth/Register", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/API/Auth/Register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
