@@ -275,7 +275,7 @@ export default function EditProfile() {
         };
         console.log('Відправка даних профілю на оновлення');
         updateProfileMutation({
-          id: profileData.Id,
+          id: profileData.id,
           updateDto: profileUpdateDto
         });
       }
