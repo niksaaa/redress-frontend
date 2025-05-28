@@ -44,7 +44,7 @@ export const fetchUserById = async (id) => {
       });
     }
     
-    const response = await authService.get(`/User/GetById?id=${id}`);
+    const response = await authService.get(`/User/GetById/${id}`);
     console.log('Дані користувача отримано:', response.data);
     return response.data;
   } catch (error) {
@@ -60,7 +60,7 @@ export const updateUser = async ({ id, updateDto }) => {
   try {
     console.log(`Оновлення користувача з ID: ${id}`, updateDto);
     
-    const response = await authService.put(`/User/Update?id=${id}`, updateDto);
+    const response = await authService.put(`/User/Update/${id}`, updateDto);
     console.log('Користувача успішно оновлено:', response.data);
     return response.data;
   } catch (error) {

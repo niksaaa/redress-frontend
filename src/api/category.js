@@ -49,7 +49,7 @@ export const fetchSubcategoriesBySex = async (sex) => {
       setTimeout(() => resolve(demoSubcategories[sex] || []), 300);
     });
   }
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Category/GetBySex?${sex}`);
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Category/GetBySex/by-sex/${sex}`);
   if (!response.ok) throw new Error('Не вдалося отримати підкатегорії');
   return response.json();
 };
@@ -65,7 +65,7 @@ export const fetchCategoryTree = async () => {
   }
 
   try {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/Category/GetTree`);
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/Category/GetTree/tree`);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при завантаженні категорій');

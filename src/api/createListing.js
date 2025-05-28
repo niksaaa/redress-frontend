@@ -13,7 +13,7 @@ export const createListing = async (listingData) => {
 
 export const startAuction = async (listingId, auctionData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/Auction/StartAuction?${listingId}`, auctionData);
+    const response = await axios.post(`${API_BASE_URL}/Auction/StartAuction/${listingId}`, auctionData);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при створенні аукціону');

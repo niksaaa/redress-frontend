@@ -70,7 +70,7 @@ export const fetchProfile = async () => {
 export const updateProfile = async ({ id, updateDto }) => {
   try {
     console.log('Оновлення профілю:', { id, updateDto });
-    const response = await authService.put(`/Profile?${id}`, updateDto);
+    const response = await authService.put(`/Profile/Update/${id}`, updateDto);
     console.log('Профіль успішно оновлено:', response.data);
     return response.data;
   } catch (error) {
@@ -86,7 +86,7 @@ export const uploadProfileImage = async ({ image, profileId }) => {
     formData.append('image', image);
     formData.append('profileId', profileId);
 
-    const response = await authService.post('/Profile/UploadImage', formData, {
+    const response = await authService.post('/Profile/UploadImage/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }

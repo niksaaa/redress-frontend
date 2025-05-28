@@ -168,7 +168,7 @@ export const fetchListingDetails = async (id) => {
   }
 
   // Реальний запит до API
-  const response = await fetch(`${API_BASE_URL}/Listing/GetById?${id}`);
+  const response = await fetch(`${API_BASE_URL}/Listing/GetById/${id}`);
   if (!response.ok) {
     throw new Error('Failed to fetch listing details');
   }
@@ -194,7 +194,7 @@ export const fetchListingCategories = async (listingId) => {
   }
 
   try {
-    const response = await axios.get(`${API_BASE_URL}/Category/GetByListingId?${listingId}`);
+    const response = await axios.get(`${API_BASE_URL}/Category/GetByListingId/by-listing/${listingId}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при завантаженні категорій');
@@ -219,7 +219,7 @@ export const fetchProfileDetails = async (profileId) => {
   }
 
   try {
-    const response = await axios.get(`${API_BASE_URL}/Profile/GetById?${profileId}`);
+    const response = await axios.get(`${API_BASE_URL}/Profile/GetById/${profileId}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при завантаженні профілю');
@@ -241,7 +241,7 @@ export const fetchUserDetails = async (userId) => {
   }
 
   try {
-    const response = await axios.get(`${API_BASE_URL}/User/GetById?${userId}`);
+    const response = await axios.get(`${API_BASE_URL}/User/GetById/${userId}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при завантаженні користувача');
