@@ -44,9 +44,11 @@ export default function Profile() {
   const { data: userData, isLoading: isUserLoading, error: userError } = useQuery({
     queryKey: ['user', profileData?.UserId],
     queryFn: () => fetchUserById(profileData?.UserId),
-    enabled: !!profileData?.UserId, // Запит виконується тільки коли є UserId
+    enabled: !!profileData && !!profileData.UserId, // Запит виконується тільки коли є UserId
     staleTime: 1000 * 60 * 5,
   });
+
+  console.log('Дані юзера завантажено');
 
   // Об'єднуємо стан завантаження та помилок
   const isLoading = isProfileLoading || isUserLoading;
