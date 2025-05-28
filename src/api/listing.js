@@ -78,7 +78,7 @@ export const fetchListingsBySex = async (sex, page = 1, pageSize = 12) => {
 
   // Інакше — реальний запит до API
   try {
-    const response = await axios.get(`${API_BASE_URL}/Listing/GetBySex?sex=${sex}&page=${page}&pageSize=${pageSize}`, {
+    const response = await axios.get(`${API_BASE_URL}/Listing/GetBySex`, {
       params: {
         sex: sex,
         page,
@@ -89,7 +89,9 @@ export const fetchListingsBySex = async (sex, page = 1, pageSize = 12) => {
     return {
       items: response.data.items,
       totalPages: response.data.totalPages,
-      totalCount: response.data.totalCount
+      totalCount: response.data.totalCount,
+      hasPreviousPage: response.data.hasPreviousPage,
+      hasNextPage:response.data.hasNextPage
     };
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при завантаженні оголошень');

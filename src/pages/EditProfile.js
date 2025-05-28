@@ -300,7 +300,7 @@ export default function EditProfile() {
         console.log('Початок завантаження зображення');
         uploadImageMutation({
           image: selectedImage,
-          profileId: profileData.Id
+          profileId: profileData.id
         });
       }
 
