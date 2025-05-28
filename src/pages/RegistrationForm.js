@@ -406,7 +406,7 @@ const RegistrationForm = () => {
             className="sex-input"
             required
             value={sex}
-            onChange={(e) => setSex(e.target.value)}
+            onChange={(e) => setSex(Number(e.target.value))} 
           >
             <option value="" disabled hidden>
               Оберіть стать
