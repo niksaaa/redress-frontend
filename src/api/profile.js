@@ -20,28 +20,6 @@
 // };
 
 
-// // Додаємо функції для отримання даних користувача
-// export const fetchCurrentUserProfile = async () => {
-//   if (process.env.REACT_APP_DEMO_MODE === 'true') {
-//     return new Promise(resolve => {
-//       setTimeout(() => {
-//         resolve({
-//           id: '5fa85f64-5717-4562-b3fc-2c963f66afa7',
-//           userId: '6fa85f64-5717-4562-b3fc-2c963f66afa8',
-//           phoneNumber: '+380991234567'
-//         });
-//       }, 300);
-//     });
-//   }
-
-//   try {
-//     const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/Profile/GetUserProfile`);
-//     return response.data;
-//   } catch (error) {
-//     throw new Error(error.response?.data?.message || 'Помилка при завантаженні профілю');
-//   }
-// };
-
 
 // export const updateProfile = async ({ id, updateDto }) => {
 //   const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Profile?${id}`, {
@@ -75,12 +53,12 @@
 
 
 import axios from 'axios';
-import { authAxios } from './authService'; // Використовуємо налаштований axios з authService
+import { authService } from './authService'; // Використовуємо налаштований axios з authService
 
 export const fetchProfile = async () => {
   try {
     console.log('Спроба отримати профіль користувача');
-    const response = await authAxios.get('/api/Profile/GetUserProfile');
+    const response = await authService.get('/api/Profile/GetUserProfile');
     console.log('Дані профілю отримано:', response.data);
     return response.data;
   } catch (error) {
@@ -92,7 +70,7 @@ export const fetchProfile = async () => {
 export const updateProfile = async ({ id, updateDto }) => {
   try {
     console.log('Оновлення профілю:', { id, updateDto });
-    const response = await authAxios.put(`/api/Profile?${id}`, updateDto);
+    const response = await authService.put(`/api/Profile?${id}`, updateDto);
     console.log('Профіль успішно оновлено:', response.data);
     return response.data;
   } catch (error) {
@@ -108,7 +86,7 @@ export const uploadProfileImage = async ({ image, profileId }) => {
     formData.append('image', image);
     formData.append('profileId', profileId);
 
-    const response = await authAxios.post('/api/Profile/UploadImage', formData, {
+    const response = await authService.post('/api/Profile/UploadImage', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -119,5 +97,28 @@ export const uploadProfileImage = async ({ image, profileId }) => {
   } catch (error) {
     console.error('Помилка при завантаженні зображення:', error);
     throw new Error(error.response?.data?.message || 'Не вдалося завантажити зображення');
+  }
+};
+
+
+// Додаємо функції для отримання даних користувача
+export const fetchCurrentUserProfile = async () => {
+  if (process.env.REACT_APP_DEMO_MODE === 'true') {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve({
+          id: '5fa85f64-5717-4562-b3fc-2c963f66afa7',
+          userId: '6fa85f64-5717-4562-b3fc-2c963f66afa8',
+          phoneNumber: '+380991234567'
+        });
+      }, 300);
+    });
+  }
+
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/Profile/GetUserProfile`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Помилка при завантаженні профілю');
   }
 };

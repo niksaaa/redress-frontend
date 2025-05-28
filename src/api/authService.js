@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_BASE_URL = 'https://redress-backend.onrender.com/api/Auth';
 
-const authService = axios.create({
+export const authService = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
