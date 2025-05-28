@@ -58,7 +58,7 @@ import { authService } from './authService'; // Використовуємо н�
 export const fetchProfile = async () => {
   try {
     console.log('Спроба отримати профіль користувача');
-    const response = await authService.get('/api/Profile/GetUserProfile');
+    const response = await authService.get('/Profile/GetUserProfile');
     console.log('Дані профілю отримано:', response.data);
     return response.data;
   } catch (error) {
@@ -70,7 +70,7 @@ export const fetchProfile = async () => {
 export const updateProfile = async ({ id, updateDto }) => {
   try {
     console.log('Оновлення профілю:', { id, updateDto });
-    const response = await authService.put(`/api/Profile?${id}`, updateDto);
+    const response = await authService.put(`/Profile?${id}`, updateDto);
     console.log('Профіль успішно оновлено:', response.data);
     return response.data;
   } catch (error) {
@@ -86,7 +86,7 @@ export const uploadProfileImage = async ({ image, profileId }) => {
     formData.append('image', image);
     formData.append('profileId', profileId);
 
-    const response = await authService.post('/api/Profile/UploadImage', formData, {
+    const response = await authService.post('/Profile/UploadImage', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }

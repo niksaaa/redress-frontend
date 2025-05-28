@@ -31,11 +31,14 @@ const sortOptions2 = [
   
 export default function Profile() {
   // Отримуємо дані профілю
+  console.log('Початок завантаження даних профілю');
   const { data: profileData, isLoading: isProfileLoading, error: profileError } = useQuery({
     queryKey: ['profile'],
     queryFn: fetchProfile,
     staleTime: 1000 * 60 * 5, // Дані будуть "свіжими" 5 хвилин
   });
+
+  console.log('Профіль завантажено, отримую дані користувача');
 
   // Отримуємо дані користувача, коли profileData доступний
   const { data: userData, isLoading: isUserLoading, error: userError } = useQuery({

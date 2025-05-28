@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://redress-backend.onrender.com/api/Auth';
+const API_BASE_URL = 'https://redress-backend.onrender.com/api';
 
 export const authService = axios.create({
   baseURL: API_BASE_URL,
@@ -109,7 +109,7 @@ authService.interceptors.response.use(
 export const registerUser = async (userData) => {
   console.log('Початок реєстрації користувача:', userData);
   try {
-    const response = await authService.post('/Register', userData);
+    const response = await authService.post('/Auth/Register', userData);
     console.log('Реєстрація успішна:', response.data);
     return response.data;
   } catch (error) {
@@ -121,7 +121,7 @@ export const registerUser = async (userData) => {
 export const loginUser = async (credentials) => {
   console.log('Початок входу користувача:', credentials);
   try {
-    const response = await authService.post('/Login', credentials);
+    const response = await authService.post('/Auth/Login', credentials);
     
     console.log('Вхід успішний. Отримано токени:', {
       accessToken: response.data.token,
@@ -141,7 +141,7 @@ export const loginUser = async (credentials) => {
 export const refreshAccessToken = async (tokenData) => {
   console.log('Оновлення токену:', tokenData);
   try {
-    const response = await authService.post('/RefreshToken', tokenData);
+    const response = await authService.post('/Auth/RefreshToken', tokenData);
     return response;
   } catch (error) {
     console.error('Помилка оновлення токену:', error.response?.data || error.message);

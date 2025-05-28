@@ -235,6 +235,7 @@ export default function EditProfile() {
   const { mutate: updateProfileMutation, isLoading: isUpdatingProfile } = useMutation({
     mutationFn: updateProfile,
     onSuccess: () => {
+      console.log('Профіль успішно оновлено');
       queryClient.invalidateQueries(['profile']);
     }
   });
@@ -242,6 +243,7 @@ export default function EditProfile() {
   const { mutate: updateUserMutation, isLoading: isUpdatingUser } = useMutation({
     mutationFn: updateUser,
     onSuccess: () => {
+      console.log('Користувача успішно оновлено');
       queryClient.invalidateQueries(['user']);
     }
   });
@@ -256,6 +258,7 @@ export default function EditProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Початок оновлення профілю');
     
     try {
       // Оновлення профілю
@@ -270,7 +273,7 @@ export default function EditProfile() {
           RatingStatus: profileData.ratingStatus,
           AverageRating: profileData.averageRating
         };
-        
+        console.log('Відправка даних профілю на оновлення');
         updateProfileMutation({
           id: profileData.Id,
           updateDto: profileUpdateDto
@@ -285,7 +288,7 @@ export default function EditProfile() {
           PhoneNumber: userData.phoneNumber,
           PasswordHash: userData.passwordHash // Залишаємо оригінальний хеш
         };
-        
+        console.log('Відправка даних користувача на оновлення');
         updateUserMutation({
           id: userData.id,
           updateDto: userUpdateDto
@@ -294,6 +297,7 @@ export default function EditProfile() {
 
       // Завантаження зображення (якщо воно було вибране)
       if (selectedImage && profileData?.Id) {
+        console.log('Початок завантаження зображення');
         uploadImageMutation({
           image: selectedImage,
           profileId: profileData.Id
