@@ -84,14 +84,14 @@ authService.interceptors.response.use(
         });
         
         console.log('Нові токени отримано:', {
-          accessToken: response.data.token,
+          accessToken: response.data.accessToken,
           refreshToken: response.data.refreshToken
         });
         
-        localStorage.setItem('accessToken', response.data.token);
+        localStorage.setItem('accessToken', response.data.accessToken);
         localStorage.setItem('refreshToken', response.data.refreshToken);
         
-        originalRequest.headers.Authorization = `Bearer ${response.data.token}`;
+        originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
         return authService(originalRequest);
       } catch (refreshError) {
         console.error('Помилка оновлення токену:', refreshError);
@@ -124,11 +124,11 @@ export const loginUser = async (credentials) => {
     const response = await authService.post('/Auth/Login', credentials);
     
     console.log('Вхід успішний. Отримано токени:', {
-      accessToken: response.data.token,
+      accessToken: response.data.accessToken,
       refreshToken: response.data.refreshToken
     });
     
-    localStorage.setItem('accessToken', response.data.token);
+    localStorage.setItem('accessToken', response.data.accessToken);
     localStorage.setItem('refreshToken', response.data.refreshToken);
     
     return response.data;
