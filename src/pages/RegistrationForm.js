@@ -306,7 +306,7 @@ const RegistrationForm = () => {
       email 
     });
 
-    if (!username || !phoneNumber || !sex) {
+    if (!username || !phoneNumber || sex === null || sex === undefined) {
       const errorMsg = "Будь ласка, заповніть усі обов'язкові поля.";
       console.warn(errorMsg);
       setError(errorMsg);
