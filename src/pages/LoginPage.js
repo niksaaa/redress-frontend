@@ -157,7 +157,7 @@ const LoginPage = () => {
     try {
       await login({ email, password });
       console.log('Вхід успішний, перенаправляємо на головну');
-      navigate("/");
+      navigate("/main-page");
     } catch (error) {
       const errorMsg = error.message || "Помилка входу. Спробуйте ще раз.";
       console.error('Помилка входу:', errorMsg);
