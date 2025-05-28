@@ -2,7 +2,7 @@ import axios from 'axios';
 import { demoListings } from '../demoData'; // Імпорт демо-функції
 import { demoListingDetails, demoCategories, demoProfiles, demoUsers } from '../demoData';
 
-const API_BASE_URL = `${process.env.REACT_APP_API_URL}/API`;
+const API_BASE_URL = `${process.env.REACT_APP_API_URL}/api`;
 
 // Отримання оголошень за статтю
 // export const fetchListingsBySex = async (sex, page = 1, pageSize = 12) => {

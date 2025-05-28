@@ -10,7 +10,7 @@ export const fetchProfile = async () => {
   }
 
   // Реальний запит до бекенду
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/API/Profile/GetUserProfile`, {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Profile/GetUserProfile`, {
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`
     }
@@ -35,7 +35,7 @@ export const fetchCurrentUserProfile = async () => {
   }
 
   try {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}/API/Profile/GetUserProfile`);
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/Profile/GetUserProfile`);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при завантаженні профілю');
@@ -44,7 +44,7 @@ export const fetchCurrentUserProfile = async () => {
 
 
 export const updateProfile = async ({ id, updateDto }) => {
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/API/Profile/${id}`, {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Profile?${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export const uploadProfileImage = async ({ image, profileId }) => {
   formData.append('image', image);
   formData.append('profileId', profileId);
 
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/API/Profile/upload`, {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Profile/UploadImage`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`

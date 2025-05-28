@@ -17,14 +17,15 @@ import SellerPage from "./pages/SellerPage";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./context/AuthContext";
 
-const clientId =
-  "587875719115-mgdk3iaeh1t65f9uca8i8vlee2bql5f5.apps.googleusercontent.com";
+const clientId = "587875719115-mgdk3iaeh1t65f9uca8i8vlee2bql5f5.apps.googleusercontent.com";
 
 const App = () => {
   return (
-    <GoogleOAuthProvider clientId={clientId}>
-      <Router>
+    // <GoogleOAuthProvider clientId={clientId}>
+    <Router>
+      <AuthProvider>
         <Routes>
           <Route
             path="/"
@@ -34,6 +35,36 @@ const App = () => {
                 <LoginPage />
                 <FooterDynamic />
               </>
+            }
+          />
+          <Route
+            path="/registration"
+            element={
+              <>
+                <Header />
+                <Registration />
+                <FooterDynamic />
+              </>
+            }
+          />
+          <Route
+            path="/registration-form"
+            element={
+              <>
+                <Header />
+                <RegistrationForm />
+                <FooterDynamic />
+              </>
+            }
+          />
+          <Route
+            path="/main-page"
+            element={
+              <ProtectedRoute>
+                <Header />
+                <MainPage />
+                <FooterDynamic />
+              </ProtectedRoute>
             }
           />
           <Route
@@ -77,36 +108,6 @@ const App = () => {
             }
           />
           <Route
-            path="/registration"
-            element={
-              <>
-                <Header />
-                <Registration />
-                <FooterDynamic />
-              </>
-            }
-          />
-          <Route
-            path="/registration-form"
-            element={
-              <>
-                <Header />
-                <RegistrationForm />
-                <FooterDynamic />
-              </>
-            }
-          />
-          <Route
-            path="/main-page"
-            element={
-              <ProtectedRoute>
-                <Header />
-                <MainPage />
-                <FooterDynamic />
-              </ProtectedRoute>
-            }
-          />
-          <Route
             path="/catalog-page/:sex"
             element={
               <>
@@ -147,8 +148,9 @@ const App = () => {
             }
           />
         </Routes>
-      </Router>
-    </GoogleOAuthProvider>
+      </AuthProvider>
+    </Router>
+    // </GoogleOAuthProvider>
   );
 };
 

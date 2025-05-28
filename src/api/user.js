@@ -8,7 +8,7 @@ export const fetchUserById = async (id) => {
         });
     }
     
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/API/User/GetById?${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/User/GetById?${id}`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
@@ -18,7 +18,7 @@ export const fetchUserById = async (id) => {
   };
   
 export const updateUser = async ({ id, updateDto }) => {
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/API/User/${id}`, {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/User?${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export const fetchUserFavorites = async (profileId, page = 1, pageSize = 5) => {
     });
   }
   
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/API/Favorite/GetUserFavorites?profileId=${profileId}&page=${page}&pageSize=${pageSize}`);
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Favorite/GetUserFavorites?profileId=${profileId}&page=${page}&pageSize=${pageSize}`);
   if (!response.ok) throw new Error('Не вдалося завантажити обрані товари');
   return response.json();
 };
@@ -50,7 +50,7 @@ export const fetchUserProducts = async (profileId, page = 1, pageSize = 5) => {
     });
   }
   
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/API/Listing/GetByProfile?profileId=${profileId}&page=${page}&pageSize=${pageSize}`);
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Listing/GetByProfile?profileId=${profileId}&page=${page}&pageSize=${pageSize}`);
   if (!response.ok) throw new Error('Не вдалося завантажити обрані товари');
   return response.json();
 };

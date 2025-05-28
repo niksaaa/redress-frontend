@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const createDeal = async (dealData) => {
   try {
-    const response = await axios.post(`${process.env.REACT_APP_API_URL}/API/Deal/Create`, dealData);
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/Deal/Create`, dealData);
     return response.data; // Повертає dealId
   } catch (error) {
     console.error('Error creating deal:', error);
@@ -12,7 +12,7 @@ export const createDeal = async (dealData) => {
 
 export const createFeedback = async (feedbackData) => {
   try {
-    const response = await axios.post(`${process.env.REACT_APP_API_URL}/API/Feedback/Create`, feedbackData);
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/Feedback/Create`, feedbackData);
     return response.data; // Повертає feedbackId
   } catch (error) {
     console.error('Error creating feedback:', error);
