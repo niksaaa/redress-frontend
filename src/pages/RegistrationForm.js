@@ -411,9 +411,9 @@ const RegistrationForm = () => {
             <option value="" disabled hidden>
               Оберіть стать
             </option>
-            <option value="0">Чоловік</option>
-            <option value="1">Жінка</option>
-            <option value="2">-</option>
+            <option value={0}>Чоловік</option>
+            <option value={1}>Жінка</option>
+            <option value={2}>-</option>
           </select>
         </div>
 
