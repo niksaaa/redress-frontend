@@ -42,8 +42,8 @@ export default function Profile() {
 
   // Отримуємо дані користувача, коли profileData доступний
   const { data: userData, isLoading: isUserLoading, error: userError } = useQuery({
-    queryKey: ['user', profileData?.UserId],
-    queryFn: () => fetchUserById(profileData?.UserId),
+    queryKey: ['user', profileData?.userId],
+    queryFn: () => fetchUserById(profileData?.userId),
     // enabled: !!profileData && !!profileData.UserId, // Запит виконується тільки коли є UserId
     staleTime: 1000 * 60 * 5,
   });
