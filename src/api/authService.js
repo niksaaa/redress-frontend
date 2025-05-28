@@ -97,7 +97,7 @@ authService.interceptors.response.use(
         console.error('Помилка оновлення токену:', refreshError);
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        window.location.href = '/login';
+        window.location.href = '/';
         return Promise.reject(refreshError);
       }
     }
