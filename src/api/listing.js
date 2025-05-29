@@ -1,28 +1,6 @@
-import axios from 'axios';
+import { authService } from './authService';
 import { demoListings } from '../demoData'; // Імпорт демо-функції
 import { demoListingDetails, demoCategories, demoProfiles, demoUsers } from '../demoData';
-
-const API_BASE_URL = `${process.env.REACT_APP_API_URL}/api`;
-
-// Отримання оголошень за статтю
-// export const fetchListingsBySex = async (sex, page = 1, pageSize = 12) => {
-//   try {
-//     const response = await axios.get(`${API_BASE_URL}/Listing/by-sex`, {
-//       params: {
-//         sex: sex.toUpperCase(),
-//         page,
-//         pageSize
-//       }
-//     });
-//     return {
-//       items: response.data.items,
-//       totalPages: response.data.totalPages,
-//       totalCount: response.data.totalCount
-//     };
-//   } catch (error) {
-//     throw new Error(error.response?.data?.message || 'Помилка при завантаженні оголошень');
-//   }
-// };
 
 
 // Демо-функція для імітації API
@@ -78,65 +56,14 @@ export const fetchListingsBySex = async (sex, page = 1, pageSize = 12) => {
 
   // Інакше — реальний запит до API
   try {
-    const response = await axios.get(`${API_BASE_URL}/Listing/GetBySex`, {
-      params: {
-        sex: sex,
-        page,
-        pageSize
-      }
+    const response = await authService.get('/Listing/GetBySex', {
+      params: { sex, page, pageSize }
     });
-
-    return {
-      items: response.data.items,
-      totalPages: response.data.totalPages,
-      totalCount: response.data.totalCount,
-      hasPreviousPage: response.data.hasPreviousPage,
-      hasNextPage:response.data.hasNextPage
-    };
+    return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при завантаженні оголошень');
   }
 };
-
-
-// Демо-функція для зображень
-// const demoFetchListingImages = async (listingId) => {
-//     await new Promise(resolve => setTimeout(resolve, 300));
-//     const demoImages = {
-//       '1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d': [
-//         { id: 'img1', url: '../images/main-page/v30_108.png' }
-//       ],
-//       '2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e': [
-//         { id: 'img2', url: '../images/main-page/v30_108.png' }
-//       ]
-//     };
-//     return demoImages[listingId] || [];
-//   };
-  
-//   export const fetchListingImages = async (listingId) => {
-//     if (process.env.REACT_APP_DEMO_MODE === 'true') {
-//       return demoFetchListingImages(listingId);
-//     }
-  
-//     try {
-//       const response = await axios.get(`${API_BASE_URL}/ListingImage/${listingId}`);
-//       return response.data.items || [];
-//     } catch (error) {
-//       throw new Error('Помилка при завантаженні зображень');
-//     }
-//   };
-
-// Отримання деталей оголошення (дата створення)
-// export const fetchListingDetails = async (listingId) => {
-//   try {
-//     const response = await axios.get(`${API_BASE_URL}/Listing/${listingId}`);
-//     return response.data;
-//   } catch (error) {
-//     throw new Error('Помилка при завантаженні деталей оголошення');
-//   }
-// };
-
-// src/api/listing.js
 
 
 export const fetchListingDetails = async (id) => {
@@ -170,11 +97,12 @@ export const fetchListingDetails = async (id) => {
   }
 
   // Реальний запит до API
-  const response = await fetch(`${API_BASE_URL}/Listing/GetById/${id}`);
-  if (!response.ok) {
+  try {
+    const response = await authService.get(`/Listing/GetById/${id}`);
+    return response.data;
+  } catch (error) {
     throw new Error('Failed to fetch listing details');
   }
-  return response.json();
 };
 
 
@@ -196,7 +124,7 @@ export const fetchListingCategories = async (listingId) => {
   }
 
   try {
-    const response = await axios.get(`${API_BASE_URL}/Category/GetByListingId/by-listing/${listingId}`);
+    const response = await authService.get(`/Category/GetByListingId/by-listing/${listingId}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при завантаженні категорій');
@@ -221,7 +149,7 @@ export const fetchProfileDetails = async (profileId) => {
   }
 
   try {
-    const response = await axios.get(`${API_BASE_URL}/Profile/GetById/${profileId}`);
+    const response = await authService.get(`/Profile/GetById/${profileId}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при завантаженні профілю');
@@ -243,7 +171,7 @@ export const fetchUserDetails = async (userId) => {
   }
 
   try {
-    const response = await axios.get(`${API_BASE_URL}/User/GetById/${userId}`);
+    const response = await authService.get(`/User/GetById/${userId}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при завантаженні користувача');

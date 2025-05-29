@@ -1,47 +1,6 @@
-// import {
-//     parentCategories,
-//     demoCategoriesFemale,
-//     demoCategoriesMale,
-//     demoCategoriesKids
-//   } from '../demoData';
-  
-//   export const fetchParentCategories = async () => {
-//     if (process.env.REACT_APP_DEMO_MODE === 'true') {
-//       return new Promise(resolve => resolve(parentCategories));
-//     }
-//     // Реальний запит для батьківських категорій
-//   };
-  
-//   export const fetchSubcategoriesBySex = async (sex) => {
-//     if (process.env.REACT_APP_DEMO_MODE === 'true') {
-//       return new Promise(resolve => {
-//         setTimeout(() => {
-//           switch (sex) {
-//             case 'female': resolve(demoCategoriesFemale);
-//             case 'male': resolve(demoCategoriesMale);
-//             case 'kids': resolve(demoCategoriesKids);
-//             default: resolve([]);
-//           }
-//         }, 300);
-//       });
-//     }
-    
-//     const response = await fetch(`${process.env.REACT_APP_API_URL}/API/Category/GetBySex/${sex}`);
-//     if (!response.ok) throw new Error('Не вдалося отримати категорії');
-//     return response.json();
-//   };
-
 import { demoParentCategories, demoSubcategories, generatedCategories } from '../demoData';
-import axios from 'axios';
+import { authService } from './authService';
 
-export const fetchParentCategories = async () => {
-  if (process.env.REACT_APP_DEMO_MODE === 'true') {
-    return new Promise(resolve => resolve(demoParentCategories));
-  }
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Category/parent-categories`);
-  if (!response.ok) throw new Error('Не вдалося отримати батьківські категорії');
-  return response.json();
-};
 
 export const fetchSubcategoriesBySex = async (sex) => {
   if (process.env.REACT_APP_DEMO_MODE === 'true') {
@@ -49,9 +8,12 @@ export const fetchSubcategoriesBySex = async (sex) => {
       setTimeout(() => resolve(demoSubcategories[sex] || []), 300);
     });
   }
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Category/GetBySex/by-sex/${sex}`);
-  if (!response.ok) throw new Error('Не вдалося отримати підкатегорії');
-  return response.json();
+  try {
+    const response = await authService.get(`/Category/GetBySex/by-sex/${sex}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Не вдалося отримати підкатегорії');
+  }
 };
 
 
@@ -65,7 +27,7 @@ export const fetchCategoryTree = async () => {
   }
 
   try {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/Category/GetTree/tree`);
+    const response = await authService.get('/Category/GetTree/tree');
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при завантаженні категорій');

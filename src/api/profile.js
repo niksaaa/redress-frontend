@@ -1,57 +1,3 @@
-// import { demoProfileData } from '../demoData';
-// import axios from 'axios';
-
-// export const fetchProfile = async () => {
-//   // Для демо-режиму - повертаємо фейкові дані
-//   if (process.env.REACT_APP_DEMO_MODE === 'true') {
-//     return new Promise(resolve => {
-//       setTimeout(() => resolve(demoProfileData), 500); // Імітуємо затримку мережі
-//     });
-//   }
-
-//   // Реальний запит до бекенду
-//   const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Profile/GetUserProfile`, {
-//     headers: {
-//       'Authorization': `Bearer ${localStorage.getItem('token')}`
-//     }
-//   });
-//   if (!response.ok) throw new Error('Не вдалося отримати дані профілю');
-//   return response.json();
-// };
-
-
-
-// export const updateProfile = async ({ id, updateDto }) => {
-//   const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Profile?${id}`, {
-//     method: 'PUT',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${localStorage.getItem('token')}`
-//     },
-//     body: JSON.stringify(updateDto)
-//   });
-//   if (!response.ok) throw new Error('Не вдалося оновити профіль');
-//   return response.json();
-// };
-
-// export const uploadProfileImage = async ({ image, profileId }) => {
-//   const formData = new FormData();
-//   formData.append('image', image);
-//   formData.append('profileId', profileId);
-
-//   const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Profile/UploadImage`, {
-//     method: 'POST',
-//     headers: {
-//       'Authorization': `Bearer ${localStorage.getItem('token')}`
-//     },
-//     body: formData
-//   });
-//   if (!response.ok) throw new Error('Не вдалося завантажити зображення');
-//   return response.json();
-// };
-
-
-
 import axios from 'axios';
 import { authService } from './authService'; // Використовуємо налаштований axios з authService
 
@@ -79,6 +25,18 @@ export const updateProfile = async ({ id, updateDto }) => {
   }
 };
 
+export const deleteProfileImage = async (profileId) => {
+  try {
+    console.log('Видалення зображення профілю для profileId:', profileId);
+    const response = await authService.delete(`/Profile/DeleteImage/${profileId}`);
+    console.log('Зображення успішно видалено:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Помилка при видаленні зображення:', error);
+    throw new Error(error.response?.data?.message || 'Не вдалося видалити зображення');
+  }
+};
+
 export const uploadProfileImage = async ({ image, profileId }) => {
   try {
     console.log('Завантаження зображення профілю');
@@ -100,6 +58,15 @@ export const uploadProfileImage = async ({ image, profileId }) => {
   }
 };
 
+export const deleteProduct = async (id) => {
+  try {
+    const response = await authService.delete(`/Listing/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Помилка видалення товару:', error.response?.data || error.message);
+    throw error.response?.data || error.message;
+  }
+};
 
 // Додаємо функції для отримання даних користувача
 export const fetchCurrentUserProfile = async () => {
@@ -116,7 +83,7 @@ export const fetchCurrentUserProfile = async () => {
   }
 
   try {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/Profile/GetUserProfile`);
+    const response = await authService.get('/Profile/GetUserProfile');
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при завантаженні профілю');

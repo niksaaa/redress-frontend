@@ -11,12 +11,16 @@ import BiddingInfo from "../components/BiddingInfo";
 import { fetchListingDetails } from "../api/listing";
 import { format } from 'date-fns';
 import { uk } from 'date-fns/locale';
+import { useFavorites } from "../context/FavoritesContext";
+import { useAuth } from "../context/AuthContext";
 
 export default function ProductPage() {
   const { id } = useParams();
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { toggleFavorite, isFavorite } = useFavorites();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     const loadListing = async () => {
@@ -32,6 +36,15 @@ export default function ProductPage() {
 
     loadListing();
   }, [id]);
+
+  const handleFavoriteClick = () => {
+    if (!isAuthenticated()) {
+      // Можна додати перенаправлення на сторінку входу або сповіщення
+      alert('Будь ласка, увійдіть, щоб додавати товари до обраного');
+      return;
+    }
+    toggleFavorite(id);
+  };
 
   if (loading) return <div className="loading">Завантаження даних товару...</div>;
   if (error) return <div className="error">Помилка: {error}</div>;
@@ -50,7 +63,17 @@ export default function ProductPage() {
         longitude={listing.longitude} 
       />
       <div className="action-buttons">
-        <div className="like-btn"></div>
+      <div 
+          className="like-btn"
+          onClick={handleFavoriteClick}
+          aria-label={isFavorite(id) ? "Видалити з обраного" : "Додати до обраного"}
+          style={{ 
+            backgroundImage: isFavorite(id) 
+              ? 'url("../images/liked.png")' 
+              : 'url("../images/like.png")'
+          }}
+        >
+        </div>
       </div>
       {/* <BiddingInfo isAuction={listing.isAuction} /> */}
       <PriceSection price={listing.price} listing={listing} />

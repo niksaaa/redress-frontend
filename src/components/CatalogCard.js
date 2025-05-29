@@ -1,15 +1,29 @@
 import React from "react";
 import "../styles/сatalog-card.css";
 import { useState } from 'react';
+import { useFavorites } from '../context/FavoritesContext';
 import { Link } from "react-router-dom";
 import fallbackImage from '../images/main-page/v31_67.png';
 
-const CatalogCard = ({ id, price, title, imageUrl, isAuction }) => {
+const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete }) => {
   const [currentImage, setCurrentImage] = useState(imageUrl);
   const [imgError, setImgError] = useState(false);
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   const handleImageError = () => {
     setCurrentImage('../images/main-page/v30_108.png');
+  };
+
+  const handleFavoriteClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFavorite(id);
+  };
+
+  const handleDeleteClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onDelete(id);
   };
 
   return (
@@ -50,9 +64,23 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction }) => {
           {isAuction && <span className="auction-label">Аукціон</span>}
         </div>
         <span className="catalog-title">{title}</span>
-        <div className="like-button">
-          <div className="like-icon2"></div>
-        </div>
+        <div className="like-button" onClick={handleFavoriteClick}>
+            <div 
+              className="like-icon2" 
+              style={{ 
+                backgroundImage: isFavorite(id) 
+                  ? 'url("../images/liked.png")' 
+                  : 'url("../images/like.png")'
+              }}
+            ></div>
+          </div>
+          {isOwner && (
+            <div className="delete-button" onClick={handleDeleteClick}>
+              <div 
+                className="delete-icon"
+              ></div>
+            </div>
+          )}
       </div>
       </div>
       </Link>

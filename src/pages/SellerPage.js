@@ -222,9 +222,6 @@ export default function SellerPage() {
           <div className="content-section">
             <FeedbackList profileId={profile.Id} />
           </div>
-        //   <div className="content-section">
-        //     <div className="text-wrapper"><p className="text">Тут поки пусто</p></div>
-        //   </div>
         )}
       </div>
   );

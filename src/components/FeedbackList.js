@@ -3,22 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchProfileFeedbacks } from '../api/feedback';
 import { useState } from 'react';
 import Pagination from './Pagination';
-
-const FeedbackItem = ({ feedback }) => {
-    return (
-        <div className="feedback-item">
-            <div className="feedback-header">
-                <span className="feedback-rating">Рейтинг: {feedback.rating}/5</span>
-                <span className="feedback-date">{new Date(feedback.createdAt).toLocaleDateString('uk-UA')}</span>
-            </div>
-            {feedback.comment && (
-                <div className="feedback-comment">
-                    <p>{feedback.comment}</p>
-                </div>
-            )}
-        </div>
-    );
-};
+import FeedbackItem from './FeedbackItem';
+import '../styles/feedback.css';
 
 export const FeedbackList = ({ profileId }) => {
     const [page, setPage] = useState(1);
@@ -56,21 +42,6 @@ export const FeedbackList = ({ profileId }) => {
                     <FeedbackItem key={feedback.id} feedback={feedback} />
                 ))}
             </div>
-            {/* <div className="pagination">
-                <button 
-                    onClick={() => setPage(p => Math.max(1, p - 1))} 
-                    disabled={page === 1}
-                >
-                    Попередня
-                </button>
-                <span>Сторінка {page}</span>
-                <button 
-                    onClick={() => setPage(p => p + 1)} 
-                    disabled={!feedbacksData?.hasNextPage}
-                >
-                    Наступна
-                </button>
-            </div> */}
             {feedbacksData.totalPages > 1 && (
         <Pagination
           currentPage={page}

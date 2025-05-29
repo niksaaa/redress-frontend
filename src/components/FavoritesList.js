@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchUserFavorites } from '../api/user';
+import { fetchUserFavorites } from '../api/favorite';
 import CatalogCard from './CatalogCard';
 import Pagination from './Pagination';
 

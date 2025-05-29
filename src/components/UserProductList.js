@@ -1,19 +1,38 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchUserProducts } from '../api/user';
+import { deleteProduct } from '../api/profile';
 import CatalogCard from './CatalogCard';
 import Pagination from './Pagination';
 
 export const UserProductList = ({ profileId }) => {
   const [page, setPage] = useState(1);
   const pageSize = 5;
+  const queryClient = useQueryClient();
 
-  const { data: favoritesData, isLoading, error } = useQuery({
-    queryKey: ['favorites', profileId, page],
+  const { data: userProductsData, isLoading, error } = useQuery({
+    queryKey: ['userProducts', profileId, page],
     queryFn: () => fetchUserProducts(profileId, page, pageSize),
     enabled: !!profileId || process.env.REACT_APP_DEMO_MODE === 'true',
     keepPreviousData: true
   });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['userProducts', profileId]);
+    }
+  });
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Ви впевнені, що хочете видалити цей товар?')) {
+      try {
+        await deleteMutation.mutateAsync(id);
+      } catch (error) {
+        console.error('Помилка при видаленні товару:', error);
+      }
+    }
+  };
     
     // Функція для зміни сторінки з прокруткою
   const handlePageChange = (newPage) => {
@@ -24,7 +43,7 @@ export const UserProductList = ({ profileId }) => {
   if (isLoading) return <div className="loading">Завантаження товарів...</div>;
   if (error) return <div className="error">Помилка: {error.message}</div>;
   
-  if (!favoritesData?.items || favoritesData.items.length === 0) {
+  if (!userProductsData?.items || userProductsData.items.length === 0) {
     return (
       <div className="content-section">
         <div className="text-wrapper"><p className="text">Тут поки пусто</p></div>
@@ -35,7 +54,7 @@ export const UserProductList = ({ profileId }) => {
   return (
     <div className="content-section-3">
       <div className="favorites-grid">
-        {favoritesData.items.map(item => (
+        {userProductsData.items.map(item => (
           <CatalogCard
             key={item.id}
             id={item.id}
@@ -43,28 +62,15 @@ export const UserProductList = ({ profileId }) => {
             title={item.title}
             imageUrl={item.url}
             isAuction={item.isAuction}
+            isOwner={true} // Додаємо пропс, що показує, що це товар власника
+            onDelete={handleDelete} // Передаємо функцію видалення
           />
         ))}
       </div>
-      {/* <div className="pagination">
-        <button 
-          onClick={() => setPage(p => Math.max(1, p - 1))} 
-          disabled={page === 1}
-        >
-          Попередня
-        </button>
-        <span>Сторінка {page}</span>
-        <button 
-          onClick={() => setPage(p => p + 1)} 
-          disabled={!favoritesData?.hasNextPage}
-        >
-          Наступна
-        </button>
-      </div> */}
-          {favoritesData.totalPages > 1 && (
+          {userProductsData.totalPages > 1 && (
         <Pagination
           currentPage={page}
-          totalPages={favoritesData.totalPages}
+          totalPages={userProductsData.totalPages}
           onPageChange={handlePageChange}
         />
       )}

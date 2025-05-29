@@ -127,4 +127,13 @@
 .back-link {
     text-decoration: underline;
     cursor: pointer;
-    color: #000; }
+    color: #000; 
+}
+
+.image-change-notice {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    font-style: italic; 
+}

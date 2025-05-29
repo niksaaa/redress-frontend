@@ -1,10 +1,8 @@
-import axios from 'axios';
-
-const API_BASE_URL = `${process.env.REACT_APP_API_URL}/api`;
+import { authService } from './authService';
 
 export const createListing = async (listingData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/Listing/Create`, listingData);
+    const response = await authService.post('/Listing/Create', listingData);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при створенні оголошення');
@@ -13,7 +11,7 @@ export const createListing = async (listingData) => {
 
 export const startAuction = async (listingId, auctionData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/Auction/StartAuction/${listingId}`, auctionData);
+    const response = await authService.post(`/Auction/StartAuction/${listingId}`, auctionData);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Помилка при створенні аукціону');
@@ -26,7 +24,7 @@ export const uploadListingImage = async (image, listingId) => {
   formData.append('listingId', listingId);
 
   try {
-    const response = await axios.post(`${API_BASE_URL}/ListingImage/UploadImage`, formData, {
+    const response = await authService.post('/ListingImage/UploadImage', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }

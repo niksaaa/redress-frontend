@@ -1,0 +1,52 @@
+.content-section-4 {
+    margin-right: 188px;
+}
+
+.feedback-item {
+    padding: 16px;
+    margin-bottom: 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.feedback-user-info {
+    flex: 1;
+}
+
+.feedback-username {
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+}
+
+.feedback-rating-date {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.feedback-rating {
+    font-size: 16px;
+    color: #ffc107;
+    font-weight: 500;
+}
+
+.feedback-date {
+    font-size: 14px;
+    color: #666;
+}
+
+.feedback-comment {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #333;
+    padding-top: 8px;
+    border-top: 1px solid #eee; }
