@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/product-page.css";
-import ProductGallery from "../components/ProductGallery"; // Import the new component
+import ProductGallery from "../components/ProductGallery";
 import PriceSection from "../components/PriceSection";
 import TagsContainer from "../components/TagsContainer";
 import LocationSection from "../components/LocationSection";
@@ -13,6 +13,8 @@ import { format } from 'date-fns';
 import { uk } from 'date-fns/locale';
 import { useFavorites } from "../context/FavoritesContext";
 import { useAuth } from "../context/AuthContext";
+import likedIcon from '../images/liked.png';
+import likeIcon from '../images/like.png';
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -39,7 +41,6 @@ export default function ProductPage() {
 
   const handleFavoriteClick = () => {
     if (!isAuthenticated()) {
-      // Можна додати перенаправлення на сторінку входу або сповіщення
       alert('Будь ласка, увійдіть, щоб додавати товари до обраного');
       return;
     }
@@ -51,6 +52,7 @@ export default function ProductPage() {
   if (!listing) return <div className="no-data">Товар не знайдено</div>;
 
   const formattedDate = format(new Date(listing.createdAt), 'dd.MM.yyyy, HH:mm:ss', { locale: uk });
+  const isItemFavorite = isFavorite(id);
 
   return (
     <div className="container-2">
@@ -63,16 +65,16 @@ export default function ProductPage() {
         longitude={listing.longitude} 
       />
       <div className="action-buttons">
-      <div 
+        <div 
           className="like-btn"
           onClick={handleFavoriteClick}
-          aria-label={isFavorite(id) ? "Видалити з обраного" : "Додати до обраного"}
-          style={{ 
-            backgroundImage: isFavorite(id) 
-              ? 'url("../images/liked.png")' 
-              : 'url("../images/like.png")'
-          }}
+          aria-label={isItemFavorite ? "Видалити з обраного" : "Додати до обраного"}
         >
+          <img 
+            src={isItemFavorite ? likedIcon : likeIcon} 
+            alt={isItemFavorite ? "В обраному" : "Додати до обраного"}
+            className="like-icon"
+          />
         </div>
       </div>
       {/* <BiddingInfo isAuction={listing.isAuction} /> */}
