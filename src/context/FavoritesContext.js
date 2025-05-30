@@ -171,11 +171,12 @@ export const FavoritesProvider = ({ children }) => {
   const loadFavorites = async (id) => {
     try {
       console.log('Loading favorites for profile:', id);
-      const data = await fetchUserFavorites(id);
-      console.log('Favorites loaded:', data);
-      setFavorites(data);
+      const { data } = await fetchUserFavorites(id);
+      const favoritesArray = Array.isArray(data?.items) ? data.items : [];
+    setFavorites(favoritesArray);
     } catch (error) {
       console.error('Error loading favorites:', error);
+      setFavorites([]);
     }
   };
 
@@ -210,7 +211,14 @@ export const FavoritesProvider = ({ children }) => {
   const value = {
     favorites,
     toggleFavorite,
-    isFavorite: (itemId) => favorites.some(fav => fav.id === itemId)
+    isFavorite: (itemId) => {
+      // Додаємо додаткову перевірку для безпеки
+      if (!Array.isArray(favorites)) {
+        console.warn('Favorites is not an array!', favorites);
+        return false;
+      }
+      return favorites.some(fav => fav.id === itemId);
+    }
   };
 
   return (
