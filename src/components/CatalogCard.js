@@ -101,25 +101,129 @@
 // export default CatalogCard;
 
 
+// import React from "react";
+// import "../styles/сatalog-card.css";
+// import { useFavorites } from '../context/FavoritesContext';
+// import { Link } from "react-router-dom";
+// import fallbackImage from '../images/defaultProductImage.png';
+// import likedIcon from '../images/liked.png';
+// import likeIcon from '../images/like.png';
+
+// const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete, forceFavorite }) => {
+//   const { isFavorite, toggleFavorite } = useFavorites();
+//   const isItemFavorite = isFavorite(id);
+
+//   // Для сторінки обраного - завжди показуємо як обране
+//   const showAsFavorite = forceFavorite || isFavorite(id);
+
+//   const handleFavoriteClick = (e) => {
+//     e.preventDefault();
+//     e.stopPropagation();
+//     toggleFavorite(id);
+//   };
+
+//   const handleDeleteClick = (e) => {
+//     e.preventDefault();
+//     e.stopPropagation();
+//     if (onDelete) {
+//       onDelete(id);
+//     }
+//   };
+
+//   return (
+//     <Link to={`/product/${id}`} className="catalog-card-link">
+//       <div className="catalog-card">
+//         <div className="card-container">
+//           <div className="card-background"></div>
+//           <div
+//             className="catalog-image"
+//             style={{
+//               backgroundImage: `url(${imageUrl || fallbackImage})`,
+//               backgroundSize: 'cover',
+//               backgroundPosition: 'center'
+//             }}
+//           ></div>
+//           <div className="price-row">
+//             <span className="catalog-price">{price} грн</span>
+//             {isAuction && <span className="auction-label">Аукціон</span>}
+//           </div>
+//           <span className="catalog-title">{title}</span>
+//           <div className="like-button" onClick={handleFavoriteClick}>
+//                    <img
+//               src={showAsFavorite ? likedIcon : likeIcon}
+//                alt={showAsFavorite ? "В обраному" : "Додати до обраного"}
+//               className="like-icon2"
+//              />
+//           </div>
+//           {isOwner && (
+//             <div className="delete-button" onClick={handleDeleteClick}>
+//               <div className="delete-icon"></div>
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     </Link>
+//   );
+// };
+
+// export default CatalogCard;
+
+
 import React from "react";
 import "../styles/сatalog-card.css";
-import { useFavorites } from '../context/FavoritesContext';
 import { Link } from "react-router-dom";
-import fallbackImage from '../images/defaultProductImage.png';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addToFavorites, removeFromFavorites } from '../api/favorite';
+import fallbackImage from '../images/main-page/v31_67.png';
 import likedIcon from '../images/liked.png';
 import likeIcon from '../images/like.png';
 
-const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete, forceFavorite }) => {
-  const { isFavorite, toggleFavorite } = useFavorites();
-  const isItemFavorite = isFavorite(id);
+const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete }) => {
+  const queryClient = useQueryClient();
+  const profileId = localStorage.getItem('profileId');
 
-  // Для сторінки обраного - завжди показуємо як обране
-  const showAsFavorite = forceFavorite || isFavorite(id);
+  // Функция для проверки, находится ли товар в избранном
+  const isFavorite = () => {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    return favorites.includes(id);
+  };
+
+  // Мутация для добавления в избранное
+  const addToFavoritesMutation = useMutation({
+    mutationFn: () => addToFavorites({ profileId, listingId: id }),
+    onSuccess: () => {
+      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      favorites.push(id);
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      queryClient.invalidateQueries(['favorites']);
+    }
+  });
+
+  // Мутация для удаления из избранного
+  const removeFromFavoritesMutation = useMutation({
+    mutationFn: () => removeFromFavorites(profileId, id),
+    onSuccess: () => {
+      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      const updatedFavorites = favorites.filter(favId => favId !== id);
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      queryClient.invalidateQueries(['favorites']);
+    }
+  });
 
   const handleFavoriteClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    toggleFavorite(id);
+    
+    if (!profileId) {
+      alert('Будь ласка, увійдіть, щоб додавати товари до обраного');
+      return;
+    }
+
+    if (isFavorite()) {
+      removeFromFavoritesMutation.mutate();
+    } else {
+      addToFavoritesMutation.mutate();
+    }
   };
 
   const handleDeleteClick = (e) => {
@@ -149,11 +253,11 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete,
           </div>
           <span className="catalog-title">{title}</span>
           <div className="like-button" onClick={handleFavoriteClick}>
-                   <img
-              src={showAsFavorite ? likedIcon : likeIcon}
-               alt={showAsFavorite ? "В обраному" : "Додати до обраного"}
+            <img 
+              src={isFavorite() ? likedIcon : likeIcon} 
+              alt={isFavorite() ? "В обраному" : "Додати до обраного"}
               className="like-icon2"
-             />
+            />
           </div>
           {isOwner && (
             <div className="delete-button" onClick={handleDeleteClick}>

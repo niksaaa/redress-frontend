@@ -8,15 +8,13 @@ import { useFavorites } from '../context/FavoritesContext';
 export const FavoritesList = ({ profileId }) => {
   const [page, setPage] = useState(1);
   const pageSize = 5;
-  const { favorites } = useFavorites();
-  console.log('FavoritesList - поточні обрані:', favorites);
 
-  // const { data: favoritesData, isLoading, error } = useQuery({
-  //   queryKey: ['favorites', profileId, page],
-  //   queryFn: () => fetchUserFavorites(profileId, page, pageSize),
-  //   enabled: !!profileId || process.env.REACT_APP_DEMO_MODE === 'true',
-  //   keepPreviousData: true
-  // });
+  const { data: favoritesData, isLoading, error } = useQuery({
+    queryKey: ['favorites', profileId, page],
+    queryFn: () => fetchUserFavorites(profileId, page, pageSize),
+    enabled: !!profileId || process.env.REACT_APP_DEMO_MODE === 'true',
+    keepPreviousData: true
+  });
     
     // Функція для зміни сторінки з прокруткою
   const handlePageChange = (newPage) => {
@@ -24,10 +22,10 @@ export const FavoritesList = ({ profileId }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // if (isLoading) return <div className="loading">Завантаження товарів...</div>;
-  // if (error) return <div className="error">Помилка: {error.message}</div>;
+  if (isLoading) return <div className="loading">Завантаження товарів...</div>;
+  if (error) return <div className="error">Помилка: {error.message}</div>;
   
-  if (!favorites?.items || favorites.items.length === 0) {
+  if (!favoritesData?.items || favoritesData.items.length === 0) {
     return (
       <div className="content-section">
         <div className="text-wrapper"><p className="text">Тут поки пусто</p></div>
@@ -38,7 +36,7 @@ export const FavoritesList = ({ profileId }) => {
   return (
     <div className="content-section-3">
       <div className="favorites-grid">
-        {favorites.items.map(item => (
+        {favoritesData.items.map(item => (
           <CatalogCard
             key={item.id}
             id={item.id}
@@ -50,10 +48,10 @@ export const FavoritesList = ({ profileId }) => {
           />
         ))}
       </div>
-          {favorites.totalPages > 1 && (
+          {favoritesData.totalPages > 1 && (
         <Pagination
           currentPage={page}
-          totalPages={favorites.totalPages}
+          totalPages={favoritesData.totalPages}
           onPageChange={handlePageChange}
         />
       )}
