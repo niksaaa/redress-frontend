@@ -47,6 +47,7 @@ export default function ProductPage() {
     toggleFavorite(id);
   };
 
+
   if (loading) return <div className="loading">Завантаження даних товару...</div>;
   if (error) return <div className="error">Помилка: {error}</div>;
   if (!listing) return <div className="no-data">Товар не знайдено</div>;
@@ -62,19 +63,12 @@ export default function ProductPage() {
         <span className="post-date">{formattedDate}</span>
           <div className="title-and-favorite">
             <span className="product-title">{listing.title}</span>
-            <div className="action-buttons">
-            {isOwner && (
-            <div className="delete-btn" onClick={handleDeleteClick}>
-              <div className="delete-icon2"></div>
-            </div>
-          )}
             <div className="like-btn" onClick={handleFavoriteClick}>
             <img 
               src={isItemFavorite ? likedIcon : likeIcon} 
               alt={isItemFavorite ? "В обраному" : "Додати до обраного"}
               className="like-icon3"
             />
-          </div>
       </div>
           </div>
           </div>
