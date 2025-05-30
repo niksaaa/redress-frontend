@@ -24,10 +24,10 @@ export const FavoritesList = ({ profileId }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (isLoading) return <div className="loading">Завантаження товарів...</div>;
-  if (error) return <div className="error">Помилка: {error.message}</div>;
+  // if (isLoading) return <div className="loading">Завантаження товарів...</div>;
+  // if (error) return <div className="error">Помилка: {error.message}</div>;
   
-  if (!favoritesData?.items || favoritesData.items.length === 0) {
+  if (!favorites?.items || favorites.items.length === 0) {
     return (
       <div className="content-section">
         <div className="text-wrapper"><p className="text">Тут поки пусто</p></div>
@@ -38,7 +38,7 @@ export const FavoritesList = ({ profileId }) => {
   return (
     <div className="content-section-3">
       <div className="favorites-grid">
-        {favoritesData.items.map(item => (
+        {favorites.items.map(item => (
           <CatalogCard
             key={item.id}
             id={item.id}
@@ -50,10 +50,10 @@ export const FavoritesList = ({ profileId }) => {
           />
         ))}
       </div>
-          {favoritesData.totalPages > 1 && (
+          {favorites.totalPages > 1 && (
         <Pagination
           currentPage={page}
-          totalPages={favoritesData.totalPages}
+          totalPages={favorites.totalPages}
           onPageChange={handlePageChange}
         />
       )}
