@@ -13,15 +13,12 @@ const PriceSection = ({ price, listing }) => {
 
   return (
     <div className="price-section">
-      <div className="price-bg"></div>
       <div className="price-content">
         <span className="price-label">Ціна</span>
         <span className="price-value">{price} грн</span>
       </div>
       <div className="buy-btn" onClick={handleBuyClick}>
-        <div className="btn-bg">
-          <span className="btn-text">Купити</span>
-        </div>
+        <span className="btn-text">Купити</span>
       </div>
     </div>
   );

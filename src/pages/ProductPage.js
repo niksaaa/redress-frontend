@@ -55,32 +55,39 @@ export default function ProductPage() {
   const isItemFavorite = isFavorite(id);
 
   return (
-    <div className="container-2">
-      <ProductGallery images={listing.images} />
-      <span className="product-title">{listing.title}</span>
+    <div className="product-page-container">
+      <div className="product-top-row">
+        <ProductGallery images={listing.images} />
+        <div className="product-info-section">
+        <span className="post-date">{formattedDate}</span>
+          <div className="title-and-favorite">
+            <span className="product-title">{listing.title}</span>
+            <div className="action-buttons">
+            {isOwner && (
+            <div className="delete-btn" onClick={handleDeleteClick}>
+              <div className="delete-icon2"></div>
+            </div>
+          )}
+            <div className="like-btn" onClick={handleFavoriteClick}>
+            <img 
+              src={isItemFavorite ? likedIcon : likeIcon} 
+              alt={isItemFavorite ? "В обраному" : "Додати до обраного"}
+              className="like-icon3"
+            />
+          </div>
+      </div>
+          </div>
+          </div>
+      </div>
       <TagsContainer listingId={listing.id}/>
       <DescriptionSection description={listing.description} />
       <LocationSection 
         latitude={listing.latitude} 
         longitude={listing.longitude} 
       />
-      <div className="action-buttons">
-        <div 
-          className="like-btn"
-          onClick={handleFavoriteClick}
-          aria-label={isItemFavorite ? "Видалити з обраного" : "Додати до обраного"}
-        >
-          <img 
-            src={isItemFavorite ? likedIcon : likeIcon} 
-            alt={isItemFavorite ? "В обраному" : "Додати до обраного"}
-            className="like-icon"
-          />
-        </div>
-      </div>
       {/* <BiddingInfo isAuction={listing.isAuction} /> */}
       <PriceSection price={listing.price} listing={listing} />
       <SellerSection profileId={listing.profileId} />
-      <span className="post-date">{formattedDate}</span> 
     </div>
   );
 }

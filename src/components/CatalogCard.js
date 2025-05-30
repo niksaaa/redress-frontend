@@ -105,7 +105,7 @@ import React from "react";
 import "../styles/сatalog-card.css";
 import { useFavorites } from '../context/FavoritesContext';
 import { Link } from "react-router-dom";
-import fallbackImage from '../images/main-page/v31_67.png';
+import fallbackImage from '../images/defaultProductImage.png';
 import likedIcon from '../images/liked.png';
 import likeIcon from '../images/like.png';
 

@@ -33,43 +33,42 @@ const BiddingInfo = () => {
   };
 
   return (
-    <div className="bidding-info-container">
-      <div className="v549_740">
-        <span className="v549_741">Дата закінчення</span>
-        <span className="v549_742">До закінчення</span>
-        <span className="v549_743">Початкова ціна</span>
-        <span className="v549_744">{startingPrice} грн</span>
-        <span className="v549_745">Зробити ставку</span>
-        <span className="v549_746">Мінімальна ставка від продавця</span>
-        <span className="v549_747">25.03.2025, 21:01:00</span>
-        <span className="v549_748">7 днів, 11:22:00</span>
-        <div className="v549_749">
-          <div className="v549_750"></div>
-          <span className="v549_751">{minBidIncrement} грн</span>
+    <div className="bidding-info">
+      <div className="info-row">
+        <span className="info-label">Дата закінчення</span>
+        <span className="info-value">12</span>
+      </div>
+      
+      <div className="info-row">
+        <span className="info-label">Початкова ціна</span>
+        <span className="info-value">{startingPrice} грн</span>
+      </div>
+      
+      <div className="bid-controls">
+        <div className="bid-action">
+          <span className="bid-label">Зробити ставку</span>
+          <div className="bid-input-group">
+            <button className="bid-btn minus" onClick={decrementBid}>-</button>
+            <input 
+              type="text" 
+              className="bid-input" 
+              value={currentBid} 
+              onChange={handleBidChange} 
+            />
+            <button className="bid-btn plus" onClick={incrementBid}>+</button>
+          </div>
         </div>
-
-        <div className="bid-controls">
-          <button className="bid-button minus" onClick={decrementBid}>
-            -
-          </button>
-          <input
-            type="text"
-            className="bid-input"
-            value={currentBid}
-            onChange={handleBidChange}
-          />
-          <button className="bid-button plus" onClick={incrementBid}>
-            +
-          </button>
-        </div>
-
-        <div className="v549_760" onClick={handleMakeBid}>
-          <div className="v549_761"></div>
-          <span className="v549_762">Зробити ставку</span>
+        
+        <div className="min-bid">
+          <span className="bid-label">Мінімальна ставка</span>
+          <span className="bid-value">{minBidIncrement} грн</span>
         </div>
       </div>
-
-      {/* Модальне вікно */}
+      
+      <button className="place-bid-btn" onClick={handleMakeBid}>
+        Зробити ставку
+      </button>
+      
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">

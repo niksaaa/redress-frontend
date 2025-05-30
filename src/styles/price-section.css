@@ -1,95 +1,32 @@
 .price-section {
-  width: 468px;
-  height: 162px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 303px;
-  left: 718px;
-  overflow: hidden;
-}
-.price-bg {
-  width: 468px;
-  height: 162px;
-  background: rgba(245, 245, 245, 1);
-  opacity: 1;
-  position: relative;
-  top: 0px;
-  left: 0px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  overflow: hidden;
-}
-.price-content {
-  width: 260px;
-  height: 36px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 28px;
-  left: 104px;
-  overflow: hidden;
-}
-.price-label {
-  width: 53px;
-  color: rgba(0, 0, 0, 1);
-  position: relative;
-  top: 0px;
-  left: 0px;
-  font-family: Inria Serif;
-  font-weight: Regular;
-  font-size: 24px;
-  opacity: 1;
-  text-align: left;
-}
-.price-value {
-  width: 87px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 0px;
-  left: 173px;
-  font-family: Inria Serif;
-  font-weight: Regular;
-  font-size: 24px;
-  opacity: 1;
-  text-align: left;
-}
-.buy-btn {
-  width: 260px;
-  height: 46px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 88px;
-  left: 104px;
-  overflow: hidden;
-  cursor: pointer;
-}
-.btn-bg {
-  width: 260px;
-  height: 46px;
-  background: rgba(217, 217, 217, 1);
+  width: 420px;
+  background-color: #F5F5F5;
   border-radius: 8px;
+  padding: 28px 80px;
   display: flex;
-  justify-content: center; /* горизонтальное выравнивание */
-  align-items: center; /* вертикальное выравнивание */
-  position: relative;
-  overflow: hidden;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.price-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-label,
+.price-value {
+  font-size: 20px;
+}
+
+.buy-btn {
+  background-color: #D9D9D9;
+  border-radius: 8px;
+  padding: 12px 0;
+  text-align: center;
+  cursor: pointer;
 }
 
 .btn-text {
-  color: rgba(0, 0, 0, 1);
-  font-family: "Inria Serif", serif;
-  font-weight: normal;
-  font-size: 20px;
-  opacity: 1;
-  text-align: center;
+  font-size: 16px;
 }
