@@ -4,14 +4,19 @@ import { useState } from 'react';
 import { useFavorites } from '../context/FavoritesContext';
 import { Link } from "react-router-dom";
 import fallbackImage from '../images/main-page/v31_67.png';
+import likedIcon from '../images/liked.png';
+import likeIcon from '../images/like.png';
 
-const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete }) => {
+const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete, forceFavorite }) => {
   const [currentImage, setCurrentImage] = useState(imageUrl);
   const [imgError, setImgError] = useState(false);
   const { isFavorite, toggleFavorite } = useFavorites();
   console.log('Отримано контекст обраного:', { isFavorite, toggleFavorite });
 
   console.log(`Рендер CatalogCard для ${id}, isFavorite:`, isFavorite(id));
+
+  // Для сторінки обраного - завжди показуємо як обране
+  const showAsFavorite = forceFavorite || isFavorite(id);
 
   const handleImageError = () => {
     setCurrentImage('../images/main-page/v30_108.png');
@@ -74,9 +79,11 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete 
         </div>
         <span className="catalog-title">{title}</span>
         <div className="like-button" onClick={handleFavoriteClick}>
-        <div 
-          className={`like-icon2 ${isFavorite(id) ? 'liked' : 'unliked'}`}
-        ></div>
+        <img 
+              src={showAsFavorite ? likedIcon : likeIcon} 
+              alt={showAsFavorite ? "В обраному" : "Додати до обраного"}
+              className="like-icon2"
+            />
           </div>
           {isOwner && (
             <div className="delete-button" onClick={handleDeleteClick}>

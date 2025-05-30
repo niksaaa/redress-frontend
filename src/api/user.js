@@ -58,3 +58,14 @@ export const fetchUserProducts = async (profileId, page = 1, pageSize = 5) => {
     throw new Error(error.response?.data?.message || 'Не вдалося завантажити товари');
   }
 };
+
+export const getProfileByUser = async () => {
+  try {
+    const response = await authService.get('/User/GetProfile/profile');
+    console.log('Дані профілю за користувачем отримано:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Помилка при отриманні профілю:', error);
+    throw new Error(error.response?.data?.message || 'Не вдалося отримати дані профілю');
+  }
+};
