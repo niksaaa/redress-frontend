@@ -32,7 +32,11 @@ export default function Filters({ sex, onCategorySelect, onPriceChange }) {
   // Фільтруємо категорії за статтю
   const getFilteredCategories = () => {
     if (!sex) return [];
-    return categories.filter(cat => cat.sex === sex);
+
+    // Конвертуємо рядкове значення sex у відповідне числове
+    const sexValue = sex === 'Male' ? 0 : sex === 'Female' ? 1 : 2;
+  
+    return categories.filter(cat => cat.sex === sexValue);
   };
 
   // Обробник вибору категорії
@@ -137,7 +141,10 @@ export default function Filters({ sex, onCategorySelect, onPriceChange }) {
   };
 
   const renderParentCategories = () => {
-    return getFilteredCategories().map(category => (
+    const filtered = getFilteredCategories();
+  if (filtered.length === 0) return <div>Немає категорій для обраного фільтру</div>;
+  
+  return filtered.map(category => (
       <div key={category.id} className="category">
         <div 
           className="category-header" 
@@ -279,9 +286,9 @@ export default function Filters({ sex, onCategorySelect, onPriceChange }) {
 
 function getSexLabel(sex) {
   switch (sex) {
-    case 'Female': return 'жінок';
-    case 'Male': return 'чоловіків';
-    case 'Child': return 'дітей';
+    case 1: return 'жінок';
+    case 0: return 'чоловіків';
+    case 2: return 'дітей';
     default: return '';
   }
 }

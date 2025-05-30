@@ -77,19 +77,19 @@ export default function MainPage() {
         <div className="gallery">
           <div
             className="image-block image-woman"
-            onClick={() => handleCategoryClick("female")}
+            onClick={() => handleCategoryClick("Female")}
           >
             <span className="label">Вона</span>
           </div>
           <div
             className="image-block image-man"
-            onClick={() => handleCategoryClick("male")}
+            onClick={() => handleCategoryClick("Male")}
           >
             <span className="label">Він</span>
           </div>
           <div
             className="image-block image-kids"
-            onClick={() => handleCategoryClick("kids")}
+            onClick={() => handleCategoryClick("Child")}
           >
             <span className="label">Діти</span>
           </div>

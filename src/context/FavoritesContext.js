@@ -32,6 +32,9 @@ export const FavoritesProvider = ({ children }) => {
   }, [isAuthenticated, user?.profileId]);
 
   const toggleFavorite = async (listingId) => {
+    console.log('Toggling favorite for:', listingId);
+  console.log('Current user:', user);
+  console.log('isAuthenticated:', isAuthenticated());
     if (!isAuthenticated() || !user?.profileId) return;
 
     try {
@@ -63,4 +66,10 @@ export const FavoritesProvider = ({ children }) => {
   );
 };
 
-export const useFavorites = () => useContext(FavoritesContext);
+export const useFavorites = () => {
+  const context = useContext(FavoritesContext);
+  if (!context) {
+    throw new Error('useFavorites must be used within a FavoritesProvider');
+  }
+  return context;
+};

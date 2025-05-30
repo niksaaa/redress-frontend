@@ -56,6 +56,9 @@ export const fetchListingsBySex = async (sex, page = 1, pageSize = 12) => {
 
   // Інакше — реальний запит до API
   try {
+    // Конвертуємо рядкове значення у числове для enum
+    const sexValue = sex === 'Male' ? 0 : sex === 'Female' ? 1 : 2;
+    
     const response = await authService.get('/Listing/GetBySex', {
       params: { sex, page, pageSize }
     });

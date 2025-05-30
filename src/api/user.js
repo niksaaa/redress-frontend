@@ -48,11 +48,13 @@ export const fetchUserProducts = async (profileId, page = 1, pageSize = 5) => {
       setTimeout(() => resolve(getPaginatedData(demoProductsData, page, pageSize)), 500);
     });
   }
-  
+  console.log('Fetching products for profile:', profileId);
   try {
-    const response = await authService.get(`/Listing/GetByProfile?profileId=${profileId}&page=${page}&pageSize=${pageSize}`);
+    const response = await authService.get(`/Listing/GetByProfile/by-profile/?profileId=${profileId}&page=${page}&pageSize=${pageSize}`);
+    console.log('API response:', response.data);
     return response.data;
   } catch (error) {
+    console.error('API error:', error);
     throw new Error(error.response?.data?.message || 'Не вдалося завантажити товари');
   }
 };

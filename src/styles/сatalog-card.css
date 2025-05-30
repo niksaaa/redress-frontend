@@ -120,6 +120,14 @@
     transition: all 0.2s ease;
 }
 
+.like-icon2.liked {
+    background-image: url('../images/liked.png');
+}
+
+.like-icon2.unliked {
+    background-image: url('../images/like.png'); 
+}
+
 .delete-button {
     cursor: pointer;
     z-index: 2;

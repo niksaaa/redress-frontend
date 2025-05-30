@@ -15,15 +15,22 @@ export default function CategoryModal({ categories, onClose, onSelect }) {
     }
   };
 
+  // const getCurrentCategories = () => {
+  //   if (selectedNodes.length === 0) return categories;
+    
+  //   let current = selectedNodes[selectedNodes.length - 1].children;
+  //   for (let i = 0; i < currentLevel - 1; i++) {
+  //     if (!current || current.length === 0) break;
+  //     current = current[0].children;
+  //   }
+    
+  //   return current || [];
+  // };
+
   const getCurrentCategories = () => {
     if (selectedNodes.length === 0) return categories;
     
     let current = selectedNodes[selectedNodes.length - 1].children;
-    for (let i = 0; i < currentLevel - 1; i++) {
-      if (!current || current.length === 0) break;
-      current = current[0].children;
-    }
-    
     return current || [];
   };
 
@@ -52,18 +59,22 @@ export default function CategoryModal({ categories, onClose, onSelect }) {
         </div>
 
         <div className="category-list">
-          {getCurrentCategories().map(category => (
-            <div
-              key={category.id}
-              className="category-item"
-              onClick={() => handleCategorySelect(category, currentLevel)}
-            >
-              {category.name}
-              {category.children && category.children.length > 0 && (
-                <span className="arrow">→</span>
-              )}
-            </div>
-          ))}
+          {getCurrentCategories().length > 0 ? (
+            getCurrentCategories().map(category => (
+              <div
+                key={category.id}
+                className="category-item"
+                onClick={() => handleCategorySelect(category, currentLevel)}
+              >
+                {category.name}
+                {category.children && category.children.length > 0 && (
+                  <span className="arrow">→</span>
+                )}
+              </div>
+            ))
+          ) : (
+            <div className="no-categories">Немає підкатегорій</div>
+          )}
         </div>
 
         <button className="close-modal-btn" onClick={onClose}>

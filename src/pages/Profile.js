@@ -168,13 +168,13 @@ export default function Profile() {
             variant="default"
           />
             </div> */}
-            <UserProductList profileId={profileData.Id} />
+            <UserProductList profileId={profileData.id} />
         </div>
         )}
 
 {sort2 === "Відгуки" && (
           <div className="content-section">
-                      <FeedbackList profileId={profileData.Id} />
+                      <FeedbackList profileId={profileData.id} />
                     </div>
         )}
 
@@ -188,7 +188,7 @@ export default function Profile() {
                       variant="default"
                     />
                             </div> */}
-                            <FavoritesList profileId={profileData?.Id} />
+                            <FavoritesList profileId={profileData?.id} />
                   </div>
         )}
 

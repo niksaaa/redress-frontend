@@ -9,12 +9,19 @@ export const UserProductList = ({ profileId }) => {
   const [page, setPage] = useState(1);
   const pageSize = 5;
   const queryClient = useQueryClient();
+  console.log('UserProductList - profileId:', profileId);
 
   const { data: userProductsData, isLoading, error } = useQuery({
     queryKey: ['userProducts', profileId, page],
     queryFn: () => fetchUserProducts(profileId, page, pageSize),
     enabled: !!profileId || process.env.REACT_APP_DEMO_MODE === 'true',
-    keepPreviousData: true
+    keepPreviousData: true,
+    onSuccess: (data) => {
+      console.log('User products data:', data); // Додайте це
+    },
+    onError: (err) => {
+      console.error('Error fetching user products:', err); // Додайте це
+    }
   });
 
   const deleteMutation = useMutation({

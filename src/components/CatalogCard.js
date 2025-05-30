@@ -17,7 +17,9 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete 
   const handleFavoriteClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    toggleFavorite(id);
+    if (toggleFavorite) { 
+      toggleFavorite(id);
+    }
   };
 
   const handleDeleteClick = (e) => {
@@ -65,14 +67,9 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete 
         </div>
         <span className="catalog-title">{title}</span>
         <div className="like-button" onClick={handleFavoriteClick}>
-            <div 
-              className="like-icon2" 
-              style={{ 
-                backgroundImage: isFavorite(id) 
-                  ? 'url("../images/liked.png")' 
-                  : 'url("../images/like.png")'
-              }}
-            ></div>
+        <div 
+          className={`like-icon2 ${isFavorite(id) ? 'liked' : 'unliked'}`}
+        ></div>
           </div>
           {isOwner && (
             <div className="delete-button" onClick={handleDeleteClick}>

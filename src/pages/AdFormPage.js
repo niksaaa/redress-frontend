@@ -56,6 +56,10 @@ export default function AdFormPage() {
   const handleSectionClick = (section) => {
     setSelectedSection(section);
     setIsModalOpen(true);
+    console.log(`Selected section: ${section}, looking for sex:`, 
+      section === "Вона" ? 1 : 
+      section === "Він" ? 0 : 
+      2);
   };
 
   const closeModal = () => {
@@ -74,10 +78,12 @@ export default function AdFormPage() {
   const getSectionCategories = () => {
     if (!selectedSection) return [];
     
-    const sectionName = selectedSection === "Вона" ? "Female" : 
-                       selectedSection === "Він" ? "Male" : "Unisex";
+    // Конвертуємо назву розділу у відповідне числове значення для sex
+  const sexValue = selectedSection === "Вона" ? 1 : 
+  selectedSection === "Він" ? 0 : 
+  2; // Для "Діти"
     
-    return categoryTree.filter(cat => cat.sex === sectionName);
+    return categoryTree.filter(cat => cat.sex === sexValue);
   };
 
   // Завантаження зображень
