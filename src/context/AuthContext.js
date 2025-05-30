@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }) => {
       register, 
       logout, 
       loading,
-      isAuthenticated: isAuthenticated()
+      isAuthenticated
     }}>
       {children}
     </AuthContext.Provider>
