@@ -8,6 +8,7 @@ export const FavoritesProvider = ({ children }) => {
   const { user, isAuthenticated } = useAuth();
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
+  console.log('Ініціалізація FavoritesProvider');
 
   // Завантаження обраних товарів при авторизації
   useEffect(() => {
@@ -32,23 +33,37 @@ export const FavoritesProvider = ({ children }) => {
   }, [isAuthenticated, user?.profileId]);
 
   const toggleFavorite = async (listingId) => {
-    console.log('Toggling favorite for:', listingId);
-  console.log('Current user:', user);
+    console.log('Спроба переключити обране для:', listingId);
+  console.log('Поточний користувач:', user);
   console.log('isAuthenticated:', isAuthenticated());
-    if (!isAuthenticated() || !user?.profileId) return;
+  
+    if (!isAuthenticated()) {
+    console.log('Користувач не авторизований, перериваємо');
+    return;
+  }
+  
+  if (!user?.profileId) {
+    console.log('Немає profileId у користувача', user);
+    return;
+  }
 
     try {
       const isFavorite = favorites.some(fav => fav.listingId === listingId);
-      
+      console.log(`Товар ${listingId} уже в обраному:`, isFavorite);
+
       if (isFavorite) {
+        console.log('Видаляємо з обраного...');
         await removeFromFavorites(user.profileId, listingId);
         setFavorites(prev => prev.filter(fav => fav.listingId !== listingId));
+        console.log('Успішно видалено');
       } else {
+        console.log('Додаємо до обраного...');
         await addToFavorites({
           ProfileId: user.profileId,
           ListingId: listingId
         });
         setFavorites(prev => [...prev, { listingId }]);
+        console.log('Успішно додано');
       }
     } catch (error) {
       console.error('Помилка при зміні стану обраного:', error);

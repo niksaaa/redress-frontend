@@ -9,7 +9,7 @@ export const fetchProfileFeedbacks = async (profileId, page = 1, pageSize = 5) =
   }
   
   try {
-    const response = await authService.get(`/Feedback/GetProfileFeedbacks?profileId=${profileId}&page=${page}&pageSize=${pageSize}`);
+    const response = await authService.get(`/Feedback/GetProfileFeedbacks/profile/?profileId=${profileId}&page=${page}&pageSize=${pageSize}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Не вдалося завантажити відгуки');
