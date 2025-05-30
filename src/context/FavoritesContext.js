@@ -7,11 +7,14 @@ const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
-  const [profileId, setProfileId] = useState(null);
+  const [profileId, setProfileId] = useState(() => {
+    // Инициализируем profileId из localStorage при создании контекста
+    return localStorage.getItem('profileId');
+  });
   const [loading, setLoading] = useState(true);
   const { isAuthenticated } = useAuth();
 
-  // Load profile data when component mounts
+  // Load profile data when component mounts or when authentication status changes
   useEffect(() => {
     const loadProfile = async () => {
       try {
@@ -21,11 +24,23 @@ export const FavoritesProvider = ({ children }) => {
           return;
         }
 
+        // Проверяем, есть ли уже profileId в localStorage
+        const storedProfileId = localStorage.getItem('profileId');
+        if (storedProfileId) {
+          console.log('Using stored profileId:', storedProfileId);
+          setProfileId(storedProfileId);
+          await loadFavorites(storedProfileId);
+          setLoading(false);
+          return;
+        }
+
+        // Если profileId нет в localStorage, получаем его из API
         const profileData = await fetchProfile();
         console.log('Profile data loaded:', profileData);
         if (profileData && profileData.id) {
+          // Сохраняем profileId в localStorage
+          localStorage.setItem('profileId', profileData.id);
           setProfileId(profileData.id);
-          // Load favorites after getting profileId
           await loadFavorites(profileData.id);
         }
       } catch (error) {
@@ -49,7 +64,8 @@ export const FavoritesProvider = ({ children }) => {
   };
 
   const toggleFavorite = async (listingId) => {
-    if (!profileId) {
+    const currentProfileId = localStorage.getItem('profileId');
+    if (!currentProfileId) {
       console.error('No profile ID available');
       return;
     }
@@ -58,17 +74,17 @@ export const FavoritesProvider = ({ children }) => {
       const isCurrentlyFavorite = favorites.some(fav => fav.id === listingId);
       
       if (isCurrentlyFavorite) {
-        await removeFromFavorites(profileId, listingId);
+        await removeFromFavorites(currentProfileId, listingId);
         setFavorites(prevFavorites => 
           prevFavorites.filter(fav => fav.id !== listingId)
         );
       } else {
         await addToFavorites({
-          profileId,
+          profileId: currentProfileId,
           listingId
         });
         // Reload favorites to get the updated list
-        await loadFavorites(profileId);
+        await loadFavorites(currentProfileId);
       }
     } catch (error) {
       console.error('Error toggling favorite:', error);
