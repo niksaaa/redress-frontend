@@ -63,13 +63,12 @@ export default function ProductPage() {
         <span className="post-date">{formattedDate}</span>
           <div className="title-and-favorite">
             <span className="product-title">{listing.title}</span>
-            <div className="like-btn" onClick={handleFavoriteClick}>
-            <img 
-              src={isItemFavorite ? likedIcon : likeIcon} 
-              alt={isItemFavorite ? "В обраному" : "Додати до обраного"}
-              className="like-icon3"
-            />
-      </div>
+            <div 
+  className={`like-btn ${isItemFavorite ? "liked" : "not-liked"}`} 
+  onClick={handleFavoriteClick}
+  title={isItemFavorite ? "В обраному" : "Додати до обраного"}
+/>
+            <PriceSection price={listing.price} listing={listing} />
           </div>
           </div>
       </div>
@@ -80,7 +79,6 @@ export default function ProductPage() {
         longitude={listing.longitude} 
       />
       {/* <BiddingInfo isAuction={listing.isAuction} /> */}
-      <PriceSection price={listing.price} listing={listing} />
       <SellerSection profileId={listing.profileId} />
     </div>
   );

@@ -47,11 +47,11 @@ export const fetchUserFavorites = async (profileId, page = 1, pageSize = 10) => 
   }
 };
 
-export const addToFavorites = async (favoriteData) => {
+export const addToFavorites = async (profileId, listingId) => {
   try {
     const response = await authService.post('/Favorite/AddToFavorites', {
-      profileId: favoriteData.profileId,
-      listingId: favoriteData.listingId
+      profileId: profileId,
+      listingId: listingId
     });
     return response.data;
   } catch (error) {

@@ -51,11 +51,18 @@
   width: 36px;
   height: 36px;
   cursor: pointer;
-  background: url("../images/like.png");
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center;
   background-size: cover;
   opacity: 1;
+}
+
+.like-btn.not-liked {
+  background-image: url("../images/like.png");
+}
+
+.like-btn.liked {
+  background-image: url("../images/liked.png");
 }
 
 .delete-btn {
