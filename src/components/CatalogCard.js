@@ -113,6 +113,9 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete,
   const { isFavorite, toggleFavorite } = useFavorites();
   const isItemFavorite = isFavorite(id);
 
+  // Для сторінки обраного - завжди показуємо як обране
+  const showAsFavorite = forceFavorite || isFavorite(id);
+
   const handleFavoriteClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -146,11 +149,11 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete,
           </div>
           <span className="catalog-title">{title}</span>
           <div className="like-button" onClick={handleFavoriteClick}>
-            <img 
-              src={isItemFavorite ? likedIcon : likeIcon} 
-              alt={isItemFavorite ? "В обраному" : "Додати до обраного"}
+                   <img
+              src={showAsFavorite ? likedIcon : likeIcon}
+               alt={showAsFavorite ? "В обраному" : "Додати до обраного"}
               className="like-icon2"
-            />
+             />
           </div>
           {isOwner && (
             <div className="delete-button" onClick={handleDeleteClick}>

@@ -11,12 +11,12 @@ export const FavoritesList = ({ profileId }) => {
   const { favorites } = useFavorites();
   console.log('FavoritesList - поточні обрані:', favorites);
 
-  const { data: favoritesData, isLoading, error } = useQuery({
-    queryKey: ['favorites', profileId, page],
-    queryFn: () => fetchUserFavorites(profileId, page, pageSize),
-    enabled: !!profileId || process.env.REACT_APP_DEMO_MODE === 'true',
-    keepPreviousData: true
-  });
+  // const { data: favoritesData, isLoading, error } = useQuery({
+  //   queryKey: ['favorites', profileId, page],
+  //   queryFn: () => fetchUserFavorites(profileId, page, pageSize),
+  //   enabled: !!profileId || process.env.REACT_APP_DEMO_MODE === 'true',
+  //   keepPreviousData: true
+  // });
     
     // Функція для зміни сторінки з прокруткою
   const handlePageChange = (newPage) => {
