@@ -3,10 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchUserFavorites } from '../api/favorite';
 import CatalogCard from './CatalogCard';
 import Pagination from './Pagination';
+import { useFavorites } from '../context/FavoritesContext';
 
 export const FavoritesList = ({ profileId }) => {
   const [page, setPage] = useState(1);
   const pageSize = 5;
+  const { favorites } = useFavorites();
+  console.log('FavoritesList - поточні обрані:', favorites);
 
   const { data: favoritesData, isLoading, error } = useQuery({
     queryKey: ['favorites', profileId, page],
@@ -43,24 +46,10 @@ export const FavoritesList = ({ profileId }) => {
             title={item.title}
             imageUrl={item.url}
             isAuction={item.isAuction}
+            forceFavorite={true}
           />
         ))}
       </div>
-      {/* <div className="pagination">
-        <button 
-          onClick={() => setPage(p => Math.max(1, p - 1))} 
-          disabled={page === 1}
-        >
-          Попередня
-        </button>
-        <span>Сторінка {page}</span>
-        <button 
-          onClick={() => setPage(p => p + 1)} 
-          disabled={!favoritesData?.hasNextPage}
-        >
-          Наступна
-        </button>
-      </div> */}
           {favoritesData.totalPages > 1 && (
         <Pagination
           currentPage={page}

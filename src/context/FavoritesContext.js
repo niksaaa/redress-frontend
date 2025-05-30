@@ -33,25 +33,17 @@ export const FavoritesProvider = ({ children }) => {
   }, [isAuthenticated, user?.profileId]);
 
   const toggleFavorite = async (listingId) => {
-    console.log('Спроба переключити обране для:', listingId);
-  console.log('Поточний користувач:', user);
-  console.log('isAuthenticated:', isAuthenticated());
-  
-    if (!isAuthenticated()) {
-    console.log('Користувач не авторизований, перериваємо');
-    return;
-  }
-  
-  if (!user?.profileId) {
-    console.log('Немає profileId у користувача', user);
-    return;
-  }
+    console.log('Початок toggleFavorite для:', listingId);
+    if (!user?.profileId) {
+      console.log('Немає profileId, перериваємо');
+      return;
+    }
 
     try {
-      const isFavorite = favorites.some(fav => fav.listingId === listingId);
-      console.log(`Товар ${listingId} уже в обраному:`, isFavorite);
-
-      if (isFavorite) {
+      const isCurrentlyFavorite = favorites.some(fav => fav.listingId === listingId);
+      console.log(`Товар ${listingId} вже в обраному:`, isCurrentlyFavorite);
+      
+      if (isCurrentlyFavorite) {
         console.log('Видаляємо з обраного...');
         await removeFromFavorites(user.profileId, listingId);
         setFavorites(prev => prev.filter(fav => fav.listingId !== listingId));
@@ -71,7 +63,9 @@ export const FavoritesProvider = ({ children }) => {
   };
 
   const isFavorite = (listingId) => {
-    return favorites.some(fav => fav.listingId === listingId);
+    const result = favorites.some(fav => fav.listingId === listingId);
+    console.log(`Перевірка чи ${listingId} в обраному:`, result);
+    return result;
   };
 
   return (

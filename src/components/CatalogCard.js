@@ -11,6 +11,8 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete 
   const { isFavorite, toggleFavorite } = useFavorites();
   console.log('Отримано контекст обраного:', { isFavorite, toggleFavorite });
 
+  console.log(`Рендер CatalogCard для ${id}, isFavorite:`, isFavorite(id));
+
   const handleImageError = () => {
     setCurrentImage('../images/main-page/v30_108.png');
   };
@@ -18,14 +20,14 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete 
   const handleFavoriteClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('Клік по сердечку для товару:', id);
-    if (typeof toggleFavorite === 'function') {
-      console.log('Викликаємо toggleFavorite для:', id);
-      toggleFavorite(id);
-    } else {
-      console.error('toggleFavorite не є функцією!');
+    console.log('Клік по сердечку для:', id);
+    if (toggleFavorite && typeof toggleFavorite === 'function') {
+      toggleFavorite(id).catch(error => {
+        console.error('Помилка при переключенні обраного:', error);
+      });
     }
   };
+
 
   const handleDeleteClick = (e) => {
     e.preventDefault();
