@@ -1,29 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { fetchProfile } from '../api/profile';
 import '../styles/user-info.css';
 
 const UserInfoComponent = ({ createdAt, location }) => {
-  const [userInfo, setUserInfo] = useState({
-    createdAt: new Date(),
-    location: 'Харків'
-  });
-//   const [loading, setLoading] = useState(false);
-//     const [error, setError] = useState(null);
-    
-const { data: profileData, isLoading, error } = useQuery({
-    queryKey: ['profile'],
-    queryFn: fetchProfile,
-    select: (data) => ({
-      createdAt: data.createdAt,
-      latitude: data.latitude,
-      longitude: data.longitude,
-    }),
-    staleTime: 1000 * 60 * 5, // 5 хвилин кешування
-  });
   
-    
-
   // Функція для перетворення координат у назву міста (дуже спрощена версія)
   const getLocationFromCoords = (lat, lng) => {
     // Це дуже спрощена імітація - в реальному додатку використовуйте API геокодінгу
@@ -98,36 +77,18 @@ const { data: profileData, isLoading, error } = useQuery({
 //     fetchUserInfo();
 //   }, [demoMode]);
 
-  if (isLoading) return <div className="loading">Завантаження...</div>;
-  if (error) return <div className="error">{error}</div>;
-
-//   return (
-//     <div className="user-info">
-//       <div className="info-wrapper">
-//         <div className="date-wrapper">
-//           <div className="date-icon">📅</div>
-//           <span className="creation-date">На REDRESS з {formatDate(userInfo.createdAt)}</span>
-//         </div>
-//         <div className="location-wrapper">
-//           <div className="location-icon">📍</div>
-//           <span className="location">{userInfo.location}</span>
-//         </div>
-//       </div>
-//     </div>
-    //   );
-    
     return (
         <div className="user-info">
           <div className="info-wrapper">
             <div className="date-wrapper">
               <div className="date-icon">📅</div>
               <span className="creation-date">
-                На REDRESS з {formatDate(profileData?.createdAt || new Date())}
+                На REDRESS з {formatDate(createdAt || new Date())}
               </span>
             </div>
             <div className="location-wrapper">
               <div className="location-ico">📍</div>
-              <span className="location">{profileData?.latitude}</span>
+              <span className="location">{location.latitude}, {location.longitude}</span>
             </div>
           </div>
         </div>

@@ -104,7 +104,11 @@ export default function Profile() {
         <div className="info-section">
             <span className="username">{userData?.username}</span>
 
-          <RatingComponent />
+            <RatingComponent
+            rating={profileData?.averageRating}
+            count= {profileData?.ratingCount}
+            status= {profileData?.ratingStatus}
+            />
 
           <UserInfoComponent 
             createdAt={profileData?.createdAt} 
@@ -148,7 +152,7 @@ export default function Profile() {
         
         {sort2 === "Гаманець" && (
           <div className="content-section">
-            <WalletBalance />
+            <WalletBalance balance={profileData?.balance}/>
           </div>
         )}
 

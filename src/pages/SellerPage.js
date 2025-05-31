@@ -7,7 +7,7 @@ import BioComponent from '../components/BioComponent';
 import SortSelector from "../components/SortSelector";
 import { fetchProfileDetails, fetchUserDetails } from "../api/listing";
 import { FeedbackList } from "../components/FeedbackList";
-import { FavoritesList } from "../components/FavoritesList";
+import { UserProductList } from "../components/UserProductList";
 
 // import "../styles/seller-profile.css";
 import "../styles/profile.css";
@@ -214,7 +214,7 @@ export default function SellerPage() {
             variant="default"
           />
                   </div> */}
-                  <FavoritesList profileId={profile.Id} />
+                  <UserProductList profileId={profile.Id} />
         </div>
         )}
 
