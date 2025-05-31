@@ -245,8 +245,8 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete 
           <span className="catalog-title">{title}</span>
           <div className="like-button" onClick={handleFavoriteClick}>
             <img 
-              src={isItemFavorite() ? likedIcon : likeIcon} 
-              alt={isItemFavorite() ? "В обраному" : "Додати до обраного"}
+              src={isItemFavorite ? likedIcon : likeIcon} 
+              alt={isItemFavorite ? "В обраному" : "Додати до обраного"}
               className="like-icon2"
             />
           </div>
