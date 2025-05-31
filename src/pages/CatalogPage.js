@@ -1,16 +1,13 @@
 import "../styles/catalog-page.css";
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Filters from "../components/Filters";
 import Search from "../components/Search";
 import SortSelector from "../components/SortSelector";
-import dressImg from "../images/main-page/v30_108.png";
 import CatalogList from "../components/CatalogList";
 import Pagination from "../components/Pagination";
 import { useQuery } from '@tanstack/react-query';
 import { fetchListingsBySex } from '../api/listing';
 import Filters2 from "../components/Filters2";
-// import { demoListings as fetchListingsBySex } from '../demoData';
 
 
 const sortOptions1 = ["За популярністю", "Дешевше", "Дорожче", "За новинками"];
@@ -21,6 +18,7 @@ export default function CatalogPage() {
   const [sort1, setSort1] = useState(sortOptions1[0]);
   const [sort2, setSort2] = useState(sortOptions2[0]);
   const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
   const { sex } = useParams();
 
   const { data, isLoading, error } = useQuery({
@@ -29,10 +27,16 @@ export default function CatalogPage() {
     keepPreviousData: true
   });
 
+  const handleSearch = (term) => {
+    setSearchTerm(term.toLowerCase()); // Зберігаємо пошуковий термін в нижньому регістрі
+    setPage(1); // Скидаємо на першу сторінку при новому пошуку
+  };
+
   const handleReset = () => {
     setSort1(sortOptions1[0]);
     setSort2(sortOptions2[0]);
     setPage(1);
+    setSearchTerm(''); // Очищуємо пошуковий термін
   };
 
   // Функція для зміни сторінки з прокруткою
@@ -40,9 +44,15 @@ export default function CatalogPage() {
     setPage(newPage);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-    
-  // Фільтрація оголошень за типом
+
+  // Фільтрація оголошень за типом та пошуковим терміном
   const filteredItems = data?.items?.filter(item => {
+    // Пошук за назвою (якщо є пошуковий термін)
+    if (searchTerm && !item.title.toLowerCase().includes(searchTerm)) {
+      return false;
+    }
+    
+    // Фільтрація за типом оголошення
     if (sort2 === "Всі оголошення") return true;
     if (sort2 === "Аукціон") return item.isAuction;
     return !item.isAuction;
@@ -53,12 +63,12 @@ export default function CatalogPage() {
     switch (sort1) {
       case "Дешевше": return a.price - b.price;
       case "Дорожче": return b.price - a.price;
-      default: return 0; // Базове сортування (як отримали з API)
+      default: return 0;
     }
   });
 
-  // if (isLoading) return <div className="loading">Завантаження оголошень...</div>;
-  // if (error) return <div className="error">Помилка: {error.message}</div>;
+  if (isLoading) return <div className="loading">Завантаження оголошень...</div>;
+  if (error) return <div className="error">Помилка: {error.message}</div>;
 
 
   return (
@@ -74,10 +84,10 @@ export default function CatalogPage() {
 
         <div className="content-area">
           <div className="search-sort-row">
-            {/* <div className="search">
-              <Search />
-            </div> */}
-            <Search />
+            <Search
+            onSearch={handleSearch} 
+            searchTerm={searchTerm} // Передаємо поточний пошуковий термін
+            />
             <SortSelector
               options={sortOptions1}
               active={sort1}
