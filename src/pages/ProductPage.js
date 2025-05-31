@@ -87,8 +87,8 @@ export default function ProductPage() {
   onClick={handleFavoriteClick}
   title={isItemFavorite ? "В обраному" : "Додати до обраного"}
 />
-            <PriceSection price={listing.price} listing={listing} />
           </div>
+          <PriceSection price={listing.price} listing={listing} />
           </div>
       </div>
       <TagsContainer listingId={listing.id}/>
