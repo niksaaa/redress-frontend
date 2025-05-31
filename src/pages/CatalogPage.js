@@ -6,7 +6,7 @@ import SortSelector from "../components/SortSelector";
 import CatalogList from "../components/CatalogList";
 import Pagination from "../components/Pagination";
 import { useQuery } from '@tanstack/react-query';
-import { fetchListingsBySex } from '../api/listing';
+import { fetchListingsBySex, fetchListingsByCategory, fetchListingsByPriceRange } from '../api/listing';
 import Filters2 from "../components/Filters2";
 
 
@@ -19,11 +19,24 @@ export default function CatalogPage() {
   const [sort2, setSort2] = useState(sortOptions2[0]);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [priceRange, setPriceRange] = useState(null);
   const { sex } = useParams();
 
+  // Визначаємо який запит виконувати в залежності від обраних фільтрів
+  const getQueryFn = () => {
+    if (selectedCategory) {
+      return () => fetchListingsByCategory(selectedCategory, page);
+    }
+    if (priceRange) {
+      return () => fetchListingsByPriceRange(priceRange.min, priceRange.max, page);
+    }
+    return () => fetchListingsBySex(sex, page);
+  };
+
   const { data, isLoading, error } = useQuery({
-    queryKey: ['listings', sex, page],
-    queryFn: () => fetchListingsBySex(sex, page),
+    queryKey: ['listings', sex, page, selectedCategory, priceRange],
+    queryFn: getQueryFn(),
     keepPreviousData: true
   });
 
@@ -32,11 +45,25 @@ export default function CatalogPage() {
     setPage(1); // Скидаємо на першу сторінку при новому пошуку
   };
 
+  const handleCategorySelect = (categoryId) => {
+    setSelectedCategory(categoryId);
+    setPriceRange(null); // Скидаємо фільтр по ціні при зміні категорії
+    setPage(1);
+  };
+
+  const handlePriceChange = (range) => {
+    setPriceRange(range);
+    setSelectedCategory(null); // Скидаємо фільтр по категорії при зміні ціни
+    setPage(1);
+  };
+
   const handleReset = () => {
     setSort1(sortOptions1[0]);
     setSort2(sortOptions2[0]);
     setPage(1);
     setSearchTerm(''); // Очищуємо пошуковий термін
+    setSelectedCategory(null);
+    setPriceRange(null);
   };
 
   // Функція для зміни сторінки з прокруткою
@@ -79,7 +106,12 @@ export default function CatalogPage() {
       />
       <div className="container">
         <div className="filters">
-          <Filters2 sex={sex} />
+          <Filters2
+          sex={sex} 
+          onCategorySelect={handleCategorySelect}
+          onPriceChange={handlePriceChange}
+          selectedCategoryId={selectedCategory}
+          />
         </div>
 
         <div className="content-area">

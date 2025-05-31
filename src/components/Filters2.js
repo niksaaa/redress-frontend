@@ -2,12 +2,11 @@ import "../styles/filters.css";
 import React, { useState, useEffect } from 'react';
 import { fetchCategoryTree } from '../api/category';
 
-export default function Filters({ sex, onCategorySelect, onPriceChange }) {
+export default function Filters({ sex, onCategorySelect, onPriceChange, selectedCategoryId }) {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [expandedCategories, setExpandedCategories] = useState({});
-  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 50000 });
   const [isPriceOpen, setIsPriceOpen] = useState(false);
   const [inputPrice, setInputPrice] = useState({ min: 0, max: 50000 });
@@ -41,7 +40,6 @@ export default function Filters({ sex, onCategorySelect, onPriceChange }) {
 
   // Обробник вибору категорії
   const handleCategorySelect = (categoryId) => {
-    setSelectedCategoryId(categoryId);
     if (onCategorySelect) {
       onCategorySelect(categoryId);
     }

@@ -180,3 +180,53 @@ export const fetchUserDetails = async (userId) => {
     throw new Error(error.response?.data?.message || 'Помилка при завантаженні користувача');
   }
 };
+
+
+export const fetchListingsByCategory = async (categoryId, page = 1, pageSize = 12) => {
+  if (process.env.REACT_APP_DEMO_MODE === 'true') {
+    return demoFetchListings(null, page, pageSize); // Можете адаптувати для демо-режиму
+  }
+
+  try {
+    const response = await authService.get(`/Listing/GetByCategory`, {
+      params: {
+        categoryId,
+        page,
+        pageSize
+      }
+    });
+
+    return {
+      items: response.data.items,
+      totalPages: response.data.totalPages,
+      totalCount: response.data.totalCount
+    };
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Помилка при завантаженні оголошень за категорією');
+  }
+};
+
+export const fetchListingsByPriceRange = async (minPrice, maxPrice, page = 1, pageSize = 12) => {
+  if (process.env.REACT_APP_DEMO_MODE === 'true') {
+    return demoFetchListings(null, page, pageSize); // Можете адаптувати для демо-режиму
+  }
+
+  try {
+    const response = await authService.get(`/Listing/by-price-range`, {
+      params: {
+        minPrice,
+        maxPrice,
+        page,
+        pageSize
+      }
+    });
+
+    return {
+      items: response.data.items,
+      totalPages: response.data.totalPages,
+      totalCount: response.data.totalCount
+    };
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Помилка при завантаженні оголошень за ціною');
+  }
+};
