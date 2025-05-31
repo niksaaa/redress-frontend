@@ -132,7 +132,7 @@ export default function SellerPage() {
         if (savedData) {
           try {
             const parsedData = JSON.parse(savedData);
-            if (parsedData.profile.Id === id) {
+            if (parsedData.profile.id === id) {
               setSellerData(parsedData);
               setLoading(false);
               return;
