@@ -212,7 +212,7 @@ export const fetchListingsByPriceRange = async (minPrice, maxPrice, page = 1, pa
   }
 
   try {
-    const response = await authService.get(`/Listing/by-price-range`, {
+    const response = await authService.get(`/Listing/GetByPriceRange/by-price-range`, {
       params: {
         minPrice,
         maxPrice,
