@@ -157,12 +157,6 @@ const LoginPage = () => {
 
     try {
       await login({ email, password });
-      // После успешного входа получаем и сохраняем данные профиля
-      const profileData = await fetchProfile();
-      if (profileData && profileData.id) {
-        localStorage.setItem('profileId', profileData.id);
-        console.log('Profile data saved:', profileData);
-      }
       console.log('Вхід успішний, перенаправляємо на головну');
       navigate("/main-page");
     } catch (error) {

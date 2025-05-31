@@ -15,45 +15,44 @@ import { useFavorites } from "../context/FavoritesContext";
 import { useAuth } from "../context/AuthContext";
 import likedIcon from '../images/liked.png';
 import likeIcon from '../images/like.png';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { addToFavorites, removeFromFavorites } from '../api/favorite';
 
 export default function ProductPage() {
   const { id } = useParams();
   const [listing, setListing] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const { toggleFavorite, isFavorite } = useFavorites();
-  const { isAuthenticated } = useAuth();
+  const profileId = localStorage.getItem('profileId');
+  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  const isItemFavorite = favorites.includes(id);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const loadListing = async () => {
-      try {
-        const data = await fetchListingDetails(id);
-        setListing(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+  const { mutate: toggleFavorite } = useMutation({
+    mutationFn: async () => {
+      if (isItemFavorite) {
+        await removeFromFavorites(profileId, id);
+      } else {
+        await addToFavorites(profileId, id);
       }
-    };
-
-    loadListing();
-  }, [id]);
+    },
+    onSuccess: () => {
+      const updatedFavorites = isItemFavorite
+        ? favorites.filter(favId => favId !== id)
+        : [...favorites, id];
+      
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      queryClient.invalidateQueries(['favorites']);
+    }
+  });
 
   const handleFavoriteClick = () => {
-    if (!isAuthenticated()) {
+    if (!profileId) {
       alert('Будь ласка, увійдіть, щоб додавати товари до обраного');
       return;
     }
-    toggleFavorite(id);
+    toggleFavorite();
   };
 
-
-  if (loading) return <div className="loading">Завантаження даних товару...</div>;
-  if (error) return <div className="error">Помилка: {error}</div>;
-  if (!listing) return <div className="no-data">Товар не знайдено</div>;
-
   const formattedDate = format(new Date(listing.createdAt), 'dd.MM.yyyy, HH:mm:ss', { locale: uk });
-  const isItemFavorite = isFavorite(id);
 
   return (
     <div className="product-page-container">

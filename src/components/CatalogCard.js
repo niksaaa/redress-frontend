@@ -172,9 +172,9 @@
 import React from "react";
 import "../styles/сatalog-card.css";
 import { Link } from "react-router-dom";
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addToFavorites, removeFromFavorites } from '../api/favorite';
-import fallbackImage from '../images/main-page/v31_67.png';
+import fallbackImage from '../images/defaultProductImage.png';
 import likedIcon from '../images/liked.png';
 import likeIcon from '../images/like.png';
 
@@ -182,51 +182,42 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete 
   const queryClient = useQueryClient();
   const profileId = localStorage.getItem('profileId');
 
-  // Функция для проверки, находится ли товар в избранном
-  const isFavorite = () => {
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-    return favorites.includes(id);
-  };
+  // Отримуємо список обраних з localStorage
+  const favorites = JSON.parse(localStorage.getItem('favorites') || []);
+  const isItemFavorite = favorites.includes(id);
 
-  // Мутация для добавления в избранное
-  const addToFavoritesMutation = useMutation({
-    mutationFn: () => addToFavorites({ profileId, listingId: id }),
+  // Мутації для додавання/видалення
+  const { mutate: toggleFavorite } = useMutation({
+    mutationFn: async () => {
+      if (isItemFavorite) {
+        await removeFromFavorites(profileId, id);
+      } else {
+        await addToFavorites(profileId, id);
+      }
+    },
     onSuccess: () => {
-      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-      favorites.push(id);
-      localStorage.setItem('favorites', JSON.stringify(favorites));
-      queryClient.invalidateQueries(['favorites']);
-    }
-  });
-
-  // Мутация для удаления из избранного
-  const removeFromFavoritesMutation = useMutation({
-    mutationFn: () => removeFromFavorites(profileId, id),
-    onSuccess: () => {
-      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-      const updatedFavorites = favorites.filter(favId => favId !== id);
+      // Оновлюємо localStorage
+      const updatedFavorites = isItemFavorite
+        ? favorites.filter(favId => favId !== id)
+        : [...favorites, id];
+      
       localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      
+      // Інвалідуємо запити
       queryClient.invalidateQueries(['favorites']);
     }
   });
 
   const handleFavoriteClick = (e) => {
     e.preventDefault();
-    e.stopPropagation();
-    
     if (!profileId) {
       alert('Будь ласка, увійдіть, щоб додавати товари до обраного');
       return;
     }
-
-    if (isFavorite()) {
-      removeFromFavoritesMutation.mutate();
-    } else {
-      addToFavoritesMutation.mutate();
-    }
+    toggleFavorite();
   };
 
-  const handleDeleteClick = (e) => {
+    const handleDeleteClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (onDelete) {
@@ -254,8 +245,8 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete 
           <span className="catalog-title">{title}</span>
           <div className="like-button" onClick={handleFavoriteClick}>
             <img 
-              src={isFavorite() ? likedIcon : likeIcon} 
-              alt={isFavorite() ? "В обраному" : "Додати до обраного"}
+              src={isItemFavorite() ? likedIcon : likeIcon} 
+              alt={isItemFavorite() ? "В обраному" : "Додати до обраного"}
               className="like-icon2"
             />
           </div>

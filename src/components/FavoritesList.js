@@ -13,7 +13,14 @@ export const FavoritesList = ({ profileId }) => {
     queryKey: ['favorites', profileId, page],
     queryFn: () => fetchUserFavorites(profileId, page, pageSize),
     enabled: !!profileId || process.env.REACT_APP_DEMO_MODE === 'true',
-    keepPreviousData: true
+    keepPreviousData: true,
+    onSuccess: (data) => {
+      // Оновлюємо localStorage при завантаженні
+      if (data?.items) {
+        const favoriteIds = data.items.map(item => item.id);
+        localStorage.setItem('favorites', JSON.stringify(favoriteIds));
+      }
+    }
   });
     
     // Функція для зміни сторінки з прокруткою

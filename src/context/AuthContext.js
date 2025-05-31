@@ -6,6 +6,8 @@ import {
   isAuthenticated,
   refreshAccessToken
 } from '../api/authService';
+import { fetchProfile } from '../api/profile';
+import { fetchUserFavorites } from '../api/favorite';
 
 const AuthContext = createContext();
 
@@ -25,6 +27,15 @@ export const AuthProvider = ({ children }) => {
       setUser(userData);
       
       console.log('Користувач успішно авторизований:', userData);
+      
+      // Завантажуємо обрані товари після входу
+    const profileData = await fetchProfile();
+    if (profileData?.id) {
+      localStorage.setItem('profileId', profileData.id);
+      const favorites = await fetchUserFavorites(profileData.id);
+      localStorage.setItem('favorites', JSON.stringify(favorites.items.map(item => item.id)));
+      }
+      
       return response;
     } catch (error) {
       console.error('Помилка авторизації:', error);
