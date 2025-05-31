@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchUserFavorites } from '../api/favorite';
 import CatalogCard from './CatalogCard';
 import Pagination from './Pagination';
-import { useFavorites } from '../context/FavoritesContext';
 
 export const FavoritesList = ({ profileId }) => {
   const [page, setPage] = useState(1);

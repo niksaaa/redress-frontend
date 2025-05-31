@@ -11,7 +11,6 @@ import BiddingInfo from "../components/BiddingInfo";
 import { fetchListingDetails } from "../api/listing";
 import { format } from 'date-fns';
 import { uk } from 'date-fns/locale';
-import { useFavorites } from "../context/FavoritesContext";
 import { useAuth } from "../context/AuthContext";
 import likedIcon from '../images/liked.png';
 import likeIcon from '../images/like.png';
@@ -21,10 +20,27 @@ import { addToFavorites, removeFromFavorites } from '../api/favorite';
 export default function ProductPage() {
   const { id } = useParams();
   const [listing, setListing] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const profileId = localStorage.getItem('profileId');
   const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
   const isItemFavorite = favorites.includes(id);
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    const loadListing = async () => {
+      try {
+        const data = await fetchListingDetails(id);
+        setListing(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadListing();
+  }, [id]);
 
   const { mutate: toggleFavorite } = useMutation({
     mutationFn: async () => {
@@ -51,6 +67,10 @@ export default function ProductPage() {
     }
     toggleFavorite();
   };
+
+  if (loading) return <div className="loading">Завантаження даних товару...</div>;
+  if (error) return <div className="error">Помилка: {error}</div>;
+  if (!listing) return <div className="no-data">Товар не знайдено</div>;
 
   const formattedDate = format(new Date(listing.createdAt), 'dd.MM.yyyy, HH:mm:ss', { locale: uk });
 

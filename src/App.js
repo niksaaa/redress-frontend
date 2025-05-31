@@ -18,7 +18,6 @@ import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
-import { FavoritesProvider } from './context/FavoritesContext';
 
 const clientId = "587875719115-mgdk3iaeh1t65f9uca8i8vlee2bql5f5.apps.googleusercontent.com";
 
@@ -27,7 +26,6 @@ const App = () => {
     // <GoogleOAuthProvider clientId={clientId}>
     <Router>
       <AuthProvider>
-      <FavoritesProvider>
         <Routes>
           <Route
             path="/"
@@ -150,7 +148,6 @@ const App = () => {
             }
           />
           </Routes>
-          </FavoritesProvider>
       </AuthProvider>
     </Router>
     // </GoogleOAuthProvider>
