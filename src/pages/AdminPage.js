@@ -20,7 +20,8 @@ const AdminPage = () => {
   const queryClient = useQueryClient();
 
   // Отримання списку оголошень
-  const { data: listingsData, isLoading: isListingsLoading } = useQuery({
+  const { data: listingsData = { items: [], totalPages: 1 },
+  isLoading: isListingsLoading, } = useQuery({
     queryKey: ['adminListings', listingsPage],
     queryFn: () => fetchAllListings({ page: listingsPage, pageSize: 10 }),
   });
@@ -111,7 +112,7 @@ const AdminPage = () => {
             ) : (
               <>
                   <div className="items-grid">
-                    {listingsData.items.map(item => (
+                    {listingsData?.items.map(item => (
                       <CatalogCard
                         key={item.id}
                         id={item.id}
