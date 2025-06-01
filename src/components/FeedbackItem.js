@@ -1,22 +1,43 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchFeedbackDetails } from '../api/feedback';
 import { fetchUserDetails } from '../api/listing';
+import { useAuth } from '../context/AuthContext';
+import { deleteFeedback } from '../api/feedback';
+import '../styles/feedback.css';
 
-const FeedbackItem = ({ feedback }) => {
-  // Отримуємо деталі відгуку
+export const FeedbackItem = ({ feedback }) => {
+  const { userRole } = useAuth();
+  const queryClient = useQueryClient();
+  const isModerator = userRole === 1; // 1 - роль модератора
+
+  // Отримуємо деталі відгуку тільки для звичайного користувача
   const { data: feedbackDetails } = useQuery({
     queryKey: ['feedbackDetails', feedback.id],
     queryFn: () => fetchFeedbackDetails(feedback.id),
-    enabled: !!feedback.id
+    enabled: !!feedback.id && !isModerator // Викликаємо тільки якщо не модератор
   });
 
-  // Отримуємо дані користувача
+  // Отримуємо дані користувача для обох ролей
   const { data: userData } = useQuery({
-    queryKey: ['userDetails', feedbackDetails?.profile?.userId],
-    queryFn: () => fetchUserDetails(feedbackDetails?.profile?.userId),
-    enabled: !!feedbackDetails?.profile?.userId
+    queryKey: ['userDetails', isModerator ? feedback.userId : feedbackDetails?.profile?.userId],
+    queryFn: () => fetchUserDetails(isModerator ? feedback.userId : feedbackDetails?.profile?.userId),
+    enabled: !!(isModerator ? feedback.userId : feedbackDetails?.profile?.userId)
   });
+
+  // Мутація для видалення відгуку
+  const deleteMutation = useMutation({
+    mutationFn: () => deleteFeedback(feedback.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['feedbacks']);
+    },
+  });
+
+  const handleDelete = () => {
+    if (window.confirm('Ви впевнені, що хочете видалити цей відгук?')) {
+      deleteMutation.mutate();
+    }
+  };
 
   return (
     <div className="feedback-item">
@@ -36,6 +57,17 @@ const FeedbackItem = ({ feedback }) => {
       {feedback.comment && (
         <div className="feedback-comment">
           <p>{feedback.comment}</p>
+        </div>
+      )}
+      {isModerator && (
+        <div className="feedback-actions">
+          <button 
+            className="delete-btn" 
+            onClick={handleDelete}
+            disabled={deleteMutation.isLoading}
+          >
+            {deleteMutation.isLoading ? 'Видалення...' : 'Видалити'}
+          </button>
         </div>
       )}
     </div>

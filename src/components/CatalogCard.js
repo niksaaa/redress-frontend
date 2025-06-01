@@ -1,5 +1,7 @@
 import React from "react";
-import "../styles/сatalog-card.css";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from '../context/AuthContext';
+import "../styles/catalog-card.css";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addToFavorites, removeFromFavorites } from '../api/favorite';
@@ -7,7 +9,18 @@ import fallbackImage from '../images/defaultProductImage.png';
 import likedIcon from '../images/liked.png';
 import likeIcon from '../images/like.png';
 
-const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete }) => {
+const CatalogCard = ({ 
+  id, 
+  title, 
+  price, 
+  imageUrl, 
+  isAuction, 
+  isOwner,
+  onDelete 
+}) => {
+  const navigate = useNavigate();
+  const { user, userRole } = useAuth();
+  const isAdmin = userRole === 0;
   const queryClient = useQueryClient();
   const profileId = localStorage.getItem('profileId');
 
@@ -37,6 +50,10 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete 
     }
   });
 
+  const handleCardClick = () => {
+    navigate(`/product/${id}`);
+  };
+
   const handleFavoriteClick = (e) => {
     e.preventDefault();
     if (!profileId) {
@@ -46,8 +63,7 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete 
     toggleFavorite();
   };
 
-    const handleDeleteClick = (e) => {
-    e.preventDefault();
+  const handleDelete = (e) => {
     e.stopPropagation();
     if (onDelete) {
       onDelete(id);
@@ -79,8 +95,8 @@ const CatalogCard = ({ id, price, title, imageUrl, isAuction, isOwner, onDelete 
               className="like-icon2"
             />
           </div>
-          {isOwner && (
-            <div className="delete-button" onClick={handleDeleteClick}>
+          {(isOwner || isAdmin) && (
+            <div className="delete-button" onClick={handleDelete}>
               <div className="delete-icon"></div>
             </div>
           )}

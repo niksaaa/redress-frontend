@@ -69,3 +69,24 @@ export const getProfileByUser = async () => {
     throw new Error(error.response?.data?.message || 'Не вдалося отримати дані профілю');
   }
 };
+
+
+export const fetchAllUsers = async ({ page = 1, pageSize = 10 }) => {
+  try {
+    const response = await authService.get(`/User/GetAll?page=${page}&pageSize=${pageSize}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    throw error;
+  }
+};
+
+export const deleteUser = async (userId) => {
+  try {
+    const response = await authService.delete(`/User/Delete/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    throw error;
+  }
+};

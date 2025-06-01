@@ -16,6 +16,8 @@ import OrderPage from "./pages/OrderPage";
 import SellerPage from "./pages/SellerPage";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
+import AdminPage from "./pages/AdminPage";
+import ModeratorPage from "./pages/ModeratorPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -63,6 +65,26 @@ const App = () => {
               <ProtectedRoute>
                 <Header />
                 <MainPage />
+                <FooterDynamic />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <Header />
+                <AdminPage />
+                <FooterDynamic />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/moderator"
+            element={
+              <ProtectedRoute>
+                <Header />
+                <ModeratorPage />
                 <FooterDynamic />
               </ProtectedRoute>
             }

@@ -11,9 +11,16 @@ import { fetchUserFavorites } from '../api/favorite';
 
 const AuthContext = createContext();
 
+export const UserRole = {
+  Admin: 0,
+  Moderator: 1,
+  Regular: 2
+};
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userRole, setUserRole] = useState(null);
 
   console.log('Ініціалізація AuthProvider');
 
@@ -22,20 +29,24 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await loginUser(credentials);
       
-      // Оскільки у вас немає методу /UserInfo, просто встановлюємо email
-      const userData = { email: credentials.email };
+      const userData = { 
+        email: credentials.email,
+        role: response.data.role // Додаємо роль з відповіді сервера
+      };
+      
       setUser(userData);
+      setUserRole(response.data.role);
       
       console.log('Користувач успішно авторизований:', userData);
       
-      // Завантажуємо обрані товари після входу
-    const profileData = await fetchProfile();
-    if (profileData?.id) {
-      localStorage.setItem('profileId', profileData.id);
-      localStorage.setItem('userBalance', profileData.balance); // Store balance
-      
-      const favorites = await fetchUserFavorites(profileData.id);
-      localStorage.setItem('favorites', JSON.stringify(favorites.items.map(item => item.id)));
+      const profileData = await fetchProfile();
+      if (profileData?.id) {
+        localStorage.setItem('profileId', profileData.id);
+        localStorage.setItem('userBalance', profileData.balance);
+        localStorage.setItem('userRole', response.data.role);
+        
+        const favorites = await fetchUserFavorites(profileData.id);
+        localStorage.setItem('favorites', JSON.stringify(favorites.items.map(item => item.id)));
       }
       
       return response;
@@ -61,6 +72,8 @@ export const AuthProvider = ({ children }) => {
     console.log('Викликано вихід користувача');
     logoutUser();
     setUser(null);
+    setUserRole(null);
+    localStorage.removeItem('userRole');
     console.log('Користувач вийшов з системи');
   };
 
@@ -69,9 +82,9 @@ export const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
       try {
         if (isAuthenticated()) {
-          console.log('Користувач має токен, але немає методу /UserInfo');
-          // Встановлюємо мінімальні дані, оскільки немає методу отримання інфи
-          setUser({ authenticated: true });
+          const role = localStorage.getItem('userRole');
+          setUserRole(parseInt(role));
+          setUser({ authenticated: true, role: parseInt(role) });
         } else {
           console.log('Користувач не авторизований');
         }
@@ -93,7 +106,8 @@ export const AuthProvider = ({ children }) => {
       register, 
       logout, 
       loading,
-      isAuthenticated
+      isAuthenticated,
+      userRole
     }}>
       {children}
     </AuthContext.Provider>

@@ -12,13 +12,13 @@ const CatalogList = ({ items }) => {
     <div className="items-grid">
       {items.map((item) => (
         <CatalogCard
-          key={item.id}
-          id={item.id}
-          price={item.price}
-          title={item.title}
-          imageUrl={item.url}
-          isAuction={item.isAuction}
-        />
+        key={item.id}
+        id={item.id}
+        price={item.price}
+        title={item.title}
+        imageUrl={item.url}
+        isAuction={item.isAuction}
+      />
       ))}
     </div>
   );

@@ -40,3 +40,24 @@ export const fetchFeedbackDetails = async (feedbackId) => {
     throw new Error(error.response?.data?.message || 'Не вдалося завантажити деталі відгуку');
   }
 };
+
+
+export const fetchAllFeedbacks = async ({ page = 1, pageSize = 10 }) => {
+  try {
+    const response = await authService.get(`/Feedback/GetAll?page=${page}&pageSize=${pageSize}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching feedbacks:', error);
+    throw error;
+  }
+};
+
+export const deleteFeedback = async (feedbackId) => {
+  try {
+    const response = await authService.delete(`/Feedback/Delete/${feedbackId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting feedback:', error);
+    throw error;
+  }
+};
