@@ -111,7 +111,7 @@ const AdminPage = () => {
             ) : (
               <>
                   <div className="items-grid">
-                    {listingsData?.items.map(item => (
+                    {listingsData.items.map(item => (
                       <CatalogCard
                         key={item.id}
                         id={item.id}

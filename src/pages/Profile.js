@@ -13,6 +13,7 @@ import WalletBalance from '../components/WalletBalance';
 import { FeedbackList } from '../components/FeedbackList';
 import { FavoritesList } from "../components/FavoritesList";
 import { UserProductList } from "../components/UserProductList";
+import { useAuth } from '../context/AuthContext';
 
 const sortOptions1 = [
     "За популярністю",
@@ -30,6 +31,8 @@ const sortOptions2 = [
 ];
   
 export default function Profile() {
+  const { logout } = useAuth();
+
   // Отримуємо дані профілю
   console.log('Початок завантаження даних профілю');
   const { data: profileData, isLoading: isProfileLoading, error: profileError } = useQuery({
@@ -83,6 +86,11 @@ export default function Profile() {
     }
   }, [state]);
 
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
   if (isLoading) return <div className="loading">Завантаження профілю...</div>;
   if (error) return <div className="error">Помилка: {error.message}</div>;
     
@@ -132,7 +140,10 @@ export default function Profile() {
       </button>
             <button className="add-listing-btn" onClick={() => navigate("/ad-form")}>
               Додати оголошення
-            </button>
+              </button>
+              <button className="logout-btn2" onClick={handleLogout}>
+          Вийти
+        </button>
           </div>
         </div>
       </div>
