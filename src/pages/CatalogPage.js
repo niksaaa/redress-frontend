@@ -10,7 +10,7 @@ import { fetchListingsBySex, fetchListingsByCategory, fetchListingsByPriceRange 
 import Filters2 from "../components/Filters2";
 
 
-const sortOptions1 = ["За популярністю", "Дешевше", "Дорожче", "За новинками"];
+const sortOptions1 = ["За популярністю", "Дешевше", "Дорожче"];
 
 const sortOptions2 = ["Всі оголошення", "Аукціон", "Звичайні оголошення"];
 

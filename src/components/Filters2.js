@@ -284,9 +284,9 @@ export default function Filters({ sex, onCategorySelect, onPriceChange, selected
 
 function getSexLabel(sex) {
   switch (sex) {
-    case 1: return 'жінок';
-    case 0: return 'чоловіків';
-    case 2: return 'дітей';
+    case "Female": return 'жінок';
+    case "Male": return 'чоловіків';
+    case "Child": return 'дітей';
     default: return '';
   }
 }

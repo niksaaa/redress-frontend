@@ -163,7 +163,8 @@ export default function Profile() {
         
         {sort2 === "Гаманець" && (
           <div className="content-section">
-            <WalletBalance balance={profileData?.balance}/>
+            {/* <WalletBalance balance={profileData?.balance}/> */}
+            <WalletBalance balance={2000}/>
           </div>
         )}
 

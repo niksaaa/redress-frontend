@@ -46,7 +46,6 @@ const Header = () => {
     <header className="v162_3">
       {/* Общий хедер для всех страниц */}
       <div className="v162_4">
-        <div className="search-icon"></div>
         <div className="like-icon" onClick={handleLikeClick} title="Обране"></div>
         <Link to="/profile">
           <div className="profile-icon" title="Профіль"></div>
