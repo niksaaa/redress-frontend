@@ -44,7 +44,7 @@
 }
 
 .v31_75 {
-  width: 74px;
+  width: 100%;
   color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 348px;
@@ -57,7 +57,7 @@
 }
 
 .v31_82 {
-  width: 117px;
+  max-width: 240px;
   color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 376px;
@@ -100,7 +100,6 @@
 .v46_118 {
   width: 24px;
   height: 24px;
-  background: url("../images/like.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;

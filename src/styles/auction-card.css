@@ -65,6 +65,7 @@
   font-weight: regular;
   font-size: 16px;
   margin-top: 4px;
+  max-width: 200px;
 }
 
 .auction-card__like {
@@ -116,7 +117,6 @@
 .v46_118_like {
   width: 24px;
   height: 24px;
-  background: url("../images/like.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;

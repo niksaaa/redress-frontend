@@ -230,3 +230,12 @@ export const fetchListingsByPriceRange = async (minPrice, maxPrice, page = 1, pa
     throw new Error(error.response?.data?.message || 'Помилка при завантаженні оголошень за ціною');
   }
 };
+
+
+export const fetchAllListings = async ({ page, pageSize }) => {
+  const response = await authService.get(`Listing/GetAll?page=${page}&pageSize=${pageSize}`);
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+};
