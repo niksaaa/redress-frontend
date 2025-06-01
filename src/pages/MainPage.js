@@ -7,10 +7,10 @@ import AuctionList from "../components/AuctionList";
 import { useNavigate } from "react-router-dom";
 
 export default function MainPage() {
-  const { data: listings, isLoading, isError } = useQuery(
-    ['listings'],
-    () => fetchAllListings({ page: 1, pageSize: 20 }) // Fetch enough items for both sections
-  );
+  const { data: listings, isLoading, isError } = useQuery({
+    queryKey: ['listings'],
+    queryFn: () => fetchAllListings({ page: 1, pageSize: 20 }),
+  });
 
   const navigate = useNavigate();
 
