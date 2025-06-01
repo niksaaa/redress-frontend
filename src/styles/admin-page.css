@@ -1,6 +1,7 @@
 .admin-page {
     padding: 40px 188px;
     min-height: calc(100vh - 200px);
+    font-family: 'Inria Serif', serif;
 }
 
 .admin-header {
@@ -17,7 +18,7 @@
     color: #333;
 }
 
-.logout-btn {
+.logout-btn2 {
     padding: 8px 20px;
     background-color: #D9D9D9;
     border: none;
@@ -28,7 +29,7 @@
     transition: all 0.3s ease;
 }
 
-.logout-btn:hover {
+.logout-btn2:hover {
     background-color: #C9C9C9;
     transform: translateY(-2px);
 }
@@ -52,7 +53,7 @@
 
 .tab-btn.active {
     background-color: #3CC12B;
-    color: white;
+    color: black;
 }
 
 .tab-btn:hover:not(.active) {

@@ -83,7 +83,7 @@ const AdminPage = () => {
     <div className="admin-page">
       <div className="admin-header">
         <h1>Панель адміністратора</h1>
-        <button className="logout-btn" onClick={handleLogout}>
+        <button className="logout-btn2" onClick={handleLogout}>
           Вийти
         </button>
       </div>
@@ -110,7 +110,6 @@ const AdminPage = () => {
               <div className="loading">Завантаження оголошень...</div>
             ) : (
               <>
-                <div className="content-section-3">
                   <div className="items-grid">
                     {listingsData?.items.map(item => (
                       <CatalogCard
@@ -125,7 +124,6 @@ const AdminPage = () => {
                       />
                     ))}
                   </div>
-                </div>
                 {listingsData?.totalPages > 1 && (
                   <Pagination
                     currentPage={listingsPage}

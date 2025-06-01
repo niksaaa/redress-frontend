@@ -23,7 +23,7 @@ const UserItem = ({ user, onDelete }) => {
           <span className="user-role">{getRoleText(user.role)}</span>
         </div>
         <button 
-          className="delete-btn" 
+          className="delete-btn2" 
           onClick={() => onDelete(user.id)}
         >
           Видалити
