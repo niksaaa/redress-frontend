@@ -31,11 +31,11 @@ export const AuthProvider = ({ children }) => {
       
       const userData = { 
         email: credentials.email,
-        role: response.data.role // Додаємо роль з відповіді сервера
+        role: response.data.user.role // Додаємо роль з відповіді сервера
       };
       
       setUser(userData);
-      setUserRole(response.data.role);
+      setUserRole(response.data.user.role);
       
       console.log('Користувач успішно авторизований:', userData);
       
