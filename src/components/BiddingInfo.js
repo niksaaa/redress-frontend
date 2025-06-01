@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import "../styles/bidding-info.css";
 import { format } from 'date-fns';
 import { uk } from 'date-fns/locale';
+import { createBid } from "../api/bid";
 
-const BiddingInfo = ({ currentPrice, startPrice, minStep, endAt }) => {
+const BiddingInfo = ({ currentPrice, startPrice, minStep, endAt, auctionId, onBidSuccess }) => {
   const [currentBid, setCurrentBid] = useState(currentPrice || startPrice);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleBidChange = (e) => {
     const value = parseInt(e.target.value);
@@ -25,8 +27,9 @@ const BiddingInfo = ({ currentPrice, startPrice, minStep, endAt }) => {
     }
   };
 
-  const handleMakeBid = () => {  
+  const handleMakeBid = async () => {  
     const userBalance = parseFloat(localStorage.getItem('userBalance')) || 0;
+    const profileId = localStorage.getItem('profileId');
     const requiredAmount = currentBid;
 
     if (currentBid <= currentPrice) {
@@ -45,8 +48,43 @@ const BiddingInfo = ({ currentPrice, startPrice, minStep, endAt }) => {
       return;
     }
 
-    // Якщо все добре - робимо ставку
-    console.log("Робимо ставку:", currentBid);
+    if (!auctionId || !profileId) {
+      setModalMessage('Помилка: не вдалося ідентифікувати аукціон або користувача');
+      setShowModal(true);
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Відправка ставки
+      const bidData = {
+        amount: currentBid,
+        auctionId: auctionId,
+        profileId: profileId
+      };
+
+      await createBid(bidData);
+      
+      // Оновлення даних
+      if (onBidSuccess) {
+        await onBidSuccess();
+      }
+      
+      setModalMessage(`Ставку успішно прийнято! Нова ціна: ${currentBid} грн`);
+      setShowModal(true);
+      
+      // Оновлюємо поточну ставку до нової ціни
+      setCurrentBid(currentBid + minStep);
+
+    } catch (error) {
+      console.error('Помилка при відправці ставки:', error);
+      setModalMessage(`Помилка при відправці ставки: ${error.response?.data?.message || error.message}`);
+      setShowModal(true);
+      setCurrentBid(currentPrice);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const formattedEndDate = endAt ? format(new Date(endAt), 'dd.MM.yyyy, HH:mm', { locale: uk }) : 'Не вказано';
@@ -89,8 +127,12 @@ const BiddingInfo = ({ currentPrice, startPrice, minStep, endAt }) => {
         </div>
       </div>
       
-      <button className="place-bid-btn" onClick={handleMakeBid}>
-        Зробити ставку
+      <button 
+        className="place-bid-btn" 
+        onClick={handleMakeBid}
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? 'Відправка...' : 'Зробити ставку'}
       </button>
       
       {showModal && (

@@ -29,29 +29,35 @@ export default function ProductPage() {
   const isItemFavorite = favorites.includes(id);
   const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const loadListing = async () => {
-      try {
-        const data = await fetchListingDetails(id);
-        setListing(data);
-        
-        // If it's an auction, fetch auction details
-        if (data.isAuction && data.auctionId) {
-          try {
-            const auctionData = await getAuctionById(data.auctionId);
-            setAuctionDetails(auctionData);
-          } catch (auctionError) {
-            console.error("Failed to fetch auction details:", auctionError);
-          }
-        }
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+  const fetchListingData = async () => {
+    try {
+      const listingData = await fetchListingDetails(id);
+      setListing(listingData);
+      
+      if (listingData.isAuction && listingData.auctionId) {
+        const auctionData = await getAuctionById(listingData.auctionId);
+        setAuctionDetails(auctionData);
       }
-    };
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    loadListing();
+  const refreshAuctionData = async () => {
+    if (listing?.auctionId) {
+      try {
+        const data = await getAuctionById(listing.auctionId);
+        setAuctionDetails(data);
+      } catch (error) {
+        console.error("Помилка оновлення аукціону:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchListingData();
   }, [id]);
 
   const { mutate: toggleFavorite } = useMutation({
@@ -106,6 +112,8 @@ export default function ProductPage() {
               startPrice={auctionDetails?.startPrice || listing.price}
               minStep={auctionDetails?.minStep || 10}
               endAt={auctionDetails?.endAt}
+              auctionId={listing.auctionId} 
+              onBidSuccess={refreshAuctionData}
             />
           ) : (
             <PriceSection price={listing.price} />
