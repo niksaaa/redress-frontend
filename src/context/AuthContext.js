@@ -32,6 +32,8 @@ export const AuthProvider = ({ children }) => {
     const profileData = await fetchProfile();
     if (profileData?.id) {
       localStorage.setItem('profileId', profileData.id);
+      localStorage.setItem('userBalance', profileData.balance); // Store balance
+      
       const favorites = await fetchUserFavorites(profileData.id);
       localStorage.setItem('favorites', JSON.stringify(favorites.items.map(item => item.id)));
       }

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "../styles/bidding-info.css";
+import { format } from 'date-fns';
+import { uk } from 'date-fns/locale';
 
-const BiddingInfo = () => {
-  const [startingPrice, setStartingPrice] = useState(690);
-  const [currentBid, setCurrentBid] = useState(690);
+const BiddingInfo = ({ currentPrice, startPrice, minStep, endAt }) => {
+  const [currentBid, setCurrentBid] = useState(currentPrice || startPrice);
   const [showModal, setShowModal] = useState(false);
-  const minBidIncrement = 10;
+  const [modalMessage, setModalMessage] = useState('');
 
   const handleBidChange = (e) => {
     const value = parseInt(e.target.value);
@@ -15,33 +16,56 @@ const BiddingInfo = () => {
   };
 
   const incrementBid = () => {
-    setCurrentBid(currentBid + minBidIncrement);
+    setCurrentBid(currentBid + minStep);
   };
 
   const decrementBid = () => {
-    if (currentBid - minBidIncrement >= startingPrice) {
-      setCurrentBid(currentBid - minBidIncrement);
+    if (currentBid - minStep >= startPrice) {
+      setCurrentBid(currentBid - minStep);
     }
   };
 
-  const handleMakeBid = () => {
-    if (currentBid > 800) {
+  const handleMakeBid = () => {  
+    const userBalance = parseFloat(localStorage.getItem('userBalance')) || 0;
+    const requiredAmount = currentBid;
+
+    if (currentBid <= currentPrice) {
+      setModalMessage('Ваша ставка повинна бути вищою за поточну ціну');
       setShowModal(true);
-    } else if (currentBid > startingPrice) {
-      setStartingPrice(currentBid);
+      setCurrentBid(currentPrice); // Скидаємо до поточної ціни
+      return;
     }
+
+    if (userBalance < requiredAmount) {
+      const shortage = requiredAmount - userBalance;
+      setModalMessage(`Для участі у аукціоні на Вашому рахунку, нажаль, недостатньо
+              коштів. Вам не вистачає ${shortage} грн.\n \n Перейдіть до особистого кабінету, щоб поповнити рахунок.`);
+      setShowModal(true);
+      setCurrentBid(currentPrice); // Скидаємо до поточної ціни
+      return;
+    }
+
+    // Якщо все добре - робимо ставку
+    console.log("Робимо ставку:", currentBid);
   };
+
+  const formattedEndDate = endAt ? format(new Date(endAt), 'dd.MM.yyyy, HH:mm', { locale: uk }) : 'Не вказано';
 
   return (
     <div className="bidding-info">
       <div className="info-row">
         <span className="info-label">Дата закінчення</span>
-        <span className="info-value">12</span>
+        <span className="info-value">{formattedEndDate}</span>
       </div>
       
       <div className="info-row">
         <span className="info-label">Початкова ціна</span>
-        <span className="info-value">{startingPrice} грн</span>
+        <span className="info-value">{startPrice} грн</span>
+      </div>
+
+      <div className="info-row">
+        <span className="info-label">Поточна ціна</span>
+        <span className="info-value">{currentPrice} грн</span>
       </div>
       
       <div className="bid-controls">
@@ -61,7 +85,7 @@ const BiddingInfo = () => {
         
         <div className="min-bid">
           <span className="bid-label">Мінімальна ставка</span>
-          <span className="bid-value">{minBidIncrement} грн</span>
+          <span className="bid-value">{minStep} грн</span>
         </div>
       </div>
       
@@ -72,11 +96,9 @@ const BiddingInfo = () => {
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">
-            <p>
-              Для участі у аукціоні на Вашому рахунку, нажаль, недостатньо
-              коштів
+          <p>
+            {modalMessage}
             </p>
-            <p>Перейдіть до особистого кабінету, щоб поповнити</p>
             <button onClick={() => setShowModal(false)}>Закрити</button>
           </div>
         </div>

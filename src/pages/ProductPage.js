@@ -9,6 +9,7 @@ import SellerSection from "../components/SellerSection";
 import DescriptionSection from "../components/DescriptionSection";
 import BiddingInfo from "../components/BiddingInfo";
 import { fetchListingDetails } from "../api/listing";
+import { getAuctionById } from "../api/auction";
 import { format } from 'date-fns';
 import { uk } from 'date-fns/locale';
 import { useAuth } from "../context/AuthContext";
@@ -20,6 +21,7 @@ import { addToFavorites, removeFromFavorites } from '../api/favorite';
 export default function ProductPage() {
   const { id } = useParams();
   const [listing, setListing] = useState(null);
+  const [auctionDetails, setAuctionDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const profileId = localStorage.getItem('profileId');
@@ -32,6 +34,16 @@ export default function ProductPage() {
       try {
         const data = await fetchListingDetails(id);
         setListing(data);
+        
+        // If it's an auction, fetch auction details
+        if (data.isAuction && data.auctionId) {
+          try {
+            const auctionData = await getAuctionById(data.auctionId);
+            setAuctionDetails(auctionData);
+          } catch (auctionError) {
+            console.error("Failed to fetch auction details:", auctionError);
+          }
+        }
       } catch (err) {
         setError(err.message);
       } finally {
@@ -88,7 +100,16 @@ export default function ProductPage() {
   title={isItemFavorite ? "В обраному" : "Додати до обраного"}
 />
           </div>
-          <PriceSection price={listing.price} listing={listing} />
+          {listing.isAuction ? (
+            <BiddingInfo 
+              currentPrice={auctionDetails?.currentPrice || listing.price}
+              startPrice={auctionDetails?.startPrice || listing.price}
+              minStep={auctionDetails?.minStep || 10}
+              endAt={auctionDetails?.endAt}
+            />
+          ) : (
+            <PriceSection price={listing.price} />
+          )}
           </div>
       </div>
       <TagsContainer listingId={listing.id}/>
