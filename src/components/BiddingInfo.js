@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { uk } from 'date-fns/locale';
 import { createBid } from "../api/bid";
 
-const BiddingInfo = ({ currentPrice, startPrice, minStep, endAt, auctionId, onBidSuccess }) => {
+const BiddingInfo = ({ currentPrice, startPrice, minStep, endAt, auctionId, onBidSuccess, isAdmin, onAdminRestriction }) => {
   const [currentBid, setCurrentBid] = useState(currentPrice || startPrice);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
@@ -27,7 +27,12 @@ const BiddingInfo = ({ currentPrice, startPrice, minStep, endAt, auctionId, onBi
     }
   };
 
-  const handleMakeBid = async () => {  
+  const handleMakeBid = async () => {
+    if (isAdmin) {
+      onAdminRestriction();
+      return;
+    }
+    
     const userBalance = parseFloat(localStorage.getItem('userBalance')) || 0;
     const profileId = localStorage.getItem('profileId');
     const requiredAmount = currentBid;

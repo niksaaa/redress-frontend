@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/price-section.css";
 
-const PriceSection = ({ price, listing }) => {
+const PriceSection = ({ price, listing, isAdmin, onAdminRestriction }) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
   const handleBuyClick = () => {
+    if (isAdmin) {
+      onAdminRestriction();
+      return;
+    }
+    
     const userBalance = parseFloat(localStorage.getItem('userBalance')) || 0;
     
     // if (userBalance < price) {

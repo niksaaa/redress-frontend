@@ -28,6 +28,9 @@ export default function ProductPage() {
   const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
   const isItemFavorite = favorites.includes(id);
   const queryClient = useQueryClient();
+  const { user, userRole } = useAuth();
+  const isAdmin = userRole === 0;
+  const [showAdminModal, setShowAdminModal] = useState(false);
 
   const fetchListingData = async () => {
     try {
@@ -86,6 +89,10 @@ export default function ProductPage() {
     toggleFavorite();
   };
 
+  const handleAdminRestriction = () => {
+    setShowAdminModal(true);
+  };
+
   if (loading) return <div className="loading">Завантаження даних товару...</div>;
   if (error) return <div className="error">Помилка: {error}</div>;
   if (!listing) return <div className="no-data">Товар не знайдено</div>;
@@ -114,10 +121,27 @@ export default function ProductPage() {
               endAt={auctionDetails?.endAt}
               auctionId={listing.auctionId} 
               onBidSuccess={refreshAuctionData}
+              isAdmin={isAdmin}
+              onAdminRestriction={handleAdminRestriction}
             />
           ) : (
-            <PriceSection price={listing.price} listing={listing}/>
+            <PriceSection 
+          price={listing.price} 
+          listing={listing}
+          isAdmin={isAdmin}
+          onAdminRestriction={handleAdminRestriction}
+        />
           )}
+
+          {/* Модальне вікно для адміністратора */}
+      {showAdminModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <p>Адміністратори не можуть робити покупки або ставки на аукціонах</p>
+            <button onClick={() => setShowAdminModal(false)}>Закрити</button>
+          </div>
+        </div>
+      )}
           </div>
       </div>
       <TagsContainer listingId={listing.id}/>
