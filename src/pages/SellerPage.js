@@ -214,13 +214,13 @@ export default function SellerPage() {
             variant="default"
           />
                   </div> */}
-                  <UserProductList profileId={profile.Id} />
+                  <UserProductList profileId={profile.id} />
         </div>
         )}
 
 {sort2 === "Відгуки" && (
           <div className="content-section">
-            <FeedbackList profileId={profile.Id} />
+            <FeedbackList profileId={profile.id} />
           </div>
         )}
       </div>
