@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { GoogleLogin } from '@react-oauth/google';
 import { fetchProfile } from "../api/profile";
 import "../styles/login.css";
 
@@ -61,6 +62,41 @@ const LoginPage = () => {
     navigate("/registration");
   };
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      setIsLoading(true);
+      setErrorMessage("");
+
+      const response = await login({ idToken: credentialResponse.credential });
+      
+      // Отримуємо роль користувача з відповіді
+      const userRole = response.data.role;
+      
+      // Перенаправляємо користувача в залежності від ролі
+      switch (userRole) {
+        case 0: // Адміністратор
+          navigate("/admin");
+          break;
+        case 1: // Модератор
+          navigate("/moderator");
+          break;
+        default: // Звичайний користувач
+          navigate("/main-page");
+          break;
+      }
+    } catch (error) {
+      const errorMsg = error.message || "Помилка входу через Google. Спробуйте ще раз.";
+      console.error('Помилка входу через Google:', errorMsg);
+      setErrorMessage(errorMsg);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleError = () => {
+    setErrorMessage("Помилка входу через Google. Спробуйте ще раз.");
+  };
+
   return (
         <main>
       <div className="background-image"></div>
@@ -94,10 +130,15 @@ const LoginPage = () => {
           </button>
         </div>
         <div className="google-auth-btn-container">
-          <button className="google-auth-btn" id="googleAuthBtn">
-            <span className="google-auth-text">Продовжити з Google</span>
-            <div className="google-auth-icon"></div>
-          </button>
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={handleGoogleError}
+            useOneTap
+            theme="filled_blue"
+            shape="rectangular"
+            text="continue_with"
+            locale="uk"
+          />
         </div>
         <div className="login-container">
           <button type="button" className="login-option-btn">

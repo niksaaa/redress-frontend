@@ -21,11 +21,11 @@ import ModeratorPage from "./pages/ModeratorPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 
-const clientId = "587875719115-mgdk3iaeh1t65f9uca8i8vlee2bql5f5.apps.googleusercontent.com";
+const clientId = "87878886399-243c9hj3ir6ehci7eabnmls7tr042cb2.apps.googleusercontent.com";
 
 const App = () => {
   return (
-    // <GoogleOAuthProvider clientId={clientId}>
+    <GoogleOAuthProvider clientId={clientId}>
     <Router>
       <AuthProvider>
         <Routes>
@@ -172,7 +172,7 @@ const App = () => {
           </Routes>
       </AuthProvider>
     </Router>
-    // </GoogleOAuthProvider>
+    </GoogleOAuthProvider>
   );
 };
 

@@ -67,19 +67,28 @@ authApi.interceptors.response.use(
   }
 );
 
-export const login = async (email, password) => {
+export const login = async (credentials) => {
   try {
-    const response = await authApi.post('/Login', { email, password });
-    const { accessToken, refreshToken, user } = response.data;
+    let endpoint = '/Auth/Login';
+    let data = credentials;
+
+    // Якщо це Google аутентифікація
+    if (credentials.idToken) {
+      endpoint = '/Auth/GoogleAuth';
+      data = { idToken: credentials.idToken };
+    }
+
+    const response = await authApi.post(endpoint, data);
     
-    // Store tokens and user info
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
-    localStorage.setItem('user', JSON.stringify(user));
+    if (response.data.accessToken) {
+      localStorage.setItem('token', response.data.accessToken);
+      localStorage.setItem('refreshToken', response.data.refreshToken);
+    }
     
-    return response.data;
+    return response;
   } catch (error) {
-    throw error.response?.data || error.message;
+    console.error('Помилка аутентифікації:', error);
+    throw error;
   }
 };
 
