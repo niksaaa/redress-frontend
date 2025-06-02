@@ -114,9 +114,9 @@ const OrderPage = () => {
 
     try {
       const feedbackData = {
-        Rating: rating,
-        Comment: comment,
-        DealId: dealId
+        rating: rating,
+        comment: comment,
+        dealId: dealId
       };
 
       await createFeedback(feedbackData);

@@ -24,7 +24,7 @@ export const uploadListingImage = async (image, listingId) => {
   formData.append('listingId', listingId);
 
   try {
-    const response = await authService.post('/ListingImage/UploadImage', formData, {
+    const response = await authService.post('/ListingImage/UploadImage/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
