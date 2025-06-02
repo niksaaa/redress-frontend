@@ -45,16 +45,16 @@ export const FeedbackItem = ({ feedback }) => {
       <Link to={`/seller/${feedback.profile.id}`}>
         <div className="feedback-user-info">
           {/* Аватарка користувача */}
-          {feedback.profile?.profileImage?.url && (
+          {profileData.profileImage?.url && (
             <img 
-              src={feedback.profile.profileImage.url} 
+              src={profileData.profileImage.url} 
               alt="Аватар" 
               className="feedback-avatar"
             />
           )}
           
           {/* Нікнейм користувача */}
-          {feedback.profile?.username && (
+          {userData.username && (
             <span className="feedback-username">{userData.username}</span>
           )}
           </div>
