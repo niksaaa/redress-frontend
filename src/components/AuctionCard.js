@@ -68,13 +68,12 @@ const AuctionCard = ({ id, price, title, imageUrl, isOwner, onDelete }) => {
         </div>
         <div className="v46_121_like">
           <div className="v46_120_like"></div>
-            <div className="v46_118_like" onClick={handleFavoriteClick}>
-            <img 
-              src={isItemFavorite ? likedIcon : likeIcon} 
-              alt={isItemFavorite ? "В обраному" : "Додати до обраного"}
-              className="like-icon2"
-            />
-          </div>
+          <div 
+  className={`v46_118_like ${isItemFavorite ? 'liked' : 'not-liked'}`} 
+  onClick={handleFavoriteClick} 
+  title={isItemFavorite ? "В обраному" : "Додати до обраного"}
+></div>
+
           </div>
           {isOwner && (
             <div className="delete-button" onClick={handleDeleteClick}>

@@ -96,7 +96,7 @@ const CatalogCard = ({
               className="like-icon2"
             />
           </div>
-          {(isOwner || isAdmin) && (
+          {(isOwner || isAdmin) && onDelete && (
             <div className="delete-button" onClick={handleDelete}>
               <div className="delete-icon"></div>
             </div>

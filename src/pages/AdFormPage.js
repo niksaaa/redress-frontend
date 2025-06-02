@@ -4,14 +4,12 @@ import AdType from "../components/AdType";
 import React, { useState, useEffect } from "react";
 import { fetchCategoryTree } from "../api/category";
 import { createListing, startAuction, uploadListingImage } from "../api/createListing";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function AdFormPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSection, setSelectedSection] = useState("");
-  // const [selectedCategory, setSelectedCategory] = useState("");
-  // const [selectedSubcategory, setSelectedSubcategory] = useState("");
-  // const [selectedSize, setSelectedSize] = useState("");
   const [adType, setAdType] = useState(null);
   const [endDate, setEndDate] = useState("");
   const [minBid, setMinBid] = useState("");
@@ -24,6 +22,7 @@ export default function AdFormPage() {
   const [price, setPrice] = useState("");
   const [images, setImages] = useState([]);
   const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const navigate = useNavigate();
 
   // Отримання даних користувача з localStorage
   useEffect(() => {
@@ -109,34 +108,50 @@ export default function AdFormPage() {
     };
 
     try {
-      // Створення оголошення
-      const listingId = await createListing(listingData);
-      
-      // Завантаження зображень
-      if (images.length > 0) {
-        const uploadPromises = images.map(image => 
-          uploadListingImage(image, listingId)
-        );
-        await Promise.all(uploadPromises);
-      }
+    // 1. Створення оголошення
+    console.log("Creating listing...", listingData);
+    const listingResponse = await createListing(listingData);
+    const listingId = listingResponse.id; // Або listingResponse.listingId - залежно від API
+    
+    // Невелика пауза
+    await new Promise(resolve => setTimeout(resolve, 500));
 
-      // Якщо це аукціон - створюємо аукціон
-      if (adType === "auction") {
-        const auctionData = {
-          endAt: endDate,
-          startPrice: parseFloat(price),
-          minStep: parseFloat(minBid),
-          listingId
-        };
-        await startAuction(listingId, auctionData);
+    // 2. Завантаження фото (послідовно)
+    if (images.length > 0) {
+      console.log("Uploading images...");
+      for (const [index, image] of images.entries()) {
+        console.log(`Uploading image ${index + 1}/${images.length}`);
+        await uploadListingImage(image, listingId);
+        await new Promise(resolve => setTimeout(resolve, 500));
       }
-
-      alert("Оголошення успішно створено!");
-      // Тут можна додати перенаправлення на сторінку оголошення
-    } catch (error) {
-      console.error("Помилка при створенні оголошення:", error);
-      alert("Сталася помилка при створенні оголошення");
     }
+
+    // 3. Створення аукціону (якщо потрібно)
+    if (adType === "auction") {
+      console.log("Starting auction...");
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const auctionData = {
+        endAt: new Date(endDate).toISOString(), // Переконайтеся у правильному форматі
+        startPrice: parseFloat(price),
+        minStep: parseFloat(minBid),
+        listingId
+      };
+      
+      await startAuction(listingId, auctionData);
+    }
+
+    alert("Оголошення успішно створено!");
+    // Перенаправлення на сторінку користувача
+    navigate("/profile");
+  } catch (error) {
+    console.error("Помилка при створенні оголошення:", {
+      message: error.message,
+      response: error.response?.data,
+      stack: error.stack
+    });
+    alert(`Помилка при створенні оголошення: ${error.message}`);
+  }
   };
 
   // Обробник для аукціонного оголошення

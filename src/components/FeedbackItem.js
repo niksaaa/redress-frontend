@@ -62,7 +62,7 @@ export const FeedbackItem = ({ feedback }) => {
       {isModerator && (
         <div className="feedback-actions">
           <button 
-            className="delete-btn" 
+            className="delete-btn2" 
             onClick={handleDelete}
             disabled={deleteMutation.isLoading}
           >

@@ -36,7 +36,7 @@ const ModeratorPage = () => {
       <div className="moderator-page">
         <div className="moderator-header">
           <h1>Панель модератора</h1>
-          <button className="logout-btn" onClick={handleLogout}>
+          <button className="logout-btn2" onClick={handleLogout}>
             Вийти
           </button>
         </div>

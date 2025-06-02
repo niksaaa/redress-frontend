@@ -10,6 +10,8 @@ export const UserProductList = ({ profileId }) => {
   const pageSize = 5;
   const queryClient = useQueryClient();
   console.log('UserProductList - profileId:', profileId);
+  const currentUserProfileId = localStorage.getItem('profileId'); // Отримуємо ID поточного користувача
+  const isOwner = currentUserProfileId === profileId; // Перевіряємо, чи це профіль поточного користувача
 
   const { data: userProductsData, isLoading, error } = useQuery({
     queryKey: ['userProducts', profileId, page],
@@ -69,8 +71,8 @@ export const UserProductList = ({ profileId }) => {
             title={item.title}
             imageUrl={item.url}
             isAuction={item.isAuction}
-            isOwner={true} // Додаємо пропс, що показує, що це товар власника
-            onDelete={handleDelete} // Передаємо функцію видалення
+            isOwner={isOwner} // Передаємо результат перевірки
+            onDelete={isOwner ? handleDelete : null} // Передаємо функцію видалення тільки якщо це профіль власника
           />
         ))}
       </div>
