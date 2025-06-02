@@ -121,7 +121,16 @@ export const registerUser = async (userData) => {
 export const loginUser = async (credentials) => {
   console.log('Початок входу користувача:', credentials);
   try {
-    const response = await authService.post('/Auth/Login', credentials);
+    let endpoint = '/Auth/Login';
+    let data = credentials;
+
+    // Якщо це Google авторизація
+    if (credentials.idToken) {
+      endpoint = '/Auth/GoogleAuth';
+      data = { idToken: credentials.idToken };
+    }
+
+    const response = await authService.post(endpoint, data);
     
     console.log('Вхід успішний. Отримано токени:', {
       accessToken: response.data.accessToken,

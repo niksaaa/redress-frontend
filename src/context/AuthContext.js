@@ -30,8 +30,8 @@ export const AuthProvider = ({ children }) => {
       const response = await loginUser(credentials);
       
       const userData = { 
-        email: credentials.email,
-        role: response.user.role // Додаємо роль з відповіді сервера
+        email: credentials.email || response.data.email,
+        role: response.data.role
       };
       
       setUser(userData);
