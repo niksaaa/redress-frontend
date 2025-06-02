@@ -64,7 +64,8 @@ const CatalogCard = ({
   };
 
   const handleDelete = (e) => {
-    e.stopPropagation();
+    e.preventDefault();  // Відміняємо перехід за лінком
+    e.stopPropagation(); // Зупиняємо спливання, щоб не викликалися інші обробники
     if (onDelete) {
       onDelete(id);
     }

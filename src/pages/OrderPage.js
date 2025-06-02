@@ -78,8 +78,8 @@ const OrderPage = () => {
       setIsProcessingPayment(true);
       
       const dealData = {
-        Status: 'Completed', // або 'Pending' залежно від вашої логіки
-        ListingType: listing.isAuction ? 'Auction' : 'Sale',
+        Status: 2, // Completed
+        ListingType: listing.isAuction ? 1 : 0, // Auction : Sale
         Price: listing.price,
         ListingId: listing.id,
         ProfileId: listing.profileId
