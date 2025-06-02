@@ -232,28 +232,85 @@ export const fetchListingsByPriceRange = async (minPrice, maxPrice, page = 1, pa
 };
 
 
+// export const fetchAllListings = async ({ page, pageSize }) => {
+//   try {
+//     const response = await authService.get(`Listing/GetAll?page=${page}&pageSize=${pageSize}`);
+//     console.log(response);
+    
+//     if (!response.ok) {
+//       const errorText = await response.text();
+//     throw new Error(`Error ${response.status}: ${errorText}`);
+//     }
+    
+//     return {
+//       items: response.data.items,
+//       totalPages: response.data.totalPages,
+//       totalCount: response.data.totalCount
+//     };
+    
+//   } catch (error) {
+//     console.error('Error fetching listings:', error);
+//     throw {
+//       message: error.message,
+//       status: error.response?.status,
+//       data: error.response?.data
+//     };
+//   }
+// };
+
 export const fetchAllListings = async ({ page, pageSize }) => {
   try {
+    console.log(`Fetching listings page ${page}, size ${pageSize}`);
+
+    if (!page || !pageSize) {
+      throw new Error('Missing page or pageSize parameters');
+    }
+
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      throw new Error('Authentication required');
+    }
+
     const response = await authService.get(`Listing/GetAll?page=${page}&pageSize=${pageSize}`);
-    console.log(response);
+
+    if (!response.data) {
+      throw new Error('Empty response from server');
+    }
+
+    const { items, totalPages, totalCount } = response.data;
     
-    if (!response.ok) {
-      const errorText = await response.text();
-    throw new Error(`Error ${response.status}: ${errorText}`);
+    if (!Array.isArray(items)) {
+      throw new Error('Items should be an array');
     }
     
+    // Axios поміщає реальну відповідь у response.data
+    const data = response.data;
+    console.log('Received listings data:', data);
+
+    if (!data || !Array.isArray(data.items)) {
+      console.error('Invalid data format:', data);
+      throw new Error('Server returned invalid data format');
+    }
+
     return {
-      items: response.data.items,
-      totalPages: response.data.totalPages,
-      totalCount: response.data.totalCount
+      items: data.items,
+      totalPages: data.totalPages || 1,
+      totalCount: data.totalCount || 0
     };
     
   } catch (error) {
-    console.error('Error fetching listings:', error);
-    throw {
-      message: error.message,
+    // Axios помилки містять відповідь у error.response
+    const errorMessage = error.response?.data?.message || 
+                       error.message || 
+                       'Failed to fetch listings';
+    
+    console.error('Full error details:', {
+      message: errorMessage,
       status: error.response?.status,
-      data: error.response?.data
-    };
+      data: error.response?.data,
+      config: error.config
+    });
+    
+    throw new Error(errorMessage);
   }
 };

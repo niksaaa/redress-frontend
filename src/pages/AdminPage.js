@@ -19,6 +19,7 @@ const AdminPage = () => {
   const [usersPage, setUsersPage] = useState(1);
   const queryClient = useQueryClient();
 
+  console.log('Current token:', localStorage.getItem('accessToken'));
   // Отримання списку оголошень
   const { data: listingsData = { items: [], totalPages: 1 },
   isLoading: isListingsLoading, } = useQuery({

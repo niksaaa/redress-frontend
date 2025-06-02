@@ -116,7 +116,7 @@ export default function ProductPage() {
               onBidSuccess={refreshAuctionData}
             />
           ) : (
-            <PriceSection price={listing.price} />
+            <PriceSection price={listing.price} listing={listing}/>
           )}
           </div>
       </div>
