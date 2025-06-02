@@ -33,7 +33,7 @@ const LoginPage = () => {
       console.log('Вхід успішний, перевіряємо роль користувача');
       
       // Отримуємо роль користувача з відповіді
-      const userRole = response.data.user.role;
+      const userRole = response.user.role;
       
       // Перенаправляємо користувача в залежності від ролі
       switch (userRole) {

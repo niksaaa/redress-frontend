@@ -30,12 +30,12 @@ export const AuthProvider = ({ children }) => {
       const response = await loginUser(credentials);
       
       const userData = { 
-        email: credentials.email || response.data.email,
-        role: response.data.user.role
+        email: credentials.email || response.user.email,
+        role: response.user.role
       };
       
       setUser(userData);
-      setUserRole(response.data.user.role);
+      setUserRole(response.user.role);
       
       console.log('Користувач успішно авторизований:', userData);
       
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
       if (profileData?.id) {
         localStorage.setItem('profileId', profileData.id);
         localStorage.setItem('userBalance', profileData.balance);
-        localStorage.setItem('userRole', response.data.user.role);
+        localStorage.setItem('userRole', response.user.role);
         
         const favorites = await fetchUserFavorites(profileData.id);
         localStorage.setItem('favorites', JSON.stringify(favorites.items.map(item => item.id)));
