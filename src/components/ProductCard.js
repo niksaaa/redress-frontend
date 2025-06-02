@@ -70,7 +70,7 @@ const ProductCard = ({ id, price, title, imageUrl, isOwner, onDelete }) => {
             <img 
               src={isItemFavorite ? likedIcon : likeIcon} 
               alt={isItemFavorite ? "В обраному" : "Додати до обраного"}
-              className="like-icon2"
+              className="like-icon3"
             />
           </div>
           </div>

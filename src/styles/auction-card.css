@@ -117,17 +117,28 @@
 .v46_118_like {
   width: 24px;
   height: 24px;
-  background-size: contain;
   background-repeat: no-repeat;
-  cursor: pointer;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  overflow: hidden;
 }
 
-.v46_118_like.liked {
-  background-image: url('../images/liked.png');
-}
-
-.v46_118_like.not-liked {
-  background-image: url('../images/like.png');
+.like-icon3 {
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  overflow: hidden;
+  transition: all 0.2s ease;
 }
 
 .v46_164 {

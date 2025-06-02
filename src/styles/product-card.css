@@ -109,3 +109,17 @@
   left: 4px;
   overflow: hidden;
 }
+
+.like-icon3 {
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}

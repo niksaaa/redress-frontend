@@ -110,8 +110,8 @@ export default function AdFormPage() {
     try {
     // 1. Створення оголошення
     console.log("Creating listing...", listingData);
-    const listingResponse = await createListing(listingData);
-    const listingId = listingResponse.id; // Або listingResponse.listingId - залежно від API
+    const listingId = await createListing(listingData); // Отримуємо безпосередньо ID
+    console.log("Created listing with ID:", listingId);
     
     // Невелика пауза
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -120,7 +120,7 @@ export default function AdFormPage() {
     if (images.length > 0) {
       console.log("Uploading images...");
       for (const [index, image] of images.entries()) {
-        console.log(`Uploading image ${index + 1}/${images.length}`);
+        console.log(`Uploading image ${index + 1}/${images.length} for listing ${listingId}`);
         await uploadListingImage(image, listingId);
         await new Promise(resolve => setTimeout(resolve, 500));
       }
@@ -128,14 +128,14 @@ export default function AdFormPage() {
 
     // 3. Створення аукціону (якщо потрібно)
     if (adType === "auction") {
-      console.log("Starting auction...");
+      console.log("Starting auction for listing:", listingId);
       await new Promise(resolve => setTimeout(resolve, 500));
       
       const auctionData = {
         endAt: new Date(endDate).toISOString(), // Переконайтеся у правильному форматі
         startPrice: parseFloat(price),
         minStep: parseFloat(minBid),
-        listingId
+        listingId: listingId
       };
       
       await startAuction(listingId, auctionData);
