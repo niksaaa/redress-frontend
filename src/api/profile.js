@@ -60,7 +60,7 @@ export const uploadProfileImage = async ({ image, profileId }) => {
 
 export const deleteProduct = async (id) => {
   try {
-    const response = await authService.delete(`/Listing/${id}`);
+    const response = await authService.delete(`/Listing/Delete/${id}`);
     return response.data;
   } catch (error) {
     console.error('Помилка видалення товару:', error.response?.data || error.message);
