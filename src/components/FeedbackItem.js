@@ -45,7 +45,7 @@ export const FeedbackItem = ({ feedback }) => {
       <Link to={`/seller/${feedback.profile.id}`}>
         <div className="feedback-user-info">
           {/* Аватарка користувача */}
-          {profileData.profileImage?.url && (
+          {profileData?.profileImage?.url && (
             <img 
               src={profileData.profileImage.url} 
               alt="Аватар" 
@@ -54,7 +54,7 @@ export const FeedbackItem = ({ feedback }) => {
           )}
           
           {/* Нікнейм користувача */}
-          {userData.username && (
+          {userData?.username && (
             <span className="feedback-username">{userData.username}</span>
           )}
           </div>
