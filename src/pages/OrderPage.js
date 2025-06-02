@@ -76,13 +76,19 @@ const OrderPage = () => {
 
     try {
       setIsProcessingPayment(true);
+
+      // Отримуємо profileId з localStorage
+      const buyerProfileId = localStorage.getItem('profileId');
+      if (!buyerProfileId) {
+        throw new Error('Не вдалося отримати ID профілю покупця');
+      }
       
       const dealData = {
         Status: 2, // Completed
         ListingType: listing.isAuction ? 1 : 0, // Auction : Sale
         Price: listing.price,
         ListingId: listing.id,
-        ProfileId: listing.profileId
+        ProfileId: buyerProfileId // Використовуємо profileId покупця
       };
 
       // Викликаємо API для створення угоди
