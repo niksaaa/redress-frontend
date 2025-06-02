@@ -19,11 +19,16 @@ export const FeedbackItem = ({ feedback }) => {
   });
 
   // Отримуємо дані користувача для обох ролей
-  const { data: userData } = useQuery({
-    queryKey: ['userDetails', isModerator ? feedback.userId : feedbackDetails?.profile?.userId],
-    queryFn: () => fetchUserDetails(isModerator ? feedback.userId : feedbackDetails?.profile?.userId),
-    enabled: !!(isModerator ? feedback.userId : feedbackDetails?.profile?.userId)
-  });
+  const profileId = isModerator
+  ? feedback?.profile?.id
+  : feedbackDetails?.profile?.id;
+
+const { data: userData } = useQuery({
+  queryKey: ['userDetails', profileId],
+  queryFn: () => fetchUserDetails(profileId),
+  enabled: !!profileId
+});
+
 
   // Мутація для видалення відгуку
   const deleteMutation = useMutation({
