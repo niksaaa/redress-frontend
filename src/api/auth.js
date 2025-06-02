@@ -69,20 +69,23 @@ authApi.interceptors.response.use(
 
 export const login = async (credentials) => {
   try {
-    let endpoint = '/Auth/Login';
+    let endpoint = '/Login';
     let data = credentials;
 
     // Якщо це Google аутентифікація
     if (credentials.idToken) {
-      endpoint = '/Auth/GoogleAuth';
+      endpoint = '/GoogleAuth';
       data = { idToken: credentials.idToken };
     }
 
     const response = await authApi.post(endpoint, data);
     
     if (response.data.accessToken) {
-      localStorage.setItem('token', response.data.accessToken);
+      localStorage.setItem('accessToken', response.data.accessToken);
       localStorage.setItem('refreshToken', response.data.refreshToken);
+      if (response.data.user) {
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+      }
     }
     
     return response;
