@@ -1,8 +1,9 @@
 import React from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchFeedbackDetails, deleteFeedback } from '../api/feedback';
 import { fetchProfileDetails, fetchUserDetails } from '../api/listing';
 import { useAuth } from '../context/AuthContext';
+import { deleteFeedback } from '../api/feedback';
+import { Link } from "react-router-dom";
 import '../styles/feedback.css';
 
 export const FeedbackItem = ({ feedback }) => {
@@ -10,23 +11,11 @@ export const FeedbackItem = ({ feedback }) => {
   const queryClient = useQueryClient();
   const isModerator = userRole === 1; // 1 - роль модератора
 
-  // Отримуємо деталі відгуку тільки для звичайного користувача
-  const { data: feedbackDetails } = useQuery({
-    queryKey: ['feedbackDetails', feedback.id],
-    queryFn: () => fetchFeedbackDetails(feedback.id),
-    enabled: !!feedback.id && !isModerator
-  });
-
-  // Отримуємо ID профілю в залежності від ролі
-  const profileId = isModerator 
-    ? feedback?.profile?.id 
-    : feedbackDetails?.profile?.id;
-
   // Отримуємо дані профілю
   const { data: profileData } = useQuery({
-    queryKey: ['profileDetails', profileId],
-    queryFn: () => fetchProfileDetails(profileId),
-    enabled: !!profileId
+    queryKey: ['profileDetails', feedback.profile.id],
+    queryFn: () => fetchProfileDetails(feedback.profile.id),
+    enabled: !!feedback.profile.id
   });
 
   // Отримуємо дані користувача через userId з профілю
@@ -53,21 +42,23 @@ export const FeedbackItem = ({ feedback }) => {
   return (
     <div className="feedback-item">
       <div className="feedback-header">
+      <Link to={`/seller/${feedback.profile.id}`}>
         <div className="feedback-user-info">
           {/* Аватарка користувача */}
-          {profileData?.profileImage?.url && (
+          {feedback.profile?.profileImage?.url && (
             <img 
-              src={profileData.profileImage.url} 
+              src={feedback.profile.profileImage.url} 
               alt="Аватар" 
               className="feedback-avatar"
             />
           )}
           
           {/* Нікнейм користувача */}
-          {userData?.username && (
+          {feedback.profile?.username && (
             <span className="feedback-username">{userData.username}</span>
           )}
-        </div>
+          </div>
+          </Link>
         
         <div className="feedback-rating-date">
           <span className="feedback-rating">Рейтинг: {feedback.rating}/5</span>

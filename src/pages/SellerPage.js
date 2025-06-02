@@ -8,8 +8,6 @@ import SortSelector from "../components/SortSelector";
 import { fetchProfileDetails, fetchUserDetails } from "../api/listing";
 import { FeedbackList } from "../components/FeedbackList";
 import { UserProductList } from "../components/UserProductList";
-
-// import "../styles/seller-profile.css";
 import "../styles/profile.css";
 
 const sortOptions1 = [
@@ -37,95 +35,8 @@ export default function SellerPage() {
           const handleReset = () => {
             setSort1(sortOptions1[0]);
             setSort2(sortOptions2[0]);
-    };
-
-//   useEffect(() => {
-//     const loadSellerData = async () => {
-//       try {
-//         const data = await fetchSellerDetails(id);
-//         setSellerData(data);
-//       } catch (err) {
-//         setError(err.message);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     loadSellerData();
-    //   }, [id]);
-    
-//   if (loading) return <div className="loading">Завантаження даних продавця...</div>;
-//   if (error) return <div className="error">Помилка: {error}</div>;
-    //   if (!sellerData) return <div className="no-data">Продавець не знайдений</div>;
-    // console.log('початкове значення sort2:', sort2);
-    // useEffect(() => {
-    //     // Отримуємо дані з localStorage
-    //     const savedData = localStorage.getItem('currentSellerProfile');
-        
-    //     if (savedData) {
-    //       try {
-    //         const parsedData = JSON.parse(savedData);
-    //         // Перевіряємо, чи це дані для поточного продавця
-    //         if (parsedData.profile.Id === id) {
-    //             setSellerData(parsedData);
-    //             console.log('Профіль встановлено:', parsedData.profile.Id);
-    //           setLoading(false);
-    //           return;
-    //         }
-    //       } catch (e) {
-    //         console.error('Помилка парсингу даних продавця', e);
-    //       }
-    //     }
-        
-    //     // Якщо даних немає в localStorage, завантажуємо з API
-    //     const fetchData = async () => {
-    //       try {
-    //         const profileData = await fetchProfileDetails(id);
-    //         const userData = await fetchUserDetails(profileData.userId);
-    //           setSellerData({ profile: profileData, user: userData });
-    //           console.log('Профіль встановлено:', profileData.Id);
-    //       } catch (err) {
-    //         console.error('Помилка завантаження даних продавця', err);
-    //       } finally {
-    //         setLoading(false);
-    //       }
-    //     };
-        
-    //     fetchData();
-    // }, [id]);
-    
-    // useEffect(() => {
-    //     console.log('useEffect перевірка:', sort2, sellerData?.profile?.Id);
-    //     if (sellerData?.profile?.Id && sort2 === "Мої товари") {
-    //       loadFavorites();
-    //     }
-    //   }, [sort2, sellerData?.profile?.Id]);
-    
-    // //   const loadFavorites = async () => {
-    // //     setFavoritesLoading(true);
-    // //     try {
-    // //       const data = await fetchUserFavorites(sellerData.profile.Id);
-    // //       setFavorites(data.items || []);
-    // //     } catch (error) {
-    // //       console.error('Помилка завантаження обраних товарів:', error);
-    // //     } finally {
-    // //       setFavoritesLoading(false);
-    // //     }
-    // //   };
-    // const loadFavorites = async () => {
-    //     setFavoritesLoading(true);
-    //     try {
-    //       console.log('Завантаження обраних, демо режим:', process.env.REACT_APP_DEMO_MODE);
-    //       const data = await fetchUserFavorites(sellerData.profile.Id);
-    //       console.log('Отримані обрані:', data);
-    //       setFavorites(data.items || []);
-    //     } catch (error) {
-    //       console.error('Помилка завантаження обраних товарів:', error);
-    //     } finally {
-    //       setFavoritesLoading(false);
-    //     }
-    //   };
-
+  };
+  
     useEffect(() => {
         const savedData = localStorage.getItem('currentSellerProfile');
         
@@ -206,14 +117,6 @@ export default function SellerPage() {
 
         {sort2 === "Мої товари" && (
           <div className="content-section-2">
-            {/* <div className="sort">
-            <SortSelector
-            options={sortOptions1}
-            active={sort1}
-            setActive={setSort1}
-            variant="default"
-          />
-                  </div> */}
                   <UserProductList profileId={profile.id} />
         </div>
         )}
