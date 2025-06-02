@@ -1,9 +1,8 @@
 import React from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchFeedbackDetails } from '../api/feedback';
-import { fetchUserDetails } from '../api/listing';
+import { fetchFeedbackDetails, deleteFeedback } from '../api/feedback';
+import { fetchProfileDetails, fetchUserDetails } from '../api/listing';
 import { useAuth } from '../context/AuthContext';
-import { deleteFeedback } from '../api/feedback';
 import '../styles/feedback.css';
 
 export const FeedbackItem = ({ feedback }) => {
@@ -15,20 +14,27 @@ export const FeedbackItem = ({ feedback }) => {
   const { data: feedbackDetails } = useQuery({
     queryKey: ['feedbackDetails', feedback.id],
     queryFn: () => fetchFeedbackDetails(feedback.id),
-    enabled: !!feedback.id && !isModerator // Викликаємо тільки якщо не модератор
+    enabled: !!feedback.id && !isModerator
   });
 
-  // Отримуємо дані користувача для обох ролей
-  const profileId = isModerator
-  ? feedback?.profile?.id
-  : feedbackDetails?.profile?.id;
+  // Отримуємо ID профілю в залежності від ролі
+  const profileId = isModerator 
+    ? feedback?.profile?.id 
+    : feedbackDetails?.profile?.id;
 
-const { data: userData } = useQuery({
-  queryKey: ['userDetails', profileId],
-  queryFn: () => fetchUserDetails(profileId),
-  enabled: !!profileId
-});
+  // Отримуємо дані профілю
+  const { data: profileData } = useQuery({
+    queryKey: ['profileDetails', profileId],
+    queryFn: () => fetchProfileDetails(profileId),
+    enabled: !!profileId
+  });
 
+  // Отримуємо дані користувача через userId з профілю
+  const { data: userData } = useQuery({
+    queryKey: ['userDetails', profileData?.userId],
+    queryFn: () => fetchUserDetails(profileData?.userId),
+    enabled: !!profileData?.userId
+  });
 
   // Мутація для видалення відгуку
   const deleteMutation = useMutation({
@@ -48,10 +54,21 @@ const { data: userData } = useQuery({
     <div className="feedback-item">
       <div className="feedback-header">
         <div className="feedback-user-info">
+          {/* Аватарка користувача */}
+          {profileData?.profileImage?.url && (
+            <img 
+              src={profileData.profileImage.url} 
+              alt="Аватар" 
+              className="feedback-avatar"
+            />
+          )}
+          
+          {/* Нікнейм користувача */}
           {userData?.username && (
             <span className="feedback-username">{userData.username}</span>
           )}
         </div>
+        
         <div className="feedback-rating-date">
           <span className="feedback-rating">Рейтинг: {feedback.rating}/5</span>
           <span className="feedback-date">
@@ -59,11 +76,13 @@ const { data: userData } = useQuery({
           </span>
         </div>
       </div>
+      
       {feedback.comment && (
         <div className="feedback-comment">
           <p>{feedback.comment}</p>
         </div>
       )}
+      
       {isModerator && (
         <div className="feedback-actions">
           <button 

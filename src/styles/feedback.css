@@ -17,14 +17,22 @@
     margin-bottom: 12px;
 }
 
+.feedback-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
 .feedback-user-info {
-    flex: 1;
+    display: flex;
+    align-items: center;
 }
 
 .feedback-username {
-    font-weight: 600;
-    font-size: 16px;
-    color: #333;
+    font-weight: bold;
+    margin-right: 10px; 
 }
 
 .feedback-rating-date {
@@ -49,4 +57,6 @@
     line-height: 1.5;
     color: #333;
     padding-top: 8px;
-    border-top: 1px solid #eee; }
+    border-top: 1px solid #eee; 
+}
+
