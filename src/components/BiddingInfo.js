@@ -39,14 +39,14 @@ const BiddingInfo = ({ currentPrice, startPrice, minStep, endAt, auctionId, onBi
       return;
     }
 
-    if (userBalance < requiredAmount) {
-      const shortage = requiredAmount - userBalance;
-      setModalMessage(`Для участі у аукціоні на Вашому рахунку, нажаль, недостатньо
-              коштів. Вам не вистачає ${shortage} грн.\n \n Перейдіть до особистого кабінету, щоб поповнити рахунок.`);
-      setShowModal(true);
-      setCurrentBid(currentPrice); // Скидаємо до поточної ціни
-      return;
-    }
+    // if (userBalance < requiredAmount) {
+    //   const shortage = requiredAmount - userBalance;
+    //   setModalMessage(`Для участі у аукціоні на Вашому рахунку, нажаль, недостатньо
+    //           коштів. Вам не вистачає ${shortage} грн.\n \n Перейдіть до особистого кабінету, щоб поповнити рахунок.`);
+    //   setShowModal(true);
+    //   setCurrentBid(currentPrice); // Скидаємо до поточної ціни
+    //   return;
+    // }
 
     if (!auctionId || !profileId) {
       setModalMessage('Помилка: не вдалося ідентифікувати аукціон або користувача');

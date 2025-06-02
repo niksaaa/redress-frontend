@@ -235,22 +235,25 @@ export const fetchListingsByPriceRange = async (minPrice, maxPrice, page = 1, pa
 export const fetchAllListings = async ({ page, pageSize }) => {
   try {
     const response = await authService.get(`Listing/GetAll?page=${page}&pageSize=${pageSize}`);
+    console.log(response);
     
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      const errorText = await response.text();
+    throw new Error(`Error ${response.status}: ${errorText}`);
     }
     
-    const data = await response.json();
-    
-    // Перетворюємо відповідь у формат, який очікує React Query
     return {
-      items: data.items || [],
-      totalPages: data.totalPages || 1,
-      totalCount: data.totalCount || 0
+      items: response.data.items,
+      totalPages: response.data.totalPages,
+      totalCount: response.data.totalCount
     };
     
   } catch (error) {
     console.error('Error fetching listings:', error);
-    throw error;
+    throw {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data
+    };
   }
 };

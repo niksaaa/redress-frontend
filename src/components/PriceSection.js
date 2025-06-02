@@ -10,13 +10,13 @@ const PriceSection = ({ price, listing }) => {
   const handleBuyClick = () => {
     const userBalance = parseFloat(localStorage.getItem('userBalance')) || 0;
     
-    if (userBalance < price) {
-      const shortage = price - userBalance;
-      setModalMessage(`На Вашому рахунку, нажаль, недостатньо
-              коштів. Вам не вистачає ${shortage} грн.\n \n Перейдіть до особистого кабінету, щоб поповнити рахунок.`);
-      setShowModal(true);
-      return;
-    }
+    // if (userBalance < price) {
+    //   const shortage = price - userBalance;
+    //   setModalMessage(`На Вашому рахунку, нажаль, недостатньо
+    //           коштів. Вам не вистачає ${shortage} грн.\n \n Перейдіть до особистого кабінету, щоб поповнити рахунок.`);
+    //   setShowModal(true);
+    //   return;
+    // }
 
     // If we get here, the user has enough funds
     localStorage.setItem('currentOrderListing', JSON.stringify(listing));
