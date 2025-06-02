@@ -125,22 +125,6 @@ export default function AdFormPage() {
         await new Promise(resolve => setTimeout(resolve, 500));
       }
     }
-
-    // 3. Створення аукціону (якщо потрібно)
-    if (adType === "auction") {
-      console.log("Starting auction for listing:", listingId);
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      const auctionData = {
-        endAt: new Date(endDate).toISOString(), // Переконайтеся у правильному форматі
-        startPrice: parseFloat(price),
-        minStep: parseFloat(minBid),
-        listingId: listingId
-      };
-      
-      await startAuction(listingId, auctionData);
-    }
-
     alert("Оголошення успішно створено!");
     // Перенаправлення на сторінку користувача
     navigate("/profile");
@@ -154,42 +138,66 @@ export default function AdFormPage() {
   }
   };
 
-  // Обробник для аукціонного оголошення
-  const handleAuctionSubmit = async () => {
-    if (!selectedCategoryId) {
-      alert("Будь ласка, виберіть категорію");
-      return;
-    }
+  // Обробник для аукціонного оголошення з додаванням фото
+const handleAuctionSubmit = async () => {
+  if (!selectedCategoryId) {
+    alert("Будь ласка, виберіть категорію");
+    return;
+  }
 
-    const listingData = {
-      title,
-      description,
-      price: parseFloat(price),
-      categoryId: selectedCategoryId,
-      latitude: location.latitude,
-      longitude: location.longitude
-    };
-
-    try {
-      // Створення оголошення
-      const listingId = await createListing(listingData);
-      
-      // Створення аукціону
-      const auctionData = {
-        endAt: endDate,
-        startPrice: parseFloat(price),
-        minStep: parseFloat(minBid),
-        listingId
-      };
-      await startAuction(listingId, auctionData);
-
-      alert("Аукціонне оголошення успішно створено!");
-      // Тут можна додати перенаправлення на сторінку оголошення
-    } catch (error) {
-      console.error("Помилка при створенні аукціонного оголошення:", error);
-      alert("Сталася помилка при створенні аукціонного оголошення");
-    }
+  const listingData = {
+    title,
+    description,
+    price: parseFloat(price),
+    categoryId: selectedCategoryId,
+    latitude: location.latitude,
+    longitude: location.longitude
   };
+
+  try {
+    // 1. Створення оголошення
+    const listingId = await createListing(listingData);
+    console.log("Оголошення створено з ID:", listingId);
+
+    // Невелика пауза
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // 2. Завантаження фото (якщо є)
+    if (images.length > 0) {
+      console.log("Завантаження фото...");
+      for (const [index, image] of images.entries()) {
+        console.log(`Фото ${index + 1}/${images.length}`);
+        await uploadListingImage(image, listingId);
+        // Невелика пауза, щоб уникнути перевантаження сервера
+        await new Promise(resolve => setTimeout(resolve, 300));
+      }
+    }
+
+    // Невелика пауза
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // 3. Створення аукціону
+    const auctionData = {
+      endAt: new Date(endDate).toISOString(),
+      startPrice: parseFloat(price),
+      minStep: parseFloat(minBid),
+      listingId
+    };
+    console.log("Створення аукціону з даними:", auctionData);
+    await startAuction(listingId, auctionData);
+
+    alert("Аукціонне оголошення успішно створено!");
+    navigate("/profile"); // перенаправлення після успіху
+  } catch (error) {
+    console.error("Помилка при створенні аукціонного оголошення:", {
+      message: error.message,
+      response: error.response?.data,
+      stack: error.stack
+    });
+    alert("Сталася помилка при створенні аукціонного оголошення");
+  }
+};
+
 
 
   return (
@@ -299,21 +307,6 @@ export default function AdFormPage() {
           onSelect={(path, categoryId) => handleSelectCategory(path, categoryId)}
           />
         )}
-
-        {/* <SizeSelector
-          category={selectedCategory}
-          selectedSize={selectedSize}
-          onSelect={setSelectedSize}
-        />
-
-        <span className="ad-description-text-6">Бренд*</span>
-        <BrandSelector
-          selectedBrand={selectedBrand}
-          onSelect={(brand) => setSelectedBrand(brand)}
-        />
-
-        <span className="ad-description-text-7">Виберіть до 2 відтінків</span>
-        <ColorOptions /> */}
         <span className="ad-description-text-8">Вкажіть ціну</span>
         <div className="pay-container">
           <div className="pay-container-block">
