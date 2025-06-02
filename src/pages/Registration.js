@@ -45,22 +45,6 @@ const Registration = () => {
           </div>
         )}
 
-        <span className="or-text">або</span>
-
-        <div className="facebook-auth-btn-container">
-          <button className="facebook-auth-btn" id="facebookAuthBtn">
-            <div className="facebook-auth-icon"></div>
-            <span className="facebook-auth-text">Продовжити з Facebook</span>
-          </button>
-        </div>
-
-        <div className="google-auth-btn-container">
-          <button className="google-auth-btn" id="googleAuthBtn">
-            <span className="google-auth-text">Продовжити з Google</span>
-            <div className="google-auth-icon"></div>
-          </button>
-        </div>
-
         <div className="login-container-1">
           <button
             type="button"

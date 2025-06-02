@@ -102,7 +102,6 @@ const LoginPage = () => {
       <div className="background-image"></div>
       <div className="login-form">
         <div className="background"></div>
-        <span className="additional">Не можете увійти? Забули пароль?</span>
 
         <div className="login-btn-container">
           <button
@@ -123,12 +122,6 @@ const LoginPage = () => {
         )}
 
         <span className="or-text">або</span>
-        <div className="facebook-auth-btn-container">
-          <button className="facebook-auth-btn" id="facebookAuthBtn">
-            <div className="facebook-auth-icon"></div>
-            <span className="facebook-auth-text">Продовжити з Facebook</span>
-          </button>
-        </div>
         <div className="google-auth-btn-container">
           <GoogleLogin
             onSuccess={handleGoogleSuccess}
