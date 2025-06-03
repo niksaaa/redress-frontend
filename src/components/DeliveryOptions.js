@@ -9,11 +9,12 @@ const deliveryOptions = [
   { id: "nova-poshta", label: "Самовивіз з Нової пошти" },
 ];
 
-const DeliveryOptions = () => {
+const DeliveryOptions = ({ onDeliveryChange }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleRadioChange = (id) => {
     setSelectedOption(id);
+    onDeliveryChange && onDeliveryChange(id);
   };
 
   return (

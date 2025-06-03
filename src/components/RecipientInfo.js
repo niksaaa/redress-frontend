@@ -1,8 +1,8 @@
 // components/RecipientInfo.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/recipient-info.css";
 
-const RecipientInfo = ({ phoneNumber }) => {
+const RecipientInfo = ({ phoneNumber, onRecipientDataChange }) => {
   const [formData, setFormData] = useState({
     lastName: "",
     firstName: "",
@@ -16,6 +16,10 @@ const RecipientInfo = ({ phoneNumber }) => {
     middleName: "",
     phone: "",
   });
+
+  useEffect(() => {
+    onRecipientDataChange && onRecipientDataChange(formData);
+  }, [formData, onRecipientDataChange]);
 
   const validateLastName = (value) => {
     if (!value.trim()) return "Прізвище обов'язкове";

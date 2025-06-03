@@ -9,27 +9,89 @@ import FeedbackModal from "../components/FeedbackModal"; // The feedback modal c
 import { fetchProfileDetails, fetchUserDetails } from "../api/listing";
 import { fetchCurrentUserProfile } from "../api/profile";
 import { createDeal, createFeedback } from "../api/deal";
+import emailjs from 'emailjs-com';
 
 const OrderPage = () => {
-  // State to control the visibility of the feedback modal
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [dealId, setDealId] = useState(null);
-  // Initialize the navigate function for programmatic navigation
   const navigate = useNavigate();
-
-  // Function called when the "Сплатити" button is clicked
-  const handlePayClick = () => {
-    console.log("Payment initiated!");
-    setShowFeedbackModal(true); // Show the feedback modal
-  };
-
   const location = useLocation();
   const [listing, setListing] = useState(null);
   const [seller, setSeller] = useState(null);
   const [buyerPhone, setBuyerPhone] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isProcessingPayment, setIsProcessingPayment] = useState(false); // Для індикатора завантаження
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [deliveryOption, setDeliveryOption] = useState(null);
+  const [recipientData, setRecipientData] = useState({
+    lastName: '',
+    firstName: '',
+    middleName: '',
+    phone: ''
+  });
+
+  // Ініціалізація EmailJS
+  useEffect(() => {
+    emailjs.init("K-Gb4s6NTk679_FAO"); // Замініть на ваш User ID з EmailJS
+  }, []);
+
+  // Функція для відправки email продавцю
+  const sendEmailToSeller = async () => {
+    try {
+      const sellerProfile = JSON.parse(localStorage.getItem('currentSellerProfile'));
+      const listingData = JSON.parse(localStorage.getItem('currentOrderListing'));
+      
+      const templateParams = {
+        to_email: seller?.user?.email || sellerProfile?.email,
+        to_name: seller?.user?.username || sellerProfile?.username,
+        product_name: listing?.title || listingData?.title,
+        product_price: listing?.price || listingData?.price,
+        buyer_name: `${recipientData.lastName} ${recipientData.firstName} ${recipientData.middleName}`,
+        buyer_phone: recipientData.phone || buyerPhone,
+        delivery_method: deliveryOption,
+        from_name: "REDRESS"
+      };
+
+      await emailjs.send(
+        'service_lplxrjg', // Замініть на ваш Service ID
+        'template_a7zk9w3', // Замініть на ID шаблону для продавця
+        templateParams
+      );
+    } catch (error) {
+      console.error('Failed to send email to seller:', error);
+    }
+  };
+
+  // Функція для відправки email покупцю
+  const sendEmailToBuyer = async () => {
+    try {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      const listingData = JSON.parse(localStorage.getItem('currentOrderListing'));
+      
+      const templateParams = {
+        to_email: currentUser?.email,
+        to_name: currentUser?.username,
+        product_name: listing?.title || listingData?.title,
+        product_price: listing?.price || listingData?.price,
+        seller_name: seller?.user?.username,
+        from_name: "REDRESS"
+      };
+
+      await emailjs.send(
+        'service_lplxrjg', // Замініть на ваш Service ID
+        'template_7izrmxa', // Замініть на ID шаблону для покупця
+        templateParams
+      );
+    } catch (error) {
+      console.error('Failed to send email to buyer:', error);
+    }
+  };
+
+  // Function called when the "Сплатити" button is clicked
+  const handlePayClick = () => {
+    console.log("Payment initiated!");
+    setShowFeedbackModal(true); // Show the feedback modal
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -94,6 +156,12 @@ const OrderPage = () => {
       // Викликаємо API для створення угоди
       const createdDealId = await createDeal(dealData);
       setDealId(createdDealId);
+
+      // Відправка email після успішного створення угоди
+      await Promise.all([
+        sendEmailToSeller(),
+        sendEmailToBuyer()
+      ]);
       
       // Показуємо модалку для відгуку після успішного створення угоди
       setShowFeedbackModal(true);
@@ -133,6 +201,14 @@ const OrderPage = () => {
     navigate("/main-page");
   };
 
+  const handleDeliveryChange = (option) => {
+    setDeliveryOption(option);
+  };
+  
+  const handleRecipientDataChange = (data) => {
+    setRecipientData(data);
+  };
+
   if (loading) return <div className="loading">Завантаження даних...</div>;
   if (error) return <div className="error">Помилка: {error}</div>;
   if (!listing) return <div className="no-data">Дані товару не знайдені</div>;
@@ -148,8 +224,8 @@ const OrderPage = () => {
         productImage={listing.images?.[0]?.url}
       />
 
-      <DeliveryOptions />
-      <RecipientInfo phoneNumber={buyerPhone} />
+      <DeliveryOptions onDeliveryChange={handleDeliveryChange} />
+      <RecipientInfo phoneNumber={buyerPhone} onRecipientDataChange={handleRecipientDataChange} />
       </div>
 
       <OrderSummary
