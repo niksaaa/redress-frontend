@@ -9,31 +9,7 @@ const SellerSection = ({ profileId }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const loadSellerData = async () => {
-  //     try {
-  //       // Завантажуємо дані профілю
-  //       const profileData = await fetchProfileDetails(profileId);
-  //       setProfile(profileData);
-
-  //       // Якщо є userId, завантажуємо дані користувача
-  //       if (profileData.userId) {
-  //         const userData = await fetchUserDetails(profileData.userId);
-  //         setUser(userData);
-  //       }
-  //     } catch (err) {
-  //       setError(err.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   if (profileId) {
-  //     loadSellerData();
-  //   }
-  // }, [profileId]);
-
+  
   useEffect(() => {
     const loadSellerData = async () => {
       try {

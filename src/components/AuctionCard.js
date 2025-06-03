@@ -67,8 +67,7 @@ const AuctionCard = ({ id, price, title, imageUrl, isOwner, onDelete }) => {
           <span className="auction-card__description">{title}</span>
         </div>
         <div className="v46_121_like">
-          <div className="v46_120_like"></div>
-            <div className="v46_118_like" onClick={handleFavoriteClick}>
+            <div className="v46_120_like" onClick={handleFavoriteClick}>
             <img 
               src={isItemFavorite ? likedIcon : likeIcon} 
               alt={isItemFavorite ? "В обраному" : "Додати до обраного"}

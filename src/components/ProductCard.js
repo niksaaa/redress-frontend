@@ -65,8 +65,7 @@ const ProductCard = ({ id, price, title, imageUrl, isOwner, onDelete }) => {
         <span className="v31_75">{price} грн</span>
         <span className="v31_82">{title}</span>
         <div className="v46_121">
-          <div className="v46_120"></div>
-            <div className="v46_118">
+            <div className="v46_120">
             <img 
               src={isItemFavorite ? likedIcon : likeIcon} 
               alt={isItemFavorite ? "В обраному" : "Додати до обраного"}

@@ -7,7 +7,7 @@ const RecipientInfo = ({ phoneNumber }) => {
     lastName: "",
     firstName: "",
     middleName: "",
-    phone: { phoneNumber },
+    phone: phoneNumber || "",
   });
 
   const [errors, setErrors] = useState({
