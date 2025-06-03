@@ -1,4 +1,3 @@
-// components/DeliveryOptions.js
 import React, { useState } from "react";
 import "../styles/delivery-options.css";
 

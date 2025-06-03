@@ -53,8 +53,8 @@ const OrderPage = () => {
       };
 
       await emailjs.send(
-        'service_lplxrjg', // Замініть на ваш Service ID
-        'template_a7zk9w3', // Замініть на ID шаблону для продавця
+        'service_lplxrjg', // Service ID
+        'template_a7zk9w3', // ID шаблону для продавця
         templateParams
       );
     } catch (error) {

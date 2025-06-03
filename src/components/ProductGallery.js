@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import "../styles/product-gallery.css";
 
-// import img1 from "../images/product-page/v342_74.png";
-// import img2 from "../images/product-page/v342_74.png";
-// import img3 from "../images/product-page/v342_74.png";
-
-// const images = [img1, img2, img3];
-
 const ProductGallery = ({ images = [] }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);

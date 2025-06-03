@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { authService } from './authService'; // Використовуємо налаштований axios з authService
 
 export const fetchProfile = async () => {

@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import { fetchCategoryTree } from "../api/category";
 import { createListing, startAuction, uploadListingImage } from "../api/createListing";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 export default function AdFormPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);

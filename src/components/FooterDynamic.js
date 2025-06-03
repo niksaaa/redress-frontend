@@ -33,10 +33,12 @@ const FooterDynamic = () => {
       <div className="footer-middle1">
         {/* ЗАВАНТАЖЕННЯ ДОДАТКУ */}
         <div className="download1">
-          <div className="download-btn1"></div>
-          <div className="download-img1"></div>
-          <span className="download-text1">Завантажити додаток</span>
-        </div>
+  <a href="/com.redressmobile-Signed.apk" download className="download-btn1">
+    <div className="download-img1"></div>
+    <span className="download-text1">Завантажити додаток</span>
+  </a>
+</div>
+
 
         {/* КОНТАКТИ */}
         <section className="contacts1">

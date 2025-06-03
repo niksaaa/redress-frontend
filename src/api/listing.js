@@ -232,32 +232,6 @@ export const fetchListingsByPriceRange = async (minPrice, maxPrice, page = 1, pa
 };
 
 
-// export const fetchAllListings = async ({ page, pageSize }) => {
-//   try {
-//     const response = await authService.get(`Listing/GetAll?page=${page}&pageSize=${pageSize}`);
-//     console.log(response);
-    
-//     if (!response.ok) {
-//       const errorText = await response.text();
-//     throw new Error(`Error ${response.status}: ${errorText}`);
-//     }
-    
-//     return {
-//       items: response.data.items,
-//       totalPages: response.data.totalPages,
-//       totalCount: response.data.totalCount
-//     };
-    
-//   } catch (error) {
-//     console.error('Error fetching listings:', error);
-//     throw {
-//       message: error.message,
-//       status: error.response?.status,
-//       data: error.response?.data
-//     };
-//   }
-// };
-
 export const fetchAllListings = async ({ page, pageSize }) => {
   try {
     console.log(`Fetching listings page ${page}, size ${pageSize}`);

@@ -36,46 +36,6 @@ const UserInfoComponent = ({ createdAt, location }) => {
 //     };
 //   };
 
-//   useEffect(() => {
-//     const fetchUserInfo = async () => {
-//       try {
-//         setLoading(true);
-        
-//         if (demoMode) {
-//           // Демо-режим - генеруємо рандомні дані
-//           setTimeout(() => {
-//             setUserInfo(generateRandomData());
-//             setLoading(false);
-//           }, 500);
-//         } else {
-//           // Реальний режим - запит до бекенду
-//           const response = await fetch("https://localhost:7029/api/Profile/user", {
-//             headers: {
-//               'Authorization': `Bearer ${localStorage.getItem('token')}`
-//             }
-//           });
-          
-//           if (!response.ok) throw new Error('Не вдалося отримати дані профілю');
-          
-//           const data = await response.json();
-          
-//           setUserInfo({
-//             createdAt: data.createdAt || new Date(),
-//             location: data.latitude && data.longitude 
-//               ? getLocationFromCoords(data.latitude, data.longitude)
-//               : 'Не вказано'
-//           });
-//         }
-//       } catch (err) {
-//         setError(err.message);
-//         console.error('Помилка отримання даних:', err);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchUserInfo();
-//   }, [demoMode]);
 
     return (
         <div className="user-info">

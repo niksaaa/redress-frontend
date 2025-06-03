@@ -195,14 +195,6 @@ export default function Profile() {
 
 {sort2 === "Обране" && (
           <div className="content-section-2">
-                      {/* <div className="sort">
-                      <SortSelector
-                      options={sortOptions1}
-                      active={sort1}
-                      setActive={setSort1}
-                      variant="default"
-                    />
-                            </div> */}
                             <FavoritesList profileId={profileData?.id} />
                   </div>
         )}

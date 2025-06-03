@@ -15,18 +15,6 @@ export default function CategoryModal({ categories, onClose, onSelect }) {
     }
   };
 
-  // const getCurrentCategories = () => {
-  //   if (selectedNodes.length === 0) return categories;
-    
-  //   let current = selectedNodes[selectedNodes.length - 1].children;
-  //   for (let i = 0; i < currentLevel - 1; i++) {
-  //     if (!current || current.length === 0) break;
-  //     current = current[0].children;
-  //   }
-    
-  //   return current || [];
-  // };
-
   const getCurrentCategories = () => {
     if (selectedNodes.length === 0) return categories;
     
