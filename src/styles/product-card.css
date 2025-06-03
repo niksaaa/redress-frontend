@@ -7,6 +7,16 @@
   opacity: 1;
   overflow: hidden;
 }
+
+.product-card-link {
+  color: black;
+  text-decoration: none;
+}
+
+.product-card-link:visited {
+  color: black;
+}
+
 .v46_164 {
   width: 280px;
   height: 416px;
